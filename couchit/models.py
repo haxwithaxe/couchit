@@ -76,9 +76,10 @@ class Page(Document):
             old_hash = make_hash(old_data['content'])
             new_hash = make_hash(self.content)
             if old_hash != new_hash:
+                del old_data['_id']
+                del old_data['_rev']
                 old_data['parent'] = self.id
                 old_data['itemType'] = 'revision'
-                print "ici %s" %old_data
                 db.create(old_data)
                 db[self.id] = self._data
         return self

@@ -69,9 +69,7 @@ def edit_page(request, cname=None, pagename=None):
         pagename ='Home'
     
     page = get_page(local.db, site.id, pagename)
-    print "PAGEEEEEEEEEEEE %s" % page
     if not page or page.id is None:
-        print "here"
         page = Page(
             site=site.id,
             title=pagename.replace("_", " ")
