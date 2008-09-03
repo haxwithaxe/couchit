@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+
+<head>
+    <title>couchit- {% block title %}{% endblock %}</title>
+    <meta charset="utf-8"/>
+    <link rel="stylesheet" href="/static/css/base.css" type="text/css"/>
+
+    {% if DEBUG %}
+    <script type="text/javascript" src="/static/js/base2/src/base2.js"></script>
+    <script type="text/javascript" src="/static/js/base2/src/base2-dom.js"></script>
+    <script type="text/javascript" src="/static/js/src/base.js"></script>
+    <script type="text/javascript" src="/static/js/json2.js"></script>
+    <script type="text/javascript" src="/static/js/src/utils.js"></script>
+    <script type="text/javascript" src="/static/js/src/ajax.js"></script>
+    <script type="text/javascript" src="/static/js/src/localize_dates.js"></script>
+    <script type="text/javascript" src="/static/js/src/urlify.js"></script>
+    <script type="text/javascript" src="/static/js/src/page.js"></script>
+    {% endif %}
+
+    {% block head %}{% endblock %}
+
+</head>
+<body>
+    <div id="container">
+        <header id="topheader">
+            
+        </header>
+        <div id="content-wrapper">
+            {% block main %}
+            <section id="page">
+                {% block content %}{% endblock %}
+            </section>
+
+            <aside>
+                {% block aside %}
+
+                {% endblock %}
+            </aside>
+            {% endblock %}
+        </div>
+        <footer>
+        </footer>
+    </div>
+</body>
+</html>

@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block title %}Welcome{% endblock %}
+{% block main %}
+    <h1>Couchit</a>
+    <form action="/" name="fcreate" method="POST">
+        <p><textarea id="content" name="content" cols="60" rows="15" tabindex="1"></textarea></p>
+        <p><input type="submit" name="snew" value="Create a site" tabindex="2" /></p>
+    </form>
+{% endblock %}
