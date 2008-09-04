@@ -112,7 +112,7 @@ class Page(Document):
         return self
 
     def revisions(self, db):
-        if not self.id:
+        if not self.id or not self.previous:
             return []
         rows = self.view(db, '_view/page/revisions', startkey=[self.id, ''])
         result = list(iter(rows))

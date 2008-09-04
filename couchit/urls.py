@@ -36,9 +36,7 @@ urls_map = Map([
     Rule('/<cname>/<pagename>/history', endpoint='history_page'),
     Rule('/<cname>/<pagename>/edit', endpoint='edit_page'),
     Rule('/<cname>/<pagename>/diff', endpoint='diff_page'),
-    Rule('/<cname>/<pagename>/', endpoint='show_page'),
     Rule('/<cname>/<pagename>', endpoint='show_page'),
     Rule('/<cname>/site/design', endpoint='site_design'),
-    Rule('/<cname>/', endpoint='show_page'),
     Rule('/<cname>', endpoint='show_page')
 ])
