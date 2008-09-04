@@ -8,7 +8,7 @@ html {
 	overflow-y: scroll
 }
 
-html,body, #container {
+html,body, #container,  {
 	height: 100%
 }
 
@@ -21,30 +21,42 @@ html,body, #container {
 a { border: 0;}
 a { color: #14456e;}
 
-#page {
-    display: block;
-    position: relative;
-    float: left;
-    width: 80%;
+
+#topheader ul {
+    list-style: none;
+    float: right;
 }
 
-aside {
+#topheader ul li {
+    display: inline;
+}
+
+#wrapper {
+    width: 100%;
+    clear: both;
+}
+#page {
+    float: left;
+}
+
+aside#sidebar {
     display: block;
-    padding-left: 1em;
-    margin-left: 81%;
+    position: relative;
+    width: 160px;
     background: #a9cce6 repeat-y;
     border-left: 1px solid #9ec0da;
     height:auto !important; /* real browsers */
     height:100%; /* IE6: treaded as min-height*/
     margin-bottom: 0;
     min-height:100%; /* real browsers */
-    width: auto;
+    float: right;
 }
 
 aside ul { list-style: none; }
 
 
 #page div#actions {
+    position: relative;
     border-top: 1px solid #ccc;
     text-align: right;
 }

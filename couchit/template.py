@@ -20,13 +20,12 @@ import simplejson as json
 
 from couchit import settings
 from couchit.http import BCResponse, BCRequest
-from couchit.contrib.markdown import Markdown
+from couchit.contrib.markdown2 import Markdown
 from couchit.utils import local, datetime_tojson, datetimestr_topython
 
 template_env = Environment(loader=FileSystemLoader(settings.TEMPLATES_PATH))
 template_env.charset = 'utf-8'
-_markdown = Markdown()
-
+_markdown = Markdown(safe_mode=True, extras=['code-color'])
 WIKI_CHANGES = {
     'mod': 'Changed',
     'add': 'Added',
@@ -37,10 +36,6 @@ WIKI_CHANGES = {
 def pretty_type(value):
     return WIKI_CHANGES.get(value, '')
 template_env.filters['pretty_type'] = pretty_type
-
-def strip_tags(value):
-    return re.sub(r'<[^>]*?>', '', value)
-template_env.filters['strip_tags'] = strip_tags
 
 def url_for(endpoint, _external=False, **values):
     return local.url_adapter.build(endpoint, values, force_external=_external)

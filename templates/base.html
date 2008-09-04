@@ -5,6 +5,7 @@
     <title>couchit - {% block title %}{% endblock %}</title>
     <meta charset="utf-8"/>
     <link rel="stylesheet" href="/static/css/base.css" type="text/css" />
+    <link rel="stylesheet" href="/static/css/default.css" type="text/css" />
 
     {% if DEBUG %}
     <script type="text/javascript" src="/static/js/base2/src/base2.js"></script>
@@ -24,17 +25,24 @@
 <body>
     <div id="container">
         <header id="topheader">
-            
+            <nav>
+                <ul>
+                    <li><a href="">recent changes</a></li>
+                    <li><a href="">settings</a></li>
+                    <li><a href="">design</a></li>
+                </ul>
+            </nav>
         </header>
-        <div id="content-wrapper">
+        <div id="wrapper">
             {% block main %}
+            <aside id="sidebar">
+                {% block aside %}{% endblock %}
+            </aside>
             <section id="page">
                 {% block content %}{% endblock %}
             </section>
 
-            <aside>
-                {% block aside %}{% endblock %}
-            </aside>
+            
             {% endblock %}
         </div>
         <footer>
