@@ -20,14 +20,20 @@ from couchit import views
 all_views = {
     'home': views.home,
     'show_page': views.show_page,
-    'edit_page': views.edit_page
+    'edit_page': views.edit_page,
+    'history_page': views.history_page,
+    'revision_page': views.revision_page,
+    'diff_page': views.diff_page
 }
 
 
 
 urls_map = Map([
     Rule('/', endpoint='home'),
+    Rule('/<cname>/<pagename>/revision/<nb_revision>', endpoint='revision_page'),
+    Rule('/<cname>/<pagename>/history', endpoint='history_page'),
     Rule('/<cname>/<pagename>/edit', endpoint='edit_page'),
+    Rule('/<cname>/<pagename>/diff', endpoint='diff_page'),
     Rule('/<cname>/<pagename>', endpoint='show_page'),
     Rule('/<cname>/', endpoint='show_page'),
     Rule('/<cname>', endpoint='show_page')

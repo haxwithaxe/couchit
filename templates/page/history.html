@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% block title %}Revision history of {{ page.title }}{% endblock %}
+{% block content %}
+<h2>Revision history of <a href="{{ url_for('show_page', cname=site.cname, pagename=page.title|replace(" ", "_")) }}">{{ page.title }}</a></h2>
+
+<form id="fhistory" name="fhistory" method="get" action="{{ url_for('diff_page', cname=site.cname, pagename=page.title|replace(" ", "_")) }}">
+    <p><input type="submit" class="fhistory" name"fhistory" value="Compare selected version" /></p>
+    <table class="historyTable">
+        <tr>
+            <td><input type="checkbox" class="c" name="r" value="{{ page.nb_revision }}"></td>
+            <td class="nbrev"><a href="{{ url_for('revision_page', cname=site.cname, pagename=page.title|replace(" ", "_"), nb_revision=page.nb_revision ) }}">{{ page.nb_revision }}</a></td>
+            <td><time title="GMT" datetime="{{ page.updated|rfc3339 }}">{{ page.updated|formatdatetime }}</time></td>
+            <td class="changes">
+                {% if page.changes %}
+                <ol>
+                    {% for change in page.changes %}
+                    {% if change['type'] != 'unmod' %}
+                    <li>{{ change['type']|pretty_type }} "<span class="lineChange">{{ change['changed']['lines']|join('\n')|trim|striptags|truncate(40) }}"</li> 
+                    {% endif %}  
+                    {% endfor %}
+                </ol>
+                {% else %}
+                    {% if page.previous %}
+                Edited.
+                    {% else %}
+                Created page.
+                    {% endif %}
+                
+                {% endif %}
+
+
+            </td>
+        </tr>
+        {% for rev in revisions %}
+        <tr>
+            <td><input type="checkbox"  class="c" name="r" value="{{ rev.nb_revision }}"></td>
+            <td class="nbrev"><a href="{{ url_for('revision_page', cname=site.cname, pagename=rev.title|replace(" ", "_"), nb_revision=rev.nb_revision ) }}">{{ rev.nb_revision }}</a></td>
+            <td><time title="GMT" datetime="{{ rev.updated|rfc3339 }}">{{ rev.updated|formatdatetime }}</time></td>
+            <td class="changes">
+                {% if rev.changes %}
+                <ol>
+                    {% for change in rev.changes %}
+                        {% if change['type'] != 'unmod' %}
+                    <li>{{ change['type']|pretty_type }} "<span class="lineChange">{{ change['changed']['lines']|join('\n')|trim|striptags|truncate(40) }}"</li> 
+                        {% endif %}  
+                    {% endfor %}
+                </ol>
+                {% else %}
+                    {% if rev.previous %}
+                Edited.
+                    {% else %}
+                <span class="created">Created page.</span>
+                    {% endif %}
+                {% endif %}
+
+
+            </td>
+        </tr>
+
+        {% endfor %}    
+    </table>
+    <p><input type="submit" class="fhistory" name"fhistory" value="Compare selected version" /></p>
+</form>
+{% endblock %}
+
+{% block footer %}
+<script type="text/javascript" charset="utf-8">
+    new Compare();
+</script>
+{% endblock %}
+
+
+{% block aside %}
+{% include "sidebar.html" %}
+{% endblock %}

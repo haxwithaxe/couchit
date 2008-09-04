@@ -83,4 +83,76 @@ def edit_page(request, cname=None, pagename=None):
     
     return render_response('page/edit.html', page=page, site=site)
     
+def history_page(request, cname=None, pagename=None):
+    if cname is None:
+        return redirect('/')
+
+    site = get_site(local.db, cname)
+    if site is None:
+        return redirect('/')
     
+    if pagename is None:
+        pagename ='Home'
+    page = get_page(local.db, site.id, pagename)
+    if not Page:
+        return NotFound
+    
+    revisions = page.revisions(local.db)
+    
+    # get all pages
+    pages = all_pages(local.db, site.id)
+    return render_response('page/history.html', page=page, pages=pages, site=site, revisions=revisions)
+    
+def revision_page(request, cname=None, pagename=None, nb_revision=None):
+    if cname is None:
+        return redirect('/')
+
+    site = get_site(local.db, cname)
+    if site is None:
+        return redirect('/')
+    
+    if pagename is None:
+        pagename ='Home'
+    page = get_page(local.db, site.id, pagename)
+    if not Page:
+        return NotFound
+        
+    if nb_revision is None:
+        nb_revision = 0
+    else:
+        try:
+            nb_revision = int(nb_revision)
+        except ValueError:
+            return NotFound
+    
+    # get all pages
+    pages = all_pages(local.db, site.id)
+        
+    revision = page.revision(local.db, nb_revision)
+    if revision is None:
+        return render_response('page/revision_notfound.html', page=page, pages=pages, site=site)
+
+    return render_response('page/show.html', page=revision, pages=pages, site=site)
+    
+def diff_page(request, cname=None, pagename=None):
+    if cname is None:
+        return redirect('/')
+        
+    site = get_site(local.db, cname)
+    if site is None:
+        return redirect('/')
+        
+    if pagename is None:
+        pagename ='Home'
+    page = get_page(local.db, site.id, pagename)
+    if not Page:
+        return NotFound
+    
+    revisions = request.values.getlist('r')
+    
+    # get all pages
+    pages = all_pages(local.db, site.id)
+    
+    diff = get_diff(local.db, page, revisions[0], revisions[1])
+    
+    return render_response('page/diff.html', page=page, pages=pages, site=site, diff=diff)

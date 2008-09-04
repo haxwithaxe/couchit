@@ -1,0 +1,15 @@
+<div id="createPage">
+    <a href="#" class="doCreate">Create new page</a>
+    <form id="fnewpage" id="fnewpage" method="get">
+        <p><input type="text" name="title" id="title" value="" /></p>
+        <p><input type="submit" name="screate" id="screate" value="Create" /> or <a href="#" class="cancel">Cancel</a></p>
+    </form>
+</div>
+<ul class="pagelist">
+{% for p in pages %}
+    <li><a href="{{ url_for('show_page', cname=site.cname, pagename=p.title|replace(" ", "_")) }}">{{ p.title }}</a></li>
+{% endfor %}
+</ul>
+
+
+

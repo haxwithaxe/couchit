@@ -56,3 +56,42 @@ aside ul { list-style: none; }
 }
 
 #actions ul li.last { border: none;}
+
+.historyTable {
+    position: relative;
+    border-collapse: collapse;
+    width: auto;
+    margin: 10px 0 10px 0;
+}
+
+.historyTable tr td {
+    padding: 4px 1.5em 2px 5px;
+    vertical-align: top;
+    white-space: nowrap;
+}
+
+.changes ol { list-style: none;}
+
+span.lineChange {
+    display: inline;
+    font-family: courier;
+    height: 15px;
+    width: 216px;
+}
+
+del {
+    text-decoration: none;
+    background: #ff8888;
+    color: #000;
+}
+
+ins {
+    background: #99ff99;
+    text-decoration: none;
+    color: #000;
+}
+
+
+tr.rselected {
+    background: #E1F1B9;
+}

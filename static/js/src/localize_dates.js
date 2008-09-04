@@ -7,8 +7,7 @@ Date.parseRFC3339 = function (string) {
     if (match[7]) match[7] = (match[7]+'000').substring(1,4);
     var field = [null,'FullYear','Month','Date','Hours','Minutes','Seconds','Milliseconds'];
     for (var i=1; i<=7; i++) if (match[i]) date['setUTC'+field[i]](match[i]);
-    if (match[9]) date.setTime(date.getTime()+
-    (match[9]=='-'?1:-1)*(match[10]*3600000+match[11]*60000) );
+    if (match[9]) date.setTime(date.getTime()+(match[9]=='-'?1:-1)*(match[10]*3600000+match[11]*60000) );
     return date.getTime();
 }
 
@@ -22,11 +21,11 @@ function localizeDates() {
         if (el.getAttribute('title') == "GMT") {
             var date = new Date(Date.parseRFC3339(el.getAttribute('datetime')));
             if (!date.getTime())
-            return;
+                return;
             diff = ((now.getTime() - date.getTime()) / 1000),
             day_diff = Math.floor(diff / 86400);
             if ( isNaN(day_diff) || day_diff < 0 || day_diff >= 31 )
-            return;
+                return;
             var text = date.toLocaleString();
             var title = date.toLocaleString();
             if (day_diff == 0) {

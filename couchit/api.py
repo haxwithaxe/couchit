@@ -16,9 +16,11 @@
 from couchdb.client import ResourceNotFound
 from couchit.models import Site, Page
 from couchit.utils import utf8
+from couchit.utils.diff import diff_blocks
+
 
 __all__ = ['get_site', 'get_page', 'get_pageof',
-'all_pages']
+'all_pages', 'get_diff']
 
 def get_site(db, name):
     rows = Site.view(db, '_view/site/by_cname', key=name)
@@ -46,4 +48,18 @@ def all_pages(db, siteid):
         return []
     rows = Page.view(db, '_view/page/all_pages', key=siteid)
     return list(iter(rows))
+    
+    
+def get_diff(db, page, rev1, rev2):
+    a = int(rev1)
+    b = int(rev2)
+    if b < a:
+        a,b=b,a
+    r1 = page.revision(db, a)
+    r2 = page.revision(db, b)
+    
+    return diff_blocks(r1.content.splitlines(), r2.content.splitlines(), 3)
+    
+    
+    
     

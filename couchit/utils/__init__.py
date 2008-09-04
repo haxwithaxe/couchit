@@ -110,7 +110,7 @@ def load_views():
     couchdb_server = Server(settings.SERVER_URI)
     db = couchdb_server[settings.DATABASE_NAME]
     
-    design_path = os.path.join(os.path.dirname(__file__), '_design')
+    design_path = os.path.join(os.path.dirname(__file__), '../_design')
     print "\nLoad CouchDB views ..."
     for name in os.listdir(design_path):
         path = os.path.join(design_path,name)

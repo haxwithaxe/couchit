@@ -2,9 +2,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 
 <head>
-    <title>couchit- {% block title %}{% endblock %}</title>
+    <title>couchit - {% block title %}{% endblock %}</title>
     <meta charset="utf-8"/>
-    <link rel="stylesheet" href="/static/css/base.css" type="text/css"/>
+    <link rel="stylesheet" href="/static/css/base.css" type="text/css" />
 
     {% if DEBUG %}
     <script type="text/javascript" src="/static/js/base2/src/base2.js"></script>
@@ -33,13 +33,12 @@
             </section>
 
             <aside>
-                {% block aside %}
-
-                {% endblock %}
+                {% block aside %}{% endblock %}
             </aside>
             {% endblock %}
         </div>
         <footer>
+            {% block footer %}{% endblock %}
         </footer>
     </div>
 </body>

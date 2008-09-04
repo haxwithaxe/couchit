@@ -16,8 +16,13 @@
 from datetime import datetime
 from couchdb.schema import *
 from couchit.utils import make_hash
+from couchit.utils.diff import unified_diff, diff_blocks
 
 __all__ = ['Page', 'Site']
+
+
+class ArrayField(Field):
+    _to_python = list
 
 def _genslug():
     charset = 'abcdefghjkmnpqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ23456789'
@@ -57,10 +62,13 @@ class Site(Document):
 class Page(Document):
     site = TextField()
     title = TextField()
-    content = TextField()
+    content = TextField(default='')
     parent = TextField(default='')
+    previous = TextField(default='')
     created = DateTimeField()
     updated = DateTimeField()
+    changes = ArrayField(default=[])
+    nb_revision = IntegerField(default=0)
     
     itemType = TextField(default='page')
     
@@ -78,11 +86,47 @@ class Page(Document):
             if old_hash != new_hash:
                 del old_data['_id']
                 del old_data['_rev']
+                
                 old_data['parent'] = self.id
                 old_data['itemType'] = 'revision'
-                db.create(old_data)
+                _previous = db.create(old_data)
+                
+                # increment revision number
+                self.nb_revision = int(old_data['nb_revision']) + 1
+                
+                # save previous revision id, could be usefull
+                self.previous = _previous
+                
+                # get changes 
+                changes = diff_blocks(old_data['content'].splitlines(),
+                    self.content.splitlines(), 3, 8, 1, 0, 1)
+                
+                _changes = []
+                for row in changes:
+                    for change in row:
+                        print change
+                        _changes.append(change)
+                self.changes = _changes
+                print self.changes
                 db[self.id] = self._data
         return self
-                
-            
-            
+
+    def revisions(self, db):
+        if not self.id:
+            return []
+        rows = self.view(db, '_view/page/revisions', startkey=[self.id, ''])
+        result = list(iter(rows))
+        if result: # order revisions
+            result.sort(lambda a,b: cmp(a.updated, b.updated))
+            result.reverse()
+        return result
+        
+        
+    def revision(self, db, revid):
+        if not self.id:
+            return None
+        rows = self.view(db, '_view/page/nb_revision', key=[self.id, revid])
+        rows = list(iter(rows))
+        if rows:
+            return rows[0]
+        return None
