@@ -16,7 +16,6 @@
     <script type="text/javascript" src="/static/js/src/utils.js"></script>
     <script type="text/javascript" src="/static/js/src/ajax.js"></script>
     <script type="text/javascript" src="/static/js/src/localize_dates.js"></script>
-    <script type="text/javascript" src="/static/js/src/urlify.js"></script>
     <script type="text/javascript" src="/static/js/src/page.js"></script>
     {% endif %}
 
@@ -25,16 +24,9 @@
 </head>
 <body>
     <div id="container">
-        {% block header %}
-            <header id="topheader">
-                <nav>
-                    <ul>
-                        <li><a href="">recent changes</a></li>
-                        <li><a href="">settings</a></li>
-                        <li><a href="{{ url_for('site_design', cname=site.cname) }}">design</a></li>
-                    </ul>
-                </nav>
-            </header>
+        {% block header %} 
+        
+        {% include "header.html" %}
         {% endblock %}
         
         <div id="wrapper">

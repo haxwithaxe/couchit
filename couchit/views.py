@@ -44,7 +44,9 @@ def show_page(request, cname=None, pagename=None):
     if cname is None:
         return redirect('/')
         
-    site = get_site(local.db, cname) 
+    site = get_site(local.db, cname)
+    if site is None:
+        return NotFound
     
     if pagename is None:
         pagename ='Home'

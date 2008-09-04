@@ -31,7 +31,7 @@ def get_site(db, name):
     
 
 def get_page(db, siteid, name):
-    rows = Page.view(db, '_view/page/by_slug', key=[siteid, name])
+    rows = Page.view(db, '_view/page/by_slug', key=[siteid, name.lower()])
     lrows = list(iter(rows))
     if lrows:
         return lrows[0]
