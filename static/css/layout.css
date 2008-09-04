@@ -1,27 +1,25 @@
 body {
     background: #E9F2F5;
-    min-width: 960px;
+    min-width: 700px;
     color: #000;
 }
 
-html {
-	overflow-y: scroll
-}
 
 html,body, #container,  {
 	height: 100%
 }
 
 
-#container {
-    padding-top: 18px;
-    padding-left: 14px;
-}
 
 a { border: 0;}
 a { color: #14456e;}
 
-
+#topheader {
+    display: block;
+    width: 100%;
+    height: 24px;
+    
+}
 #topheader ul {
     list-style: none;
     float: right;
@@ -33,22 +31,26 @@ a { color: #14456e;}
 
 #wrapper {
     width: 100%;
+    height: 100%;
     clear: both;
+    padding-top: 18px;
+       padding-left: 14px;
 }
 #page {
     float: left;
+    width: 80%;
 }
 
 aside#sidebar {
     display: block;
     position: relative;
-    width: 160px;
+    width: 19%;
     background: #a9cce6 repeat-y;
     border-left: 1px solid #9ec0da;
     height:auto !important; /* real browsers */
     height:100%; /* IE6: treaded as min-height*/
     margin-bottom: 0;
-    min-height:100%; /* real browsers */
+    height:100%; /* real browsers */
     float: right;
 }
 
@@ -106,4 +108,16 @@ ins {
 
 tr.rselected {
     background: #E1F1B9;
+}
+
+section#color {
+    display: block;
+    width: 630px;
+}
+
+div.ccolor {
+    display: block;
+    width: 96px;
+    margin: 15px;
+    float: left;
 }

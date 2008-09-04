@@ -156,3 +156,13 @@ def diff_page(request, cname=None, pagename=None):
     diff = get_diff(local.db, page, revisions[0], revisions[1])
     
     return render_response('page/diff.html', page=page, pages=pages, site=site, diff=diff)
+    
+    
+def site_design(request, cname):
+    if cname is None:
+        return redirect('/')
+        
+    site = get_site(local.db, cname)
+    if site is None:
+        return redirect('/')
+    return render_response('site/design.html', site=site)

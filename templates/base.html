@@ -6,6 +6,7 @@
     <meta charset="utf-8"/>
     <link rel="stylesheet" href="/static/css/base.css" type="text/css" />
     <link rel="stylesheet" href="/static/css/default.css" type="text/css" />
+     <link rel="stylesheet" href="/static/css/blue.css" type="text/css" />
 
     {% if DEBUG %}
     <script type="text/javascript" src="/static/js/base2/src/base2.js"></script>
@@ -24,15 +25,18 @@
 </head>
 <body>
     <div id="container">
-        <header id="topheader">
-            <nav>
-                <ul>
-                    <li><a href="">recent changes</a></li>
-                    <li><a href="">settings</a></li>
-                    <li><a href="">design</a></li>
-                </ul>
-            </nav>
-        </header>
+        {% block header %}
+            <header id="topheader">
+                <nav>
+                    <ul>
+                        <li><a href="">recent changes</a></li>
+                        <li><a href="">settings</a></li>
+                        <li><a href="{{ url_for('site_design', cname=site.cname) }}">design</a></li>
+                    </ul>
+                </nav>
+            </header>
+        {% endblock %}
+        
         <div id="wrapper">
             {% block main %}
             <aside id="sidebar">

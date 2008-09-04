@@ -23,18 +23,22 @@ all_views = {
     'edit_page': views.edit_page,
     'history_page': views.history_page,
     'revision_page': views.revision_page,
-    'diff_page': views.diff_page
+    'diff_page': views.diff_page,
+    'site_design': views.site_design
 }
 
 
 
 urls_map = Map([
     Rule('/', endpoint='home'),
+    
     Rule('/<cname>/<pagename>/revision/<nb_revision>', endpoint='revision_page'),
     Rule('/<cname>/<pagename>/history', endpoint='history_page'),
     Rule('/<cname>/<pagename>/edit', endpoint='edit_page'),
     Rule('/<cname>/<pagename>/diff', endpoint='diff_page'),
+    Rule('/<cname>/<pagename>/', endpoint='show_page'),
     Rule('/<cname>/<pagename>', endpoint='show_page'),
+    Rule('/<cname>/site/design', endpoint='site_design'),
     Rule('/<cname>/', endpoint='show_page'),
     Rule('/<cname>', endpoint='show_page')
 ])
