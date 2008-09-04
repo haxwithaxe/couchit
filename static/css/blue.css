@@ -1,0 +1,22 @@
+#topheader {
+    background: #036;
+}
+
+
+#topheader a:link,
+#topheader a:visited {
+  border: 1px solid #036;
+  color: #fff;
+  background-color: #1A4F85;
+  border-bottom: 1px solid #1A4F85;
+}
+
+#topheader a:hover {
+	color: #fff;
+	background: #1D64AD;
+	border-bottom: 1px solid #1D64AD;
+}
+
+#topheader ul a:link.current, #topheader ul a:visited.current {
+	color: #090;
+}
