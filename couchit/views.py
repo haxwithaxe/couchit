@@ -47,9 +47,9 @@ def show_page(request, cname=None, pagename=None):
     site = get_site(local.db, cname)
     if site is None:
         return NotFound
-    
+
     if pagename is None:
-        pagename ='Home'
+        pagename ='home'
     page = get_page(local.db, site.id, pagename)
     if page is None:
         raise NotFound

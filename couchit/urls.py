@@ -32,11 +32,12 @@ all_views = {
 urls_map = Map([
     Rule('/', endpoint='home'),
     
+    Rule('/<cname>/site/design', endpoint='site_design'),
     Rule('/<cname>/<pagename>/revision/<nb_revision>', endpoint='revision_page'),
     Rule('/<cname>/<pagename>/history', endpoint='history_page'),
     Rule('/<cname>/<pagename>/edit', endpoint='edit_page'),
     Rule('/<cname>/<pagename>/diff', endpoint='diff_page'),
+    Rule('/<cname>', defaults={'pagename': 'home' }, endpoint='show_page'),
     Rule('/<cname>/<pagename>', endpoint='show_page'),
-    Rule('/<cname>/site/design', endpoint='site_design'),
-    Rule('/<cname>', endpoint='show_page')
+    
 ])

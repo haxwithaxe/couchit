@@ -114,8 +114,9 @@ class Page(Document):
     def revisions(self, db):
         if not self.id or not self.previous:
             return []
-        rows = self.view(db, '_view/page/revisions', startkey=[self.id, ''])
+        rows = self.view(db, '_view/page/revisions', key=self.id)
         result = list(iter(rows))
+        print result
         if result: # order revisions
             result.sort(lambda a,b: cmp(a.updated, b.updated))
             result.reverse()

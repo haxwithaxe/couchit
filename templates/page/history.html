@@ -65,6 +65,9 @@
 
 {% block footer %}
 <script type="text/javascript" charset="utf-8">
+    Site.name = "{{ site.cname }}";
+    Site.url = "/" + "{{ site.cname }}"
+    new Create();
     new Compare();
 </script>
 {% endblock %}
