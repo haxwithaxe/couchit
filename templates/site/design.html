@@ -1,13 +1,14 @@
 {% extends "base.html" %}
 
 {% block head %}
-
+<script type="text/javascript" src="/static/js/src/colorpicker2.js"></script>
 {% endblock %}
 {% block main %}
     <section id="color">
-        
-
-
+    <form>
+        <input type="text" name="background" value="" id="background" class="colorpicker" />
+    </form>
+<!-->
 <div id="everything">
  <div style="FONT-FAMILY: Garamond, Times, Serif; TEXT-ALIGN: center; PADDING-TOP: 20px;">
   <fieldset id="colorspy"><legend>DHTML Color Picker</legend>
@@ -21,9 +22,15 @@
 	 <div id="Hmodel"></div>
 	</form>
    </div>
-   <div id="plugID" style="HEIGHT: 120px; WIDTH: 480px; MARGIN: 12px 0 0 240px; PADDING-TOP: 76px; COLOR: #000; BORDER: 1px solid #333; TEXT-ALIGN: center; FONT-SiZE: 25px; BACKGROUND: #333;"><a href="http://www.nofunc.com/DHTML_Color_Picker/">DHTML Color Picker</a><br>Free to use on your own projects!</div>
+   <div id="plugID" style="HEIGHT: 120px; WIDTH: 480px; MARGIN: 12px 0 0 240px; PADDING-TOP: 76px; COLOR: #000; BORDER: 1px solid #333; TEXT-ALIGN: center; FONT-SiZE: 25px; BACKGROUND: #333;"><a href="http://www.nofunc.com/DHTML_Color_Picker/">DHTML Color Picker</a><br>Free to use on your own projects!</div>-->
 
 </section>
+<!-->
+<script type="text/javascript" src="/static/js/src/colorpicker.js"></script>-->
 
-<script type="text/javascript" src="/static/js/src/colorpicker.js"></script>
+<script type="text/javascript" charset="utf-8">
+    document.querySelectorAll('.colorpicker').forEach(function(el) {
+        new ColorPicker(el);
+    });
+</script>
 {% endblock %}
