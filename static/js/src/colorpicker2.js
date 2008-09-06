@@ -68,6 +68,7 @@ var Color = base2.Base.extend({
 
 var ColorPicker = base2.Base.extend({
     colorSelector: null,
+    stop: false,
     
     constructor: function(el) {
         this.color = new Color();
@@ -127,7 +128,7 @@ var ColorPicker = base2.Base.extend({
         }
         h.appendChild(hmodel);
         this.colorSelector.appendChild(h);
-        
+        this.hmodel = hmodel; 
         var self = this;
         self.input.addEventListener("click", function(e) {
             e.preventDefault();
@@ -156,7 +157,10 @@ var ColorPicker = base2.Base.extend({
         if (this.hideIfClickOutside) {
             document.body.removeEventListener("click", this.hideIfClickOutside, false);
             this.hideIfClickOutside = null;
+            alert("grmpff");
         }
+        document.body.removeEventListener("mousemouve", self.dragListener, false);
+    
     },
 
     setPosition: function() {
@@ -191,12 +195,21 @@ var ColorPicker = base2.Base.extend({
         			+ document.documentElement.scrollTop;
         }
       
-        
+       
+      if (!this.stop) { 
       if (e.target.id == "SV") {
           var offset = this.sv.getOffsets();
           this.svslide.style.top = (pos.y - offset.y) +  "px";
           this.svslide.style.left = (pos.x - offset.x) + "px";
+
+          this.input.background = "#" + this.color.HSV_HEX(e.target);
+      } else if (e.target.parentNode.id == "Hmodel") {
+          var offset = this.hmodel.getOffsets();
+          this.hslide.style.top = (pos.y - offset.y) +  "px";
+          this.hslide.style.left = (pos.x - offset.x) + "px";
       }
+      }
+      return false;
     },
 
     show: function() {
@@ -209,10 +222,22 @@ var ColorPicker = base2.Base.extend({
                 self.hide();
             };
         };
+
         document.body.addEventListener("click", self.hideIfClickOutside, false);
+       /* 
         self.sv.addEventListener('mousedown', function(e) {
+            self.stop = true;
             self.drag(e);
         });
         
+        self.dragListener = function(e) {
+            self.drag(e);
+        }
+        document.body.addEventListener("mousemove", self.dragListener, false); 
+        document.body.addEventListener("mouseup", function(e) {
+            self.stop = true;
+            self.drag(e);
+        }, false);  
+         */    
     },
 })

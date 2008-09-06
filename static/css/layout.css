@@ -126,6 +126,7 @@ div.ccolor {
 .colorPickerDiv {
     position: absolute;
     width: 210px;
+    height: 167px;
     background: #0d0d0d;
     color: #aaa;
     z-index: 100000;
