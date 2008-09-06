@@ -1,36 +1,58 @@
 {% extends "base.html" %}
 
 {% block head %}
-<script type="text/javascript" src="/static/js/src/colorpicker2.js"></script>
+<link rel="stylesheet" type="text/css" href="/static/css/colorPicker.css">
+<script src="/static/js/dragdrop.js" type="text/javascript"></script>
+<script src="/static/js/slider.js" type="text/javascript"></script>
+<script src="/static/js/builder.js" type="text/javascript"></script>
+<script src="/static/js/yahoo.color.js" type="text/javascript"></script>
+<script src="/static/js/colorPicker.js" type="text/javascript"></script>
+
 {% endblock %}
 {% block main %}
-    <section id="color">
+<section id="color">
     <form>
-        <input type="text" name="background" value="" id="background" class="colorpicker" />
+        <table id="custom_form">
+            <tr>
+                <th><label for="background_color">Background Color</label></th>
+                <td><input type="text" name="background_color" value="" id="background_color" /></td>
+            </tr>
+            <tr>
+                <th><label for="text_color">Text Color</label></th>
+                <td><input type="text" name="text_color" value="" id="text_color" /></td>
+            </tr>
+            <tr>
+                <th><label for="link_color">Link Color</label></th>
+                <td><input type="text" name="link_color" value="" id="link_color" /></td>
+            </tr>
+            <tr>
+                <th><label for="sidebar_fill_color">Sidebar Fill Color</label></th>
+                <td><input type="text" name="sidebar_fill_color" value="" id="sidebar_fill_color" /></td>
+            </tr>
+            <tr>
+                <th><label for="sidebar_link_color">Sidebar Link Color</label></th>
+                <td><input type="text" name="sidebar_link_color" value="" id="sidebar_link_color" /></td>
+            </tr>
+            <tr>
+                <th><label for="header_background">Header Background</label></th>
+                <td><input type="text" name="header_background" value="" id="header_background" /></td>
+            </tr>
+            <tr>
+                <th><label for="link_color">Header Fill Menu</label></th>
+                <td><input type="text" name="header_background" value="" id="header_background" /></td>
+            </tr>
+            <tr>
+                <th><label for="link_color">Header Menu Color</label></th>
+                <td><input type="text" name="header_background" value="" id="header_background" /></td>
+            </tr>
+        </table>
     </form>
-<!-->
-<div id="everything">
- <div style="FONT-FAMILY: Garamond, Times, Serif; TEXT-ALIGN: center; PADDING-TOP: 20px;">
-  <fieldset id="colorspy"><legend>DHTML Color Picker</legend>
-   <div id="plugin" onmousedown="HSVslide('drag','plugin',event)" style="TOP: 58px; Z-INDEX: 20;">
-	<div id="plugCUR"></div><div id="plugHEX" onmousedown="stop=0; setTimeout('stop=1',100);">FFFFFF</div><div id="plugCLOSE" onmousedown="toggle('plugin')">X</div><br>
-	<div id="SV" onmousedown="HSVslide('SVslide','plugin',event)" title="Saturation + Value">
-	 <div id="SVslide" style="TOP: -4px; LEFT: -4px;"><br /></div>
-	</div>
-	<form id="H" onmousedown="HSVslide('Hslide','plugin',event)" title="Hue">
-	 <div id="Hslide" style="TOP: -7px; LEFT: -8px;"><br /></div>
-	 <div id="Hmodel"></div>
-	</form>
-   </div>
-   <div id="plugID" style="HEIGHT: 120px; WIDTH: 480px; MARGIN: 12px 0 0 240px; PADDING-TOP: 76px; COLOR: #000; BORDER: 1px solid #333; TEXT-ALIGN: center; FONT-SiZE: 25px; BACKGROUND: #333;"><a href="http://www.nofunc.com/DHTML_Color_Picker/">DHTML Color Picker</a><br>Free to use on your own projects!</div>-->
+
 
 </section>
-<!-->
-<script type="text/javascript" src="/static/js/src/colorpicker.js"></script>-->
-
 <script type="text/javascript" charset="utf-8">
-    document.querySelectorAll('.colorpicker').forEach(function(el) {
-        new ColorPicker(el);
+    $('custom_form').getElementsBySelector('input').each(function(el) {
+        new Control.ColorPicker(el.id);
     });
 </script>
 {% endblock %}
