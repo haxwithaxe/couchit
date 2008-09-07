@@ -19,7 +19,29 @@ from werkzeug.utils import url_unquote
 from couchit.models import Site, Page
 from couchit.api import *
 from couchit.template import render_response, url_for
-from couchit.utils import local
+from couchit.utils import local, make_hash
+
+def site_required(f):
+    def decorated(request, **kwargs):
+        site = None
+        if not hasattr(request, 'site'):
+            cname = kwargs.get('cname', None)
+            if cname is None:
+                return redirect('/')
+            if not 'sites' in request.session:
+                request.session['sites'] = {}
+            
+            if  request.session['sites']:
+                site = request.session['sites'].get(cname, None)
+            
+            if site is None:
+                site = get_site(local.db, cname)
+                if site is None:
+                    return redirect('/')
+            request.session['sites'][site.cname] = site
+            request.site = site  
+        return f(request, **kwargs)
+    return decorated
 
 def not_found(request):
     return render_response("not_found.html")
@@ -39,38 +61,26 @@ def home(request):
         page.store(local.db)
         return redirect('/%s' % site.cname)
     return render_response('home.html')
-    
+  
+@site_required  
 def show_page(request, cname=None, pagename=None):
-    if cname is None:
-        return redirect('/')
-        
-    site = get_site(local.db, cname)
-    if site is None:
-        return NotFound
-
     if pagename is None:
         pagename ='home'
-    page = get_page(local.db, site.id, pagename)
+    page = get_page(local.db, request.site.id, pagename)
     if page is None:
         raise NotFound
     
     # get all pages
-    pages = all_pages(local.db, site.id)
+    pages = all_pages(local.db, request.site.id)
     
-    return render_response('page/show.html', page=page, pages=pages, site=site)
+    return render_response('page/show.html', page=page, pages=pages)
     
+@site_required
 def edit_page(request, cname=None, pagename=None):
-    if cname is None:
-        return redirect('/')
-        
-    site = get_site(local.db, cname)
-    if site is None:
-        return redirect('/')
-        
     if pagename is None:
         pagename ='Home'
     
-    page = get_page(local.db, site.id, pagename)
+    page = get_page(local.db, request.site.id, pagename)
     if not page or page.id is None:
         page = Page(
             site=site.id,
@@ -83,39 +93,27 @@ def edit_page(request, cname=None, pagename=None):
         redirect_url = url_for('show_page', cname=cname, pagename=pagename)
         return redirect(redirect_url)
     
-    return render_response('page/edit.html', page=page, site=site)
-    
+    return render_response('page/edit.html', page=page, site=request.site)
+  
+@site_required  
 def history_page(request, cname=None, pagename=None):
-    if cname is None:
-        return redirect('/')
-
-    site = get_site(local.db, cname)
-    if site is None:
-        return redirect('/')
-    
     if pagename is None:
         pagename ='Home'
-    page = get_page(local.db, site.id, pagename)
+    page = get_page(local.db, request.site.id, pagename)
     if not Page:
         return NotFound
     
     revisions = page.revisions(local.db)
     
     # get all pages
-    pages = all_pages(local.db, site.id)
-    return render_response('page/history.html', page=page, pages=pages, site=site, revisions=revisions)
+    pages = all_pages(local.db, request.site.id)
+    return render_response('page/history.html', page=page, pages=pages, site=request.site, revisions=revisions)
     
+@site_required
 def revision_page(request, cname=None, pagename=None, nb_revision=None):
-    if cname is None:
-        return redirect('/')
-
-    site = get_site(local.db, cname)
-    if site is None:
-        return redirect('/')
-    
     if pagename is None:
         pagename ='Home'
-    page = get_page(local.db, site.id, pagename)
+    page = get_page(local.db, request.site.id, pagename)
     if not Page:
         return NotFound
         
@@ -128,43 +126,50 @@ def revision_page(request, cname=None, pagename=None, nb_revision=None):
             return NotFound
     
     # get all pages
-    pages = all_pages(local.db, site.id)
+    pages = all_pages(local.db, request.site.id)
         
     revision = page.revision(local.db, nb_revision)
     if revision is None:
-        return render_response('page/revision_notfound.html', page=page, pages=pages, site=site)
+        return render_response('page/revision_notfound.html', page=page, pages=pages, site=request.site)
 
-    return render_response('page/show.html', page=revision, pages=pages, site=site)
-    
+    return render_response('page/show.html', page=revision, pages=pages, site=request.site)
+ 
+@site_required   
 def diff_page(request, cname=None, pagename=None):
-    if cname is None:
-        return redirect('/')
-        
-    site = get_site(local.db, cname)
-    if site is None:
-        return redirect('/')
-        
     if pagename is None:
         pagename ='Home'
-    page = get_page(local.db, site.id, pagename)
+    page = get_page(local.db, request.site.id, pagename)
     if not Page:
         return NotFound
     
     revisions = request.values.getlist('r')
     
     # get all pages
-    pages = all_pages(local.db, site.id)
+    pages = all_pages(local.db, request.site.id)
     
     diff = get_diff(local.db, page, revisions[0], revisions[1])
     
-    return render_response('page/diff.html', page=page, pages=pages, site=site, diff=diff)
+    return render_response('page/diff.html', page=page, pages=pages, site=request.site, diff=diff)
     
-    
-def site_design(request, cname):
-    if cname is None:
-        return redirect('/')
+@site_required
+def site_claim(request, cname):
+    password=''
+    if request.method == "POST" and "spassword" in request.form:
+        password = request.form['password']
+    elif request.method == "POST":
+        site.password = make_hash(request.form['password'])
+        site.email = request.form['email']
+        site.privacy = request.form['privacy']
+        site.claimed = True
+        site.store(local.db)
+        return redirect('/%s' % site.cname)
         
-    site = get_site(local.db, cname)
-    if site is None:
-        return redirect('/')
-    return render_response('site/design.html', site=site)
+    return render_response('site/claim.html', site=request.site, password=password)
+    
+@site_required
+def site_settings(request, cname):
+    return render_response('site/settings.html', site=request.site)
+    
+@site_required
+def site_design(request, cname):
+    return render_response('site/design.html', site=request.site)

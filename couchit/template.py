@@ -33,6 +33,9 @@ WIKI_CHANGES = {
     'ins': 'Inserted'
 }
 
+
+_context_processors = []
+
 def pretty_type(value):
     return WIKI_CHANGES.get(value, '')
 template_env.filters['pretty_type'] = pretty_type
@@ -128,12 +131,25 @@ def render_response(template_name, **kwargs):
 
 def render_template(template_name, _stream=False, **kwargs):
     tmpl = template_env.get_template(template_name)
+    request = getattr(local, 'request', None)
+    
+    if  request is not None and isinstance(request, BCRequest):
+        context = {}
+        for processor in _context_processors:
+            context.update(processor(request))
+        context.update(kwargs)
+    else:
+        context = kwargs
     if _stream:
-        return tmpl.stream(kwargs)
-    return tmpl.render(kwargs)
+        return tmpl.stream(context)
+    return tmpl.render(context)
     
 def send_json(Body, etag=None):
     resp = BCResponse(json.dumps(Body))
     resp.add_etag()
     resp.headers['content-type'] = 'application/json'
     return resp
+    
+def register_contextprocessor(func):
+    _context_processors.append(func)
+    return func

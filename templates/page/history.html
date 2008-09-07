@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block title %}Revision history of {{ page.title }}{% endblock %}
-{% block content %}
+{% block page %}
 <h2>Revision history of <a href="{{ url_for('show_page', cname=site.cname, pagename=page.title|replace(" ", "_")) }}">{{ page.title }}</a></h2>
 
 <form id="fhistory" name="fhistory" method="get" action="{{ url_for('diff_page', cname=site.cname, pagename=page.title|replace(" ", "_")) }}">
@@ -65,14 +65,14 @@
 
 {% block footer %}
 <script type="text/javascript" charset="utf-8">
-    Site.name = "{{ site.cname }}";
-    Site.url = "/" + "{{ site.cname }}"
+    site.name = "{{ site.cname }}";
+    site.url = "/" + "{{ site.cname }}"
     new Create();
     new Compare();
 </script>
 {% endblock %}
 
 
-{% block aside %}
+{% block sidebar %}
 {% include "sidebar.html" %}
 {% endblock %}

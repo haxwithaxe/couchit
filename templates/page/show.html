@@ -2,37 +2,58 @@
 
 {% block title %}{{ page.title }} (revision {{ page.nb_revision }}){% endblock %}
 
+{% block head %}
+<link rel="stylesheet" type="text/css" href="/static/css/textarea.css">
+<script src="/static/js/tabs.js" type="text/javascript"></script>
+<script src="/static/js/resizable.js" type="text/javascript"></script>
+<script src="/static/js/textarea.js" type="text/javascript"></script>
+<script src="/static/js/showdown.js" type="text/javascript"></script>
+{% endblock %}
 
 
-{% block content %}
-    {% if page.parent %}
-        <form name="frevert" id="frevert" action="" method="POST">
-            <p>This is the version of <a href="{{ url_for('show_page', cname=site.cname, pagename=page.title|replace(" ", "_")) }}">{{ page.title }}</a> <time title="GMT" datetime="{{ page.updated|rfc3339 }}">{{ page.updated|formatdatetime }}</time></p>
-            <input type="submit" name="srevert" id="srevert" value="revert to this" />
-        </form>
+
+
+{% block page %}
+{% if page.parent %}
+<form name="frevert" id="frevert" action="" method="POST">
+    <p>This is the version of <a href="{{ url_for('show_page', cname=site.cname, pagename=page.title|replace(" ", "_")) }}">{{ page.title }}</a> <time title="GMT" datetime="{{ page.updated|rfc3339 }}">{{ page.updated|formatdatetime }}</time></p>
+    <input type="submit" name="srevert" id="srevert" value="revert to this" />
+</form>
+{% endif %}
+
+<article>
+    {% if page.title or page.subtitle %}
+    <header>
+        <h2>{{ page.title }}</h2>
+    </header>
     {% endif %}
-    <p>{{ page.content|markdown }}</p>
-    <div id="actions">
-        <ul>
-            <li class="first"><time title="GMT" datetime="{{ page.updated|rfc3339 }}">{{ page.updated|formatdatetime }}</time></li>
+    {{ page.content|markdown }}
+    <footer>
+        <ul class="page_infos">
+            <li><time title="GMT" datetime="{{ page.updated|rfc3339 }}">{{ page.updated|formatdatetime }}</time></li>
             {% if page.title != "Home" %}
-            <li><a href="{{ url_for('show_page', cname=site.cname, pagename=page.title|replace(" ", "_")) }}/delete">delete</a></li>
+            <li><a href="{{ url_for('show_page', cname=site.cname, pagename=page.title|replace(" ", "_")) }}/delete" class="page_delete">delete</a></li>
             {% endif %}
-            <li><a href="{{ url_for('show_page', cname=site.cname, pagename=page.title|replace(" ", "_")) }}/history">history</a></li>
-            <li class="last"><a href="{{ url_for('show_page', cname=site.cname, pagename=page.title|replace(" ", "_")) }}/edit">edit</a></li>
+            <li><a href="{{ url_for('show_page', cname=site.cname, pagename=page.title|replace(" ", "_")) }}/edit" class="page_edit">edit</a></li>
+            <li class="last"><a class="page_history" href="{{ url_for('show_page', cname=site.cname, pagename=page.title|replace(" ", "_")) }}/history">history</a></li>
         </ul>
-        
-        
+    </footer>
+</article>  
+ 
 {% endblock %}
 
-{% block aside %}
-{% include "sidebar.html" %}
+{% block sidebar %}
+    {% include("sidebar.html") %}
 {% endblock %}
+
+
 
 {% block footer %}
     <script type="text/javascript" charset="utf-8">
         Site.name = "{{ site.cname }}";
         Site.url = "/" + "{{ site.cname }}"
         new Create();
+        
     </script>
+    
 {% endblock %}

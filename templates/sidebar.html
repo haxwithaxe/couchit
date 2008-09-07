@@ -5,6 +5,8 @@
         <p><input type="submit" name="screate" id="screate" value="Create" /> or <a href="#" class="cancel">Cancel</a></p>
     </form>
 </div>
+
+
 <ul class="pagelist">
 {% for p in pages %}
     <li><a href="{{ url_for('show_page', cname=site.cname, pagename=p.title|replace(" ", "_")) }}">{{ p.title }}</a></li>

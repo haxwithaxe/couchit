@@ -6,9 +6,9 @@
     <meta charset="utf-8"/>
     <link rel="stylesheet" href="/static/css/base.css" type="text/css" />
     <link rel="stylesheet" href="/static/css/default.css" type="text/css" />
-     <link rel="stylesheet" href="/static/css/blue.css" type="text/css" />
 
     <script src="/static/js/prototype.js" type="text/javascript"></script>
+    <script src="/static/js/livepipe.js" type="text/javascript"></script>
     <script src="/static/js/effects.js" type="text/javascript"></script>
     <script src="/static/js/application.js" type="text/javascript"></script>
     
@@ -17,28 +17,30 @@
 </head>
 <body>
     <div id="container">
-        {% block header %} 
-        {% if site %}
-            {% include "header.html" %}
-        {% endif %}
         
+        {% block header %} 
+            {% if site %}
+                {% include "header.html" %}
+            {% endif %}
         {% endblock %}
         
-        <div id="wrapper">
-            {% block main %}
-            <aside id="sidebar">
-                {% block aside %}{% endblock %}
-            </aside>
+        <div id="page_wrapper">
+            {% block fullpage %}
             <section id="page">
-                {% block content %}{% endblock %}
+                {% block page %}{% endblock %}
             </section>
 
-            
-            {% endblock %}
+            <aside id="sidebar">
+                {% block sidebar %}{% endblock %}
+            </aside>
+            {% endblock %}          
         </div>
-        <footer>
+        
+        <footer id="bottom">
             {% block footer %}{% endblock %}
+            <p>Powered by <a href="http://couchit.net">CouchIt</a></p>
         </footer>
+        
     </div>
 </body>
 </html>

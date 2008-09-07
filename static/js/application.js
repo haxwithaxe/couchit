@@ -153,6 +153,17 @@ var Compare = Class.create({
     }
 });
 
+
+var claim = Class.create({
+    email: false,
+    password: false,
+    
+    initialize: function() {
+        var email = $('email');
+    }
+})
+
+
 document.observe("dom:loaded", function() {
     localizeDates();
 });

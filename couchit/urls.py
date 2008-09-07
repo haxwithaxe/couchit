@@ -24,7 +24,9 @@ all_views = {
     'history_page': views.history_page,
     'revision_page': views.revision_page,
     'diff_page': views.diff_page,
-    'site_design': views.site_design
+    'site_design': views.site_design,
+    'site_settings': views.site_settings,
+    'site_claim': views.site_claim
 }
 
 
@@ -33,6 +35,8 @@ urls_map = Map([
     Rule('/', endpoint='home'),
     
     Rule('/<cname>/site/design', endpoint='site_design'),
+    Rule('/<cname>/site/claim', endpoint='site_claim'),
+    Rule('/<cname>/site/settings', endpoint='site_settings'),
     Rule('/<cname>/<pagename>/revision/<nb_revision>', endpoint='revision_page'),
     Rule('/<cname>/<pagename>/history', endpoint='history_page'),
     Rule('/<cname>/<pagename>/edit', endpoint='edit_page'),

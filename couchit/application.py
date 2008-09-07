@@ -23,7 +23,10 @@ from couchit.http import BCRequest, session_store
 from couchit.utils import local, local_manager
 from couchit.urls import all_views, urls_map
 from couchit import settings
+from couchit import context_processors
 from couchit import views
+
+
 
 class CouchitApp(object):
     def __init__(self):

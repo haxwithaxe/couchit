@@ -34,6 +34,10 @@ class Site(Document):
     cname = TextField()
     title = TextField()
     subtitle = TextField()
+    password = TextField()
+    email = TextField()
+    privacy = TextField(default='open')
+    claimed = BooleanField(default=False)
     created = DateTimeField()
     updated = DateTimeField()
     
@@ -54,9 +58,10 @@ class Site(Document):
                         self.cname = cname
                         break
             docid = db.create(self._data)
+            self._data = db.get(docid)
         else:
             db[self.id] = self._data
-        self._data = db.get(docid)
+        
         return self
                         
 class Page(Document):

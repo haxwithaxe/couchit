@@ -1,14 +1,21 @@
 body {
-    background: #E9F2F5;
+    background: #e7e7e7;
     min-width: 700px;
     color: #000;
 }
 
 
-html,body, #container,  {
+html,
+body,
+#container {
 	height: 100%
 }
 
+#container {
+    width: 99%;
+    margin: 0 auto;
+    padding-left: 10px;
+}
 
 
 a { border: 0;}
@@ -29,47 +36,113 @@ a { color: #14456e;}
     display: inline;
 }
 
-#wrapper {
-    width: 100%;
-    height: 100%;
-    clear: both;
-    padding-top: 18px;
-       padding-left: 14px;
-}
 #page {
+    width: 76%;
+    height: 100%;
     float: left;
-    width: 80%;
 }
 
 aside#sidebar {
     display: block;
-    position: relative;
-    width: 19%;
-    background: #a9cce6 repeat-y;
-    border-left: 1px solid #9ec0da;
-    height:auto !important; /* real browsers */
-    height:100%; /* IE6: treaded as min-height*/
-    margin-bottom: 0;
-    height:100%; /* real browsers */
+    width:22%;
     float: right;
 }
 
 aside ul { list-style: none; }
 
+aside.hidden { display: none;}
 
-#page div#actions {
-    position: relative;
-    border-top: 1px solid #ccc;
-    text-align: right;
+
+#page article {
+    display: block;
+    background: #fff;
+    padding: 10px;
+    border: 1px solid #d4d4d4;
 }
-#actions ul { list-style: none;}
-#actions ul li {
+
+/* tabs */
+ul.subsection_tabs {
+	list-style:none;
+	height:23px;
+	background:#d4d4d4 url(../img/index.png) 100% 0 no-repeat;
+	
+
+}
+
+
+ul.subsection_tabs li.tab {
+	float:left;
+	margin: 0;
+}
+
+ul.subsection_tabs li.tab a {
+	display:block;
+	color:#666;
+	font-size: 11px;
+	margin: 0;
+	padding-left: 18px;
+	padding-top: 5px;
+	text-decoration: none;
+	font-weight: bold;
+}
+
+ ul.subsection_tabs li.tab a:hover {
+	color:#666;
+	text-decoration: underline;
+}
+ul.subsection_tabs li.tab a.active {
+    color: #000;
+}
+
+ul.subsection_tabs li.tab-view a {
+    width: 53px;
+}
+ul.subsection_tabs li.tab-edit a {
+    width: 50px;
+}
+
+
+ul.subsection_tabs li.tab-view a.active {
+	background: transparent url(../img/tab-view.png) 0 0 no-repeat;
+}
+
+ul.subsection_tabs li.tab-edit a.active {
+    background: transparent url(../img/tab-edit.png) 0 0 no-repeat;
+}
+
+
+
+.page_infos { text-align: right;}
+.page_history {
+
+    background: transparent url(../img/icon_history.png) 0 0 no-repeat;
+    padding-left: 20px;
+}
+
+.page_delete {
+
+    background: transparent url(../img/icon_delete.png) 0 0 no-repeat;
+    padding-left: 20px;
+}
+
+.page_edit {
+
+    background: transparent url(../img/icon_edit.png) 0 0 no-repeat;
+    padding-left: 20px;
+}
+
+
+ul.page_infos  { 
+    list-style: none;
+    border-top: 1px solid #ccc;;
+}
+ul.page_infos li {
     display: inline;
     padding: 0 10px 0 10px;
     border-right:1px solid #ccc;
 }
 
-#actions ul li.last { border: none;}
+ul.page_infos li.last { border: none;}
 
 .historyTable {
     position: relative;
@@ -110,7 +183,86 @@ tr.rselected {
     background: #E1F1B9;
 }
 
-section#color {
+
+
+#fedit {
     display: block;
-    width: 630px;
+     width: 50%;
+    float: left;
+    height: 100%;
 }
+
+#fedit textarea {
+    position: relative;
+    width: 100%;
+}
+
+#preview {
+    display: block;
+    width: 48%;
+    float: right;
+    height: 100%;
+}
+
+#page-content {
+    display: block;
+    background: #fff repeat;
+    height: 100%;
+}
+
+footer#bottom {
+    display: block;
+    position: relative;
+    clear: both;
+    width: 100%;
+    margin-top: 15px;
+}
+
+#fpassword {
+    float: right;
+    display: block;
+}
+
+#page_wrapper {
+    display: block;
+    width: 100%;
+    clear: both;
+}
+#claim-wrapper {
+    position: relative;
+    width: 500px;
+    margin: 100px auto;
+}
+
+#claim-wrapper form {
+    background: #fff;
+    padding: 15px;
+    border: 1px solid #ccc;
+}
+
+
+
+#fclaim th,
+#fclaim td {
+    padding-right: 15px;
+    padding-top: 10px;
+    vertical-align: top;
+}
+
+#fclaim th {
+    color: #666;
+    font-weight: bold;
+}
+
+#fclaim td.first-row { padding-top: 0;}
+
+td.wrap {
+    white-space: pre-wrap; /* css-3 */
+    white-space: -moz-pre-wrap !important; /* Mozilla, since 1999 */
+    white-space: -pre-wrap; /* Opera 4-6 */
+    white-space: -o-pre-wrap; /* Opera 7 */
+    word-wrap: break-word; /* Internet Explorer 5.5+ */
+}
+
+table.privacy { width: 250px;}
+table.privacy input[type="radio"] { margin-right: 10px;}
