@@ -29,6 +29,9 @@
      <li class="tab tab-edit"><a href="#pedit">EDIT</a></li>  
 </ul>
 <section id="pview">
+    {% if page.id %}
+        
+    
     <article>
         {% if page.title or page.subtitle %}
         <header>
@@ -43,7 +46,8 @@
         <footer>
             
         </footer>
-    </article>  
+    </article>
+    {% endif %}
 </section>
 <section id="pedit">
     <div id="pedit_wrapper">
@@ -101,6 +105,10 @@
     <script type="text/javascript" charset="utf-8">
         Site.name = "{{ site.cname }}";
         Site.url = "/" + "{{ site.cname }}"
+        {% if not page.id %}
+        Page.created = true;
+        {% endif %}
+        
         new Create();
         new PageUI();
     </script>

@@ -18,11 +18,9 @@
 <body>
     {% if site and not site.claimed %}
        
-        <div id="claim_bar">
-            <form name="fpassword" id="fpassword" action="{{ url_for('site_claim', cname=site.cname) }}" method="post">
-                <label for="password">Pick a password</label><input type="password" id="password" name="password" value="" /><input type="submit" name="spassword" id="spassword" value="Claim" /></form>
+      
             <a href="{{ url_for('site_claim', cname=site.cname) }}" class="claim">Claim this site</a>
-        </div>
+
 
     {% endif %}
     <div id="container">

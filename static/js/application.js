@@ -65,7 +65,7 @@ var Site = {
     name: ""
 };
 
-
+var FORBIDDEN_PAGES = ['site', 'delete', 'edit', 'create', 'history', 'changes']
 
 var Create = Class.create({
     initialize: function() {
@@ -74,7 +74,7 @@ var Create = Class.create({
      
         
         this.Form = $("fnewpage");
-        this.doCreate = $$("a.doCreate")[0];
+        this.doCreate = $("doCreate");
        
         this.Form.addClassName("hidden");
         Event.observe(this.doCreate, "click", function(e) {
@@ -108,8 +108,13 @@ var Create = Class.create({
     
     submit: function() { 
         var title = $("title");
+        if (!title.value.match(/^[ \w]+$/) || FORBIDDEN_PAGES.indexOf(title.value) >= 0) {
+            alert("Page title invalid");
+            return false;
+        }
+        
         var slug = title.value.replace(/ /g, "_");
-        document.location.href = Site.url + "/" + slug + "/edit";
+        document.location.href = Site.url + "/" + slug + "#pedit";
     },
 });
 

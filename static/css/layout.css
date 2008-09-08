@@ -85,7 +85,7 @@ aside.hidden { display: none;}
     -webkit-border-bottom-right-radius: 5px;
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
-    
+    min-height: 350px;
 }
 
 /* tabs */
@@ -103,12 +103,6 @@ ul.subsection_tabs {
     border-top-right-radius: 5px;
 
 }
-
-#page {
-    
-
-}
-
 
 ul.subsection_tabs li.tab {
 	float:left;
@@ -402,5 +396,51 @@ div.resizable_handle {
     background-image: url( ../img/layout_sprite.png );
     	background-repeat: no-repeat;
     	background-position: -22px -62px;
+    
+}
+
+
+a#doCreate {
+    display: block;
+    /*background: transparent url(../img/icon_create.png) 0 0 no-repeat;
+    padding-left: 20px;*/
+    line-height: 18px;
+    height: 18px;
+    
+}
+
+a#doCreate.hidden {
+    display:none;
+}
+
+.box {
+    display: block;
+   position: relative;
+    background: #fff;
+    width: 84%;
+    background: #fff url("../images/roundedcorners.svg");
+       -moz-border-radius: 5px;  
+       -webkit-border-radius: 5px;  
+       -khtml-border-radius: 5px;  
+       padding:5px;
+       margin-top: 10px;
+       clear: right;
+}
+
+.box h4 {
+    padding: 2px 0 2px 2px;
+    background: #f4f4f4 url("../images/roundedcorners.svg");
+    -moz-border-radius-topleft: 5px;
+    -moz-border-radius-topright: 5px;
+    -khtml-border-top-left-radius: 5px;
+    -webkit-border-top-left-radius: 5px;
+    -khtml-border-top-right-radius: 5px;
+    -webkit-border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    color: #444;
+    font-size: 10px;
+    margin-bottom: 10px;
+    
     
 }

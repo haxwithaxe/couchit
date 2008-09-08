@@ -13,9 +13,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import os
+import re
 import urllib2
-import cgi
 from werkzeug import redirect
 from werkzeug.routing import NotFound
 from werkzeug.utils import url_unquote
@@ -25,6 +24,12 @@ from couchit.api import *
 from couchit.http import BCResponse
 from couchit.template import render_response, url_for
 from couchit.utils import local, make_hash
+
+
+FORBIDDEN_PAGES = ['site', 'delete', 'edit', 'create', 'history', 'changes']
+
+re_page = re.compile(r'^[- \w]+$', re.U)
+
 
 def site_required(f):
     def decorated(request, **kwargs):
@@ -72,8 +77,17 @@ def show_page(request, cname=None, pagename=None):
     if pagename is None:
         pagename ='home'
     page = get_page(local.db, request.site.id, pagename)
-    if page is None:
-        raise NotFound
+    if not page or page.id is None or not re_page.match(pagename):
+        if pagename.lower() in FORBIDDEN_PAGES:
+            redirect_url = "%s?error=%s" % (
+                url_for('show_page', cname=cname, pagename='home'),
+                u"Page name invalid."
+            )
+            return redirect(redirect_url)
+        page = Page(
+            site=request.site.id,
+            title=pagename.replace("_", " ")
+        )
     
     # get all pages
     pages = all_pages(local.db, request.site.id)

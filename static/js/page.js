@@ -6,7 +6,20 @@ var PageUI = Class.create({
         this.tabs = new Control.Tabs('tabs_wiki');
         
         this.tabs.observe('beforeChange', function(old_container, new_container) {
-            self.update_tabs(new_container);
+            if (!Page.created) {
+                 self.update_tabs(new_container);
+            } else {
+                var y = window.confirm("Are you sure you want to navigate away from this page?\n\n"+
+                "You have unsaved changes. Continue and discard those changes?\n\n" +
+                "Click OK to continue, or click Cancel to stay on this page.");
+               
+                if (!y) {
+                    throw $break;
+                } else {
+                    history.go(-1);
+                }
+            }
+           
         });
         
         new Resizable('content');
