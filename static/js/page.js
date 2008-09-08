@@ -184,8 +184,8 @@ var PageUI = Class.create({
             var obj = this;
             var insert_snippet = function(e) {
                 Event.stop(e);
-                
-                if ($('snippet_from').getValue() == "0") {
+                var snippet_from = $('fsnippet').getInputs('radio', 'snippet_from')
+                if (snippet_from[0].checked) {
                     var code = $('snippet_content').getValue();
                     code = $A(code.split("\n")).collect(function(line) {
                         line = '    ' + line;

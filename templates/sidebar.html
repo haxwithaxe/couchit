@@ -1,17 +1,17 @@
 <div id="createPage">
     <a href="#" id="doCreate">Create new page</a>
-    <form id="fnewpage" id="fnewpage" method="get">
+    <form id="fnewpage" name="fnewpage" method="get">
         <p><input type="text" name="title" id="title" value="" /></p>
         <p><input type="submit" name="screate" id="screate" value="Create" /> or <a href="#" class="cancelCreate">Cancel</a></p>
     </form>
 </div>
 
 <nav>
-<ul>
-    <li><a href="">recent changes</a></li>
-    <li><a href="{{ url_for('site_settings', cname=site.cname) }}">settings</a></li>
-    <li><a href="{{ url_for('site_design', cname=site.cname) }}">design</a></li>
-</ul>
+    <ul>
+        <li><a href="">recent changes</a></li>
+        <li><a href="{{ url_for('site_settings', cname=site.cname) }}">settings</a></li>
+        <li><a href="{{ url_for('site_design', cname=site.cname) }}">design</a></li>
+    </ul>
 </nav>
 
 <div id="pagesBox" class="box">
@@ -19,9 +19,9 @@
     <ul class="pagelist">
         {% for p in pages %}
         <li><a href="{{ url_for('show_page', cname=site.cname, pagename=p.title|replace(" ", "_"))  }}">{{ p.title }}</a></li>
-{% endfor %}
+        {% endfor %}
     </ul>
-<div>
+</div>
 
 
 

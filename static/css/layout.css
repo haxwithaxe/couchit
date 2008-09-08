@@ -249,7 +249,7 @@ tr.rselected {
     height: 100%;
 }
 
-footer#bottom {
+.footer_wrapper {
     display: block;
     position: relative;
     clear: both;
@@ -294,6 +294,28 @@ footer#bottom {
 }
 
 #fclaim td.first-row { padding-top: 0;}
+
+
+.claim { 
+    float: right; 
+    display: block;
+    margin-right: 2.5em;
+    margin-bottom: 15px;
+    font-weight: bold;
+    
+    background: #000 url("../img/roundedcorners.svg");; 
+   	-moz-border-radius-bottomleft: 5px;
+    -moz-border-radius-bottomright: 5px;
+    -khtml-border-bottom-left-radius: 5px;
+    -webkit-border-bottom-left-radius: 5px;
+    -khtml-border-bottom-right-radius: 5px;
+    -webkit-border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    padding: 5px;
+    color: #fff;
+    text-decoration: none;
+}
 
 td.wrap {
     white-space: pre-wrap; /* css-3 */

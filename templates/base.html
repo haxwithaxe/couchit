@@ -1,9 +1,11 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+
+<html lang="en">
 
 <head>
+    <meta charset="utf-8" />
     <title>couchit - {% block title %}{% endblock %}</title>
-    <meta charset="utf-8"/>
+    
     <link rel="stylesheet" href="/static/css/base.css" type="text/css" />
     <link rel="stylesheet" href="/static/css/default.css" type="text/css" />
 
@@ -17,11 +19,7 @@
 </head>
 <body>
     {% if site and not site.claimed %}
-       
-      
-            <a href="{{ url_for('site_claim', cname=site.cname) }}" class="claim">Claim this site</a>
-
-
+     <a href="{{ url_for('site_claim', cname=site.cname) }}" class="claim">Claim this site</a>
     {% endif %}
     <div id="container">
         
@@ -43,7 +41,7 @@
             {% endblock %}          
         </div>
         
-        <footer id="bottom">
+        <footer class="footer_wrapper">
             {% block footer %}{% endblock %}
             <p>Powered by <a href="http://couchit.net">CouchIt</a></p>
         </footer>
