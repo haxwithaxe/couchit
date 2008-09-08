@@ -4,10 +4,13 @@
 
 {% block head %}
 <link rel="stylesheet" type="text/css" href="/static/css/textarea.css">
+<script src="/static/js/dragdrop.js" type="text/javascript"></script>
 <script src="/static/js/tabs.js" type="text/javascript"></script>
 <script src="/static/js/resizable.js" type="text/javascript"></script>
 <script src="/static/js/textarea.js" type="text/javascript"></script>
+<script src="/static/js/window.js" type="text/javascript"></script>
 <script src="/static/js/showdown.js" type="text/javascript"></script>
+<script src="/static/js/page.js" type="text/javascript"></script>
 {% endblock %}
 
 
@@ -21,24 +24,70 @@
 </form>
 {% endif %}
 
-<article>
-    {% if page.title or page.subtitle %}
-    <header>
-        <h2>{{ page.title }}</h2>
-    </header>
-    {% endif %}
-    {{ page.content|markdown }}
-    <footer>
-        <ul class="page_infos">
-            <li><time title="GMT" datetime="{{ page.updated|rfc3339 }}">{{ page.updated|formatdatetime }}</time></li>
-            {% if page.title != "Home" %}
-            <li><a href="{{ url_for('show_page', cname=site.cname, pagename=page.title|replace(" ", "_")) }}/delete" class="page_delete">delete</a></li>
-            {% endif %}
-            <li><a href="{{ url_for('show_page', cname=site.cname, pagename=page.title|replace(" ", "_")) }}/edit" class="page_edit">edit</a></li>
-            <li class="last"><a class="page_history" href="{{ url_for('show_page', cname=site.cname, pagename=page.title|replace(" ", "_")) }}/history">history</a></li>
-        </ul>
-    </footer>
-</article>  
+<ul id="tabs_wiki" class="subsection_tabs">  
+     <li class="tab tab-view"><a href="#pview">VIEW</a></li>  
+     <li class="tab tab-edit"><a href="#pedit">EDIT</a></li>  
+</ul>
+<section id="pview">
+    <article>
+        {% if page.title or page.subtitle %}
+        <header>
+            <h2>{{ page.title }}</h2>
+            <ul class="page_infos">
+                <li><time title="GMT" datetime="{{ page.updated|rfc3339 }}">{{ page.updated|formatdatetime }}</time></li>
+                <li class="last"><a class="page_history" href="{{ url_for('show_page', cname=site.cname, pagename=page.title|replace(" ", "_")) }}/history">history</a></li>
+            </ul>
+        </header>
+        {% endif %}
+        {{ page.content|markdown }}
+        <footer>
+            
+        </footer>
+    </article>  
+</section>
+<section id="pedit">
+    <div id="pedit_wrapper">
+    <form name="fedit" id="fedit" action="{{ url_for('edit_page', cname=site.cname, pagename=page.title|replace(" ", "_")) }}" method="POST">
+        <textarea name="content" id='content' cols="80" rows="20">{{ page.content }}</textarea>
+        <p><input type="submit" name="save" id="save" value="Save" /> or <a id="cancelEdit" href="{% if page.id %}{{ url_for('show_page', cname=site.cname, pagename=page.title|replace(" ", "_")) }}{% else %}/{% endif %}">Cancel</a></p>
+    </form>
+    <div id="preview"></div>
+    </div>
+</section>
+ 
+ <div id="snippet_window" title="insert a snipet">
+     <div id="snippet_window_close"></div>
+     <div id="snippet_window_title">Insert a snippet</div>
+     <form name="fsnippet" id="fsnippet">
+         <p class="choice"><input type="radio" name="snippet_from" id="snippet_from" value="0" class="tsnippet" checked="checked" />Paste it here :</p>           
+         <table>
+             <tr>
+                 <th><label for="snippet_language">Programming language</label></th>
+                 <td>
+                    <select id="snippet_language" name="snippet_language">
+                        {% for lexer in lexers %}
+                        <option value="{{ lexer[0] }}">{{ lexer[1] }}</option>
+                        {% endfor %}
+                    </select>
+                 </td>
+             </tr>
+             <tr>
+                 <th><label for="snippet_content">Code:</label></th>
+                 <td>
+                     <textarea id="snippet_content" name="snippet_content" cols="40" rows="7"></textarea>
+                </td>
+            </tr>
+        </table>
+        <p class="choice"><input type="radio" name="snippet_from" id="snippet_from" value="1" class="tsnippet" />Or insert a snippet from <a href="http://www.friendpaste.com">Friendpaste</a></p>
+         <table>
+             <tr>
+                 <th>URL:</th>
+                 <td><input type="text" name="snippet_url" id="snippet_url" value="" /></td>
+            </tr>
+        </table>
+        <p><input type="submit" id="ssnippet" name="ssnippet" value="Insert snippet" /><input type="submit" id="cancelSnippet" name="cancelSnippet" value="Cancel" /></p>
+     </form>
+ </div>
  
 {% endblock %}
 
@@ -53,7 +102,7 @@
         Site.name = "{{ site.cname }}";
         Site.url = "/" + "{{ site.cname }}"
         new Create();
-        
+        new PageUI();
     </script>
     
 {% endblock %}

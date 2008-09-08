@@ -3,3 +3,59 @@
 {% block title %}
     settings
 {% endblock %}
+
+
+{% block page %}
+<form name="fsettings" id="fsettings" action="{{ url_for('site_settings', cname=site.cname) }}" method="post">
+    <h2>Settings</h2>
+    <table class="">
+        <tr>
+            <th>Title</th>
+            <td><input type="text" name="title" id="title" value="{{ site.title }}" /></td>
+        </tr>
+        <tr>
+            <th>Subtitle</th>
+            <td><input type="text" name="subtitle" id="subtitle" value="{{ subtitle }}" /></td>
+        </tr>
+        {% if site.password %}
+            
+        {% endif %}
+        <tr>
+            <th>Site password:</th>
+            <td><input type="password" name="password" id="password" value="{{ password }}" /></td>
+        </tr>
+        <tr>
+            <th>Email address:</th>
+            <td><input type="email" name="email" id="email" value="" /></td>
+        </tr>
+        <tr>
+            <th>Kind of site:</th>
+            <td>
+                <table class="privacy">
+                    <tr>
+                        <td class="first-row"><input type="radio" name="privacy" value="private"{% if site.privacy == "private" %} checked="checked"{% endif %} /></td>
+                        <td class="first-row">Private</td>
+                        <td class="wrap first-row">Require password to view and edit site.</td>
+                    </tr>
+                    <tr>
+                        <td><input type="radio" name="privacy" value="public"{% if site.privacy == "public" %} checked="checked"{% endif %} /></td>
+                        <td>Public</td>
+                        <td class="wrap">Require password to edit site.</td>
+                    </tr>
+                    <tr>
+                        <td><input type="radio" name="privacy" value="open"{% if site.privacy == "open" %} checked="checked"{% endif %} /></td>
+                        <td>Open</td>
+                        <td class="wrap">Everyone can view and edit.</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+    <p><input type="submit" id="ssettings" name="ssettings" value="Claim site"> or <a href="" />Cancel</a></p>
+</form>
+                       
+{% endblock %}
+
+{% block sidebar %}
+    
+{% endblock %}

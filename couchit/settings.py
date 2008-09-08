@@ -36,3 +36,7 @@ SESSION_COOKIE_AGE = 60 * 60 * 24 * 7 * 2
 SESSION_COOKIE_DOMAIN = None
 SESSION_COOKIE_PATH = '/'
 SESSION_COOKIE_SECURE = False
+
+
+ALLOWED_HOSTS = ['www.friendpaste.com', 'friendpaste.com', 
+'pypaste.com', 'www.pypaste.com']

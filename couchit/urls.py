@@ -26,14 +26,15 @@ all_views = {
     'diff_page': views.diff_page,
     'site_design': views.site_design,
     'site_settings': views.site_settings,
-    'site_claim': views.site_claim
+    'site_claim': views.site_claim,
+    'proxy': views.proxy,
 }
 
 
 
 urls_map = Map([
     Rule('/', endpoint='home'),
-    
+    Rule('/proxy', endpoint='proxy'),
     Rule('/<cname>/site/design', endpoint='site_design'),
     Rule('/<cname>/site/claim', endpoint='site_claim'),
     Rule('/<cname>/site/settings', endpoint='site_settings'),

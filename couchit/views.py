@@ -13,11 +13,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import os
+import urllib2
+import cgi
 from werkzeug import redirect
 from werkzeug.routing import NotFound
 from werkzeug.utils import url_unquote
 from couchit.models import Site, Page
 from couchit.api import *
+from couchit.http import BCResponse
 from couchit.template import render_response, url_for
 from couchit.utils import local, make_hash
 
@@ -73,7 +77,7 @@ def show_page(request, cname=None, pagename=None):
     # get all pages
     pages = all_pages(local.db, request.site.id)
     
-    return render_response('page/show.html', page=page, pages=pages)
+    return render_response('page/show.html', page=page, pages=pages, lexers=LEXERS_CHOICE)
     
 @site_required
 def edit_page(request, cname=None, pagename=None):
@@ -83,7 +87,7 @@ def edit_page(request, cname=None, pagename=None):
     page = get_page(local.db, request.site.id, pagename)
     if not page or page.id is None:
         page = Page(
-            site=site.id,
+            site=request.site.id,
             title=pagename.replace("_", " ")
         )
         
@@ -168,8 +172,50 @@ def site_claim(request, cname):
     
 @site_required
 def site_settings(request, cname):
+    print request.site
     return render_response('site/settings.html', site=request.site)
     
 @site_required
 def site_design(request, cname):
     return render_response('site/design.html', site=request.site)
+        
+def proxy(request):
+    """ simple proxy to manage remote connexion via ajax"""
+    url = request.values.get('url', None)
+    host = host = url.split("/")[2]
+    if host not in settings.ALLOWED_HOSTS:
+        return send_json({'error': "host isn't allowed"})
+    
+    if request.method == "POST" or request.method == "PUT":
+        length = request.environ['CONTENT_LENGTH']
+        headers = {
+            "Content-Type": os.environ["CONTENT_TYPE"],
+            "Accept": os.environ["ACCEPT"]
+        }
+        print headers
+        body = input_stream.read()
+        r = urllib2.Request(url, body, headers)
+        y = urllib2.urlopen(r)
+    else:
+        headers = {
+            "Content-Type": request.environ["CONTENT_TYPE"],
+            "Accept": request.environ["HTTP_ACCEPT"]
+        }
+        print request.environ
+        r = urllib2.Request(url, headers=headers)
+        y = urllib2.urlopen(r)
+        
+    i = y.info()
+    if i.has_key("Content-Type"):
+        content_type = i["Content-Type"]
+    else:
+        content_type = 'text/plain'
+    print
+    
+    resp = y.read()
+    
+    response = BCResponse(resp)
+    response.content_type = content_type
+    return response
+            
+        

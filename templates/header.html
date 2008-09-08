@@ -1,19 +1,7 @@
-<header id="topheader">
-    {% if not site.claimed %}
-        <div id="claming">
-            <form name="fpassword" action="{{ url_for('site_claim', cname=site.cname) }}" method="post">
-                <label for="password">Pick a password</label><input type="password" id="password" name="password"  value="" /><input type="submit" name="spassword" id="spassword" value="Claim" />
 
-            </form>
-            <a href="{{ url_for('site_claim', cname=site.cname) }}" class="claim">Claim this site</a>
-        </div>
-    {% endif %}
+
+<header id="topheader">
+   
     
-<nav>
-<ul>
-    <li><a href="">recent changes</a></li>
-    <li><a href="{{ url_for('site_settings', cname=site.cname) }}">settings</a></li>
-    <li><a href="{{ url_for('site_design', cname=site.cname) }}">design</a></li>
-</ul>
-</nav>
+
 </header>

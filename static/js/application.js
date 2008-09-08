@@ -65,9 +65,14 @@ var Site = {
     name: ""
 };
 
+
+
 var Create = Class.create({
     initialize: function() {
         var self = this;
+        
+     
+        
         this.Form = $("fnewpage");
         this.doCreate = $$("a.doCreate")[0];
        
@@ -78,7 +83,7 @@ var Create = Class.create({
             return false;
         }, false);
         
-        Event.observe($$("a.cancel")[0], "click", function(e) {
+        Event.observe($$("a.cancelCreate")[0], "click", function(e) {
             Event.stop(e);
             self.cancel();
             return false;

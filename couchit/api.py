@@ -12,6 +12,8 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+from pygments.lexers import get_all_lexers, get_lexer_for_filename
+from pygments.styles import get_all_styles
 
 from couchdb.client import ResourceNotFound
 from couchit.models import Site, Page
@@ -20,7 +22,23 @@ from couchit.utils.diff import diff_blocks
 
 
 __all__ = ['get_site', 'get_page', 'get_pageof',
-'all_pages', 'get_diff']
+'all_pages', 'get_diff', 'LEXERS_CHOICE']
+
+def _get_lexers():
+    lexers = get_all_lexers()
+    nl = []
+    ret=[]
+    for l in lexers:
+        if l[1][0] not in nl:
+            ret.append((l[1][0],l[0]))
+    ret.sort()
+    ret = [('text', '------------')] + ret
+    return ret
+
+LEXERS_CHOICE = [('text', 'Plain text')] + _get_lexers()
+ALL_LEXERS=get_all_lexers()
+
+ALL_COLORSHEME = list(get_all_styles())
 
 def get_site(db, name):
     rows = Site.view(db, '_view/site/by_cname', key=name)

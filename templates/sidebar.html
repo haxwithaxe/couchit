@@ -2,9 +2,17 @@
     <a href="#" class="doCreate">Create new page</a>
     <form id="fnewpage" id="fnewpage" method="get">
         <p><input type="text" name="title" id="title" value="" /></p>
-        <p><input type="submit" name="screate" id="screate" value="Create" /> or <a href="#" class="cancel">Cancel</a></p>
+        <p><input type="submit" name="screate" id="screate" value="Create" /> or <a href="#" class="cancelCreate">Cancel</a></p>
     </form>
 </div>
+
+<nav>
+<ul>
+    <li><a href="">recent changes</a></li>
+    <li><a href="{{ url_for('site_settings', cname=site.cname) }}">settings</a></li>
+    <li><a href="{{ url_for('site_design', cname=site.cname) }}">design</a></li>
+</ul>
+</nav>
 
 
 <ul class="pagelist">
