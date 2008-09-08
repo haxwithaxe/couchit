@@ -53,7 +53,7 @@ function localizeDates() {
                 title = date.toLocaleString();
             }
             el.setAttribute('title', title);
-            el.textContent = "Posted " + text;
+            el.textContent = "posted " + text;
         }
     });
 
@@ -108,13 +108,14 @@ var Create = Class.create({
     
     submit: function() { 
         var title = $("title");
-        if (!title.value.match(/^[ \w]+$/) || FORBIDDEN_PAGES.indexOf(title.value) >= 0) {
+        //a-zA-Z0-9_\\u00A1-\\uFFFF
+        if (!title.value.match(/^[ \w\u00A1-\uFFFF]+$/i) || FORBIDDEN_PAGES.indexOf(title.value) >= 0) {
             alert("Page title invalid");
             return false;
         }
         
         var slug = title.value.replace(/ /g, "_");
-        document.location.href = Site.url + "/" + slug + "#pedit";
+        document.location.href = Site.url + "/" +  slug + "#pedit";
     },
 });
 
@@ -163,13 +164,39 @@ var Compare = Class.create({
     }
 });
 
-
-var claim = Class.create({
-    email: false,
-    password: false,
-    
+var Diff = Class.create({
     initialize: function() {
-        var email = $('email');
+        var self = this;
+        this.rev_from = $('rev_from');
+        this.rev_to = $('rev_to');
+        
+        $('scompare').observe('click', function(e) {
+            Event.stop(e);
+            self.get_diff();
+            return false;
+        })
+    },
+    
+    get_diff: function() {
+        var from = this.rev_from.getValue();
+        var to = this.rev_to.getValue();
+        if (from == to) {
+            alert("Why would you want compare same version ...");
+            return
+        }
+        url = $('fdiff').action + "?r="+from+"&r="+to;
+        new Ajax.Request(url, {
+          method: 'get',
+          contentType: 'application/json', 
+          requestHeaders: {Accept: 'application/json'},
+          onSuccess: function(response) {   
+             data = response.responseText.evalJSON(true);
+             if (data['ok']) {
+                Element.remove($('tableDiff'));
+                $('pdiff').insert(data['diff'])
+             }
+         }
+        });
     }
 })
 

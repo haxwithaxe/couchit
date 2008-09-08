@@ -1,9 +1,41 @@
 {% extends "base.html" %}
-
-{% block content %}
-    {{ diff|tabular }}
+{% block title %}
+    Compare
 {% endblock %}
 
-{% block aside %}
+
+{% block page %}
+<section id="pdiff">
+    <h3>Compare revisions of <a href="{{ url_for('show_page', cname=site.cname, pagename=page.title|replace(" ", "_")) }}">{{ page.title }}</a></h3>
+    <form id="fdiff" name="fdiff" action="{{ url_for('diff_page', cname=site.cname, pagename=page.title|replace(" ", "_")) }}" method="post">
+        <p>From <select name="rev_from" id="rev_from">
+            {% for rev in revisions %}
+                {% if rev.nb_revision == rev1.nb_revision %}
+                <option value="{{ rev.nb_revision }}" selected="selected">{{ rev.nb_revision }} ({{ rev.updated|formatdatetime }})</option>
+                {% else %}
+                <option value="{{ rev.nb_revision }}">{{ rev.nb_revision }} ({{ rev.updated|formatdatetime }})</option>
+                {% endif %}{% endfor %}</select> to <select name="rev_to" id="rev_to">
+                    {% for rev in revisions %}
+                        {% if rev.nb_revision == rev2.nb_revision %}
+                        <option value="{{ rev.nb_revision }}" selected="selected">{{ rev.nb_revision }} ({{ rev.updated|formatdatetime }})</option>
+                        {% else %}
+                        <option value="{{ rev.nb_revision }}">{{ rev.nb_revision }} ({{ rev.updated|formatdatetime }})</option>
+                        {% endif %}
+                    {% endfor %}</select><input type="submit" name="scompare" id="scompare" value="Compare" /></p>
+    </form>
+    {{ diff|tabular(rev1,rev2) }}
+</section>
+{% endblock %}
+
+{% block sidebar %}
 {% include "sidebar.html" %}
+{% endblock %}
+
+{% block footer %}
+<script type="text/javascript">
+    Site.name = "{{ site.cname }}";
+    Site.url = "/" + "{{ site.cname }}";
+    new Create();
+    new Diff();
+</script>
 {% endblock %}

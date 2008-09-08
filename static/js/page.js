@@ -5,24 +5,6 @@ var PageUI = Class.create({
         this.Page = $('page');
         this.tabs = new Control.Tabs('tabs_wiki');
         
-        this.tabs.observe('beforeChange', function(old_container, new_container) {
-            if (!Page.created) {
-                 self.update_tabs(new_container);
-            } else {
-                var y = window.confirm("Are you sure you want to navigate away from this page?\n\n"+
-                "You have unsaved changes. Continue and discard those changes?\n\n" +
-                "Click OK to continue, or click Cancel to stay on this page.");
-               
-                if (!y) {
-                    throw $break;
-                } else {
-                    history.go(-1);
-                }
-            }
-           
-        });
-        
-        new Resizable('content');
         this.textarea = new Control.TextArea('content');  
         this.toolbar = new Control.TextArea.ToolBar(this.textarea);  
         this.toolbar.container.id = 'markdown_toolbar';
@@ -43,6 +25,23 @@ var PageUI = Class.create({
         
         this.build_toolbar();
         this.init();
+        
+        this.tabs.observe('beforeChange', function(old_container, new_container) {
+            if (!Page.created) {
+                 self.update_tabs(new_container);
+            } else {
+                var y = window.confirm("Are you sure you want to navigate away from this page?\n\n"+
+                "You have unsaved changes. Continue and discard those changes?\n\n" +
+                "Click OK to continue, or click Cancel to stay on this page.");
+               
+                if (!y) {
+                    throw $break;
+                } else {
+                    history.go(-1);
+                }
+            }
+        });
+        
 
         Event.observe(window, 'resize', function(e) {
             var new_height = document.viewport.getHeight() - 150;
@@ -58,7 +57,8 @@ var PageUI = Class.create({
     
     init: function() {
         var active_container = this.tabs.activeContainer;  
-        this.update_tabs(active_container)
+        if (active_container)
+            this.update_tabs(active_container);
         
         /* init size of textarea */
         var new_height = document.viewport.getHeight() -150;
@@ -219,8 +219,6 @@ var PageUI = Class.create({
                       }
                     });
                 }
-                
-                
                 
                 return false;
             }

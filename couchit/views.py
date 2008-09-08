@@ -22,7 +22,7 @@ from couchit import settings
 from couchit.models import Site, Page
 from couchit.api import *
 from couchit.http import BCResponse
-from couchit.template import render_response, url_for
+from couchit.template import render_response, url_for, render_template, send_json
 from couchit.utils import local, make_hash
 
 
@@ -112,7 +112,7 @@ def edit_page(request, cname=None, pagename=None):
         redirect_url = url_for('show_page', cname=cname, pagename=pagename)
         return redirect(redirect_url)
     
-    return render_response('page/edit.html', page=page, site=request.site)
+    return render_response('page/edit.html', page=page)
   
 @site_required  
 def history_page(request, cname=None, pagename=None):
@@ -126,14 +126,14 @@ def history_page(request, cname=None, pagename=None):
     
     # get all pages
     pages = all_pages(local.db, request.site.id)
-    return render_response('page/history.html', page=page, pages=pages, site=request.site, revisions=revisions)
+    return render_response('page/history.html', page=page, pages=pages, revisions=revisions)
     
 @site_required
 def revision_page(request, cname=None, pagename=None, nb_revision=None):
     if pagename is None:
         pagename ='Home'
     page = get_page(local.db, request.site.id, pagename)
-    if not Page:
+    if not page:
         return NotFound
         
     if nb_revision is None:
@@ -143,15 +143,22 @@ def revision_page(request, cname=None, pagename=None, nb_revision=None):
             nb_revision = int(nb_revision)
         except ValueError:
             return NotFound
-    
-    # get all pages
-    pages = all_pages(local.db, request.site.id)
-        
+
     revision = page.revision(local.db, nb_revision)
     if revision is None:
         return render_response('page/revision_notfound.html', page=page, pages=pages, site=request.site)
+        
+    # revert page
+    if request.method == "POST" and "srevert" in request.form:
+        page.content = revision.content
+        page.store(local.db)
+        return redirect(url_for("show_page", cname=request.site.cname, pagename=pagename))
+        
+    # get all pages
+    pages = all_pages(local.db, request.site.id)
+    
 
-    return render_response('page/show.html', page=revision, pages=pages, site=request.site)
+    return render_response('page/show.html', page=revision, pages=pages)
  
 @site_required   
 def diff_page(request, cname=None, pagename=None):
@@ -159,16 +166,26 @@ def diff_page(request, cname=None, pagename=None):
         pagename ='Home'
     page = get_page(local.db, request.site.id, pagename)
     if not Page:
+        if request.is_xhr:
+            return send_json({'ok': False, 'reason': 'not found'})
         return NotFound
     
     revisions = request.values.getlist('r')
+    diff, rev1, rev2 = get_diff(local.db, page, revisions[0], revisions[1])
     
+    if request.is_xhr:
+         return send_json({
+            'ok': True,
+            'diff': render_template('page/diff_inc.html', diff=diff, rev1=rev1, rev2=rev2)
+         })
+     
+    all_revisions = [page] + page.revisions(local.db)
+
     # get all pages
     pages = all_pages(local.db, request.site.id)
-    
-    diff = get_diff(local.db, page, revisions[0], revisions[1])
-    
-    return render_response('page/diff.html', page=page, pages=pages, site=request.site, diff=diff)
+
+    return render_response('page/diff.html', page=page, pages=pages, diff=diff, rev1=rev1, 
+    rev2=rev2, revisions=all_revisions)
     
 @site_required
 def site_claim(request, cname):
@@ -193,6 +210,9 @@ def site_settings(request, cname):
 @site_required
 def site_design(request, cname):
     return render_response('site/design.html', site=request.site)
+    
+    
+
         
 def proxy(request):
     """ simple proxy to manage remote connexion via ajax"""

@@ -39,7 +39,11 @@ Control.Tabs = Class.create({
 			? $(tab_list_container).select(this.options.linkSelector)
 			: this.options.linkSelector($(tab_list_container))
 		).findAll(function(link){
-			return (/^#/).exec(link.href.replace(window.location.href.split('#')[0],''));
+		    if (Prototype.Browser.WebKit)
+		        var href = decodeURIComponent(link.href);
+		    else
+		        var href = link.href;
+		 	return (/^#/).exec(href.replace(window.location.href.split('#')[0],''));
 		}).each(function(link){
 			this.addTab(link);
 		}.bind(this));
@@ -52,6 +56,7 @@ Control.Tabs = Class.create({
 			this.setActiveTab(this.options.defaultTab);
 		var targets = this.options.targetRegExp.exec(window.location);
 		if(targets && targets[1]){
+		    
 			targets[1].split(',').each(function(target){
 				this.setActiveTab(this.links.find(function(link){
 					return link.key == target;

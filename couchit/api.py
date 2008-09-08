@@ -76,7 +76,7 @@ def get_diff(db, page, rev1, rev2):
     r1 = page.revision(db, a)
     r2 = page.revision(db, b)
     
-    return diff_blocks(r1.content.splitlines(), r2.content.splitlines(), 3)
+    return diff_blocks(r1.content.splitlines(), r2.content.splitlines(), 3), r1, r2
     
     
     

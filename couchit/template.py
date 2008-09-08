@@ -56,11 +56,21 @@ def format_datetime(value):
     return value.strftime("%a %b %d %Y at %H:%M")
 template_env.filters['formatdatetime'] = format_datetime
 
-def tabular(value): 
+def tabular(value, r1, r2): 
     """
     display diff as block
     """
-    rst ='<tr class="tabularh"><th class="linenos">a</th><th class="linenos">b</th><td colspan="2"></td></tr>'
+    rst ="""<tr class="tabularh"><th class="linenos">
+    <a href="%(r1_url)s" title="revision %(r1_nb)s">%(r1_nb)s</a></th>
+    <th class="linenos"><a href="%(r2_url)s" title="revision %(r2_nb)s">%(r2_nb)s</a></th>
+    <td colspan="2"></td></tr>""" % {
+        'r1_url': url_for('revision_page', cname=local.request.site.cname, pagename=r1.title.replace(" ", "_"), nb_revision=r1.nb_revision),
+        'r1_nb':  r1.nb_revision,
+        'r2_url': url_for('revision_page', cname=local.request.site.cname, pagename=r2.title.replace(" ", "_"), nb_revision=r2.nb_revision),
+        'r2_nb': str(r2.nb_revision)
+         
+    }
+    
     for row in value:
         for change in row:
             
@@ -68,7 +78,7 @@ def tabular(value):
                 l = change['base']['offset']
                 for line in change['base']['lines']:
                     rst = rst + "<tr class=\"unmod\"><th class=\"linenos\">%s</th>\
-                    <th class=\"linenos\">%s</th><td></td><td>%s</td>" % (
+                    <th class=\"linenos\">%s</th><td></td><td>%s</td></tr>" % (
                         l,
                         l,
                         line
@@ -85,7 +95,7 @@ def tabular(value):
                 pos = 1
                 for line in change['base']['lines']:       
                     rst = rst + '<tr class="%s"><th class=\"linenos\">%s</th>\
-                    <th class=\"linenos\"></th><th class="diffm">-</th><td class="c wrap %s">%s</td>' % (
+                    <th class=\"linenos\"></th><th class="diffm">-</th><td class="c wrap %s">%s</td></tr>' % (
                         class_,
                         change['base']['offset'],
                         class_start,
@@ -111,7 +121,7 @@ def tabular(value):
                 pos = 1
                 for line in change['changed']['lines']:
                     rst = rst + "<tr class=\"%s\"><th class=\"linenos\"></th><th class=\"linenos\">%s</th>\
-                    <th class=\"diffp\">+</th><td class=\"c wrap %s\">%s</td>" % (
+                    <th class=\"diffp\">+</th><td class=\"c wrap %s\">%s</td></tr" % (
                         class_,
                         change['base']['offset'],
                         class_end,
@@ -121,8 +131,8 @@ def tabular(value):
                     pos = pos + 1
                     if pos == nb_lines:
                         class_end = "last"
-            rst = rst + "<tr><th class=\"linenos\">...<th><td colspan=\"3\"></td></tr>"
-    rst = "<table class=\"difftabular\">%s</table>" % rst
+            rst = rst + "<tr><th class=\"linenos\">...</th><td colspan=\"3\"></td></tr>"
+    rst = "<table id=\"tableDiff\" class=\"difftabular\">%s</table>" % rst
     return rst
 template_env.filters['tabular'] = tabular
 
