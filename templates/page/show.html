@@ -3,6 +3,12 @@
 {% block title %}{{ page.title }} (revision {{ page.nb_revision }}){% endblock %}
 
 {% block head %}
+{% if page.title == "Home" %}
+    <link rel="alternate" type="application/atom+xml" href="{{ url_for('site_changes', cname=site.cname, feedtype='atom') }}" title="Atom Recent Changes Feed" />
+{% endif %}
+
+<link rel="alternate" type="application/atom+xml" href="{{ url_for('revisions_feed', cname=site.cname, pagename=page.title|replace(" ", "_"), feedtype='atom') }}" title="Atom Revisions Feed" />
+
 <link rel="stylesheet" type="text/css" href="/static/css/textarea.css" />
 <script src="/static/js/dragdrop.js" type="text/javascript"></script>
 <script src="/static/js/tabs.js" type="text/javascript"></script>

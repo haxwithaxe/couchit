@@ -15,7 +15,9 @@
 
 import re
 import urllib2
+from jinja2.filters import do_truncate, do_striptags
 from werkzeug import redirect
+from werkzeug.contrib.atom import AtomFeed
 from werkzeug.routing import NotFound
 from werkzeug.utils import url_unquote
 from couchit import settings
@@ -23,7 +25,7 @@ from couchit.models import Site, Page
 from couchit.api import *
 from couchit.http import BCResponse
 from couchit.template import render_response, url_for, render_template, send_json
-from couchit.utils import local, make_hash
+from couchit.utils import local, make_hash, datetime_tojson
 
 
 FORBIDDEN_PAGES = ['site', 'delete', 'edit', 'create', 'history', 'changes']
@@ -165,7 +167,7 @@ def diff_page(request, cname=None, pagename=None):
     if pagename is None:
         pagename ='Home'
     page = get_page(local.db, request.site.id, pagename)
-    if not Page:
+    if not page:
         if request.is_xhr:
             return send_json({'ok': False, 'reason': 'not found'})
         return NotFound
@@ -186,6 +188,110 @@ def diff_page(request, cname=None, pagename=None):
 
     return render_response('page/diff.html', page=page, pages=pages, diff=diff, rev1=rev1, 
     rev2=rev2, revisions=all_revisions)
+
+    
+@site_required  
+def revisions_feed(request, cname=None, pagename=None, feedtype="atom"):
+    if pagename is None:
+        pagename ='Home'
+    page = get_page(local.db, request.site.id, pagename)
+    if not page:
+        return NotFound
+    all_revisions = [page] + page.revisions(local.db)
+    if feedtype == "atom":
+        feed = AtomFeed(
+                    title="%s: Latest revisions of %s" % (request.site.cname, page.title),
+                    subtitle=request.site.subtitle,
+                    updated = page.updated,
+                    id = page.title.replace(" ", "_")
+        )
+        for rev in all_revisions:
+            for change in rev.changes:
+                if change['type'] != "unmod":
+                    title = "\n".join(change['changed']['lines'])
+                    title = do_truncate(do_striptags(title), 60)
+            title = title and title or "Edited."
+            feed.add(title, rev.content, 
+                updated=rev.updated,
+                url=url_for("revision_page", 
+                    cname=request.site.cname, pagename=pagename, 
+                    nb_revision=rev.nb_revision
+                ),
+                id=str(rev.nb_revision)
+            )
+        return feed.get_response()
+    else:
+        json = {
+            'title': "%s: Latest revisions of %s" % (request.site.cname, page.title),
+            'subtitle': request.site.subtitle,
+            'updated':datetime_tojson(page.updated),
+            'revisions': []
+        }
+        for rev in all_revisions:
+            title = ''
+            for change in rev.changes:
+                if change['type'] != "unmod":
+                    title = "\n".join(change['changed']['lines'])
+                    title = do_truncate(do_striptags(title), 60)
+                    
+            title = title and title or "Edited."
+            url = url_for("revision_page", 
+                        cname=request.site.cname, pagename=pagename, 
+                        nb_revision=rev.nb_revision
+            )
+            json['revisions'].append({
+                'title': title,
+                'content': rev.content,
+                'url':  url,
+                'updated':datetime_tojson(rev.updated),
+                'id':rev.nb_revision
+            })
+        return send_json(json)
+    
+@site_required
+def site_changes(request, cname, feedtype=None):
+    
+    pages = all_pages(local.db, request.site.id)
+    changes = get_changes(local.db, request.site.id)
+
+    if feedtype == "atom":
+        feed = AtomFeed(
+                    title="%s: Latest changes" % request.site.title and request.site.title or request.site.cname,
+                    subtitle=request.site.subtitle,
+                    updated = changes[0].updated,
+                    id = request.site.cname
+        )
+        for rev in changes:
+            feed.add(rev.title, rev.content, 
+                updated=rev.updated,
+                url=url_for("show_page", 
+                    cname=request.site.cname, pagename=rev.title.replace(' ', '_')
+                ),
+                id=rev.title.replace(' ', '_')
+            )
+        return feed.get_response()
+    elif feedtype == 'json':
+        json = {
+                'title': "%s: Latest changes" % request.site.title and request.site.title or request.site.cname,
+                'subtitle': request.site.subtitle,
+                'updated':datetime_tojson(changes[0].updated),
+                'pages': []
+            }
+        for rev in changes:
+            url = url_for("show_page", 
+                        cname=request.site.cname, pagename=rev.title.replace(' ', '_')
+            )
+            json['pages'].append({
+                'title': rev.title,
+                'content': rev.content,
+                'url':  url,
+                'updated':datetime_tojson(rev.updated),
+                'id':rev.title.replace(' ', '_')
+            })
+        return send_json(json)
+
+    return render_response('site/changes.html', changes=changes, pages=pages)
+        
     
 @site_required
 def site_claim(request, cname):
@@ -204,7 +310,6 @@ def site_claim(request, cname):
     
 @site_required
 def site_settings(request, cname):
-    print request.site
     return render_response('site/settings.html', site=request.site)
     
 @site_required

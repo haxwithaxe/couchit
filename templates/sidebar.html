@@ -8,7 +8,7 @@
 
 <nav>
     <ul>
-        <li><a href="">recent changes</a></li>
+        <li><a href="{{ url_for('site_changes', cname=site.cname) }}">recent changes</a></li>
         <li><a href="{{ url_for('site_settings', cname=site.cname) }}">settings</a></li>
         <li><a href="{{ url_for('site_design', cname=site.cname) }}">design</a></li>
     </ul>
@@ -22,6 +22,3 @@
         {% endfor %}
     </ul>
 </div>
-
-
-

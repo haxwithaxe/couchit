@@ -1,5 +1,8 @@
 {% extends "base.html" %}
 {% block title %}Revision history of {{ page.title }}{% endblock %}
+{% block head %}
+    <link rel="alternate" type="application/atom+xml" href="{{ url_for('revisions_feed', cname=site.cname, pagename=page.title|replace(" ", "_"), feedtype='atom') }}" title="Atom Revisions Feed" />
+{% endblock %}
 {% block page %}
 <section id="phistory">
     <h2>Revision history of <a href="{{ url_for('show_page', cname=site.cname, pagename=page.title|replace(" ", "_")) }}">{{ page.title }}</a></h2>

@@ -22,7 +22,7 @@ from couchit.utils.diff import diff_blocks
 
 
 __all__ = ['get_site', 'get_page', 'get_pageof',
-'all_pages', 'get_diff', 'LEXERS_CHOICE']
+'all_pages', 'get_diff', 'LEXERS_CHOICE', 'get_changes']
 
 def _get_lexers():
     lexers = get_all_lexers()
@@ -67,6 +67,16 @@ def all_pages(db, siteid):
     rows = Page.view(db, '_view/page/all_pages', key=siteid)
     return list(iter(rows))
     
+    
+def get_changes(db, siteid):
+    if siteid is None:
+        return []
+    rows = Page.view(db, '_view/page/all_pages', key=siteid, count=50)
+    result = list(iter(rows))
+    if result: # order revisions
+        result.sort(lambda a,b: cmp(a.updated, b.updated))
+        result.reverse()
+    return result
     
 def get_diff(db, page, rev1, rev2):
     a = int(rev1)
