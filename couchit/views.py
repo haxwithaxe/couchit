@@ -19,6 +19,7 @@ import cgi
 from werkzeug import redirect
 from werkzeug.routing import NotFound
 from werkzeug.utils import url_unquote
+from couchit import settings
 from couchit.models import Site, Page
 from couchit.api import *
 from couchit.http import BCResponse
