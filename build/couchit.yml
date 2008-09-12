@@ -1,0 +1,14 @@
+css_path: ../static/css
+css:
+    ie.css:
+        - ie.css
+    print.css:
+        - print.css
+    screen.css:
+        - reset.css
+        - typography.css
+        - layout.css
+        - textarea.css
+        - colorPicker.css
+    theme.css:
+        - slate.css
