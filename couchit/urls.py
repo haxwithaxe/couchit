@@ -49,5 +49,4 @@ urls_map = Map([
     Rule('/<cname>/<pagename>/diff', endpoint='diff_page'),
     Rule('/<cname>', defaults={'pagename': 'home' }, endpoint='show_page'),
     Rule('/<cname>/<pagename>', endpoint='show_page'),
-    
 ])

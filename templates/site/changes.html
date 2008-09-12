@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}Recent changes{% endblock %}
+{% block head %}
+    <link rel="alternate" type="application/atom+xml" href="{{ url_for('site_changes', cname=site.cname, feedtype='atom') }}" title="Atom Recent Changes Feed" />
+{% endblock %}
+{% block page %}
+<section id="phistory">
+    <h2>Recent changes</h2>
+    <table class="historyTable">
+        {% for page  in changes %}
+            <tr>
+                <td><a href="{{ url_for('show_page', cname=site.cname, pagename=page.title|replace(" ", "_")) }}">{{ page.title }}</a></td>
+                <td><time title="GMT" datetime="{{ page.updated|rfc3339 }}">{{ page.updated|formatdatetime }}</time></td>
+                <td class="changes">
+                    {% if page.changes %}
+                    <ol>
+                        {% for change in page.changes %}
+                            {% if change['type'] != 'unmod' %}
+                        <li>{{ change['type']|pretty_type }} "<span class="lineChange">{{ change['changed']['lines']|join('\n')|trim|striptags|truncate(40) }}"</li> 
+                            {% endif %}  
+                        {% endfor %}
+                    </ol>
+                    {% else %}
+                        {% if page.previous %}
+                    Edited.
+                        {% else %}
+                    <span class="created">Created page.</span>
+                        {% endif %}
+                    {% endif %}
+
+
+                </td>
+            </tr>
+        {% endfor %}
+        </table>
+</section>
+{% endblock %}
+
+{% block footer %}
+<script type="text/javascript" charset="utf-8">
+    Site.name = "{{ site.cname }}";
+    Site.url = "/" + "{{ site.cname }}"
+    new Create();
+</script>
+{% endblock %}
+
+
+{% block sidebar %}
+{% include "sidebar.html" %}
+{% endblock %}
