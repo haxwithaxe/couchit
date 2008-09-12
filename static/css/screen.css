@@ -118,7 +118,7 @@ tr.base .last {border-bottom:1px solid;}
 /* ../static/css/src/textarea.css */
 #markdown_toolbar {position:relative;list-style:none;border:1px solid #d7d7d7;background-color:#F6F6F6;margin:0;padding:0;height:18px;margin-bottom:2px;}
 #markdown_toolbar li {list-style:none;margin:0;padding:0;float:left;}
-#markdown_toolbar li a {width:24px;height:16px;float:left;display:block;background-image:url("../../img/markdown_icons.gif");border:1px solid #fff;border-right-color:#d7d7d7;}
+#markdown_toolbar li a {width:24px;height:16px;float:left;display:block;background-image:url(../img/markdown_icons.gif);border:1px solid #fff;border-right-color:#d7d7d7;}
 #markdown_toolbar li a:hover {border-color:#900;}
 #markdown_toolbar li span {display:none;}
 #markdown_toolbar li a#markdown_help_button {position:absolute;top:0;right:0;border-left-color:#d7d7d7;border-right-color:#fff;}
@@ -133,7 +133,7 @@ tr.base .last {border-bottom:1px solid;}
 #markdown_code_button {background-position:0 -136px;}
 #markdown_help_button {background-position:0 -153px;}
 #markdown_heading_button {background-position:0 -85px;}
-#markdown_toolbar li a#markdown_snippet_button {background:transparent url("../../img/edit-paste.png") 4px 0 no-repeat;}
+#markdown_toolbar li a#markdown_snippet_button {background:transparent url(../img/edit-paste.png) 4px 0 no-repeat;}
 /* ../static/css/src/colorPicker.css */
 #colorpicker {position:absolute;width:145px;height:135px;overflow:hidden;background:#F9F9F9;border:2px #C0C0C0 outset;z-index:1000;}
 #colorpicker-hue-container {position:absolute;top:4px;left:120px;width:18px;height:110px;}
