@@ -316,8 +316,6 @@ def site_settings(request, cname):
 def site_design(request, cname):
     return render_response('site/design.html', site=request.site)
     
-    
-
         
 def proxy(request):
     """ simple proxy to manage remote connexion via ajax"""
@@ -350,7 +348,6 @@ def proxy(request):
         content_type = i["Content-Type"]
     else:
         content_type = 'text/plain'
-    print
     
     resp = y.read()
     

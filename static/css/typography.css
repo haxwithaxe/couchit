@@ -35,3 +35,78 @@ input { font-size: 12px;}
 	font-weight: bold;
     font-size: 12px;
 }
+
+#prevert p {
+    font-weight: bold;
+}
+
+#snippet_window {
+    font-size:13px;
+}
+
+.box h4 {
+    font-size: 10px;
+}
+
+tr.base {
+    background: #ffd8d8;
+}
+
+tr.base td.c,
+th.diffm {
+    border-right-color: #aa3333;
+}
+
+th.diffp,
+tr.changed td.c {
+    border-right-color: #33aa33;
+}
+
+ul.subsection_tabs li.tab a {
+    font-size: 11px;
+    font-weight: bold;
+}
+
+
+span.lineChange {
+    font-family: courier;
+}
+
+del {
+    text-decoration: none;
+    
+}
+
+ins {
+    text-decoration: none;
+}
+
+#snippet_window_title {
+    font-size:14px;
+    font-weight: bold;  
+    cursor:move;
+}
+
+#snippet_window {
+    font-weight:bold;  
+} 
+
+th.linenos {
+    font-weight: bold;
+}
+.linenos .special { 
+    font-weight: bold; 
+}
+
+table.difftabular th {
+    text-align: center;
+}
+
+table.difftabular th.linenos {
+    text-align: center;
+}
+
+.claim {
+    font-weight: bold;
+    text-decoration: none;
+}
