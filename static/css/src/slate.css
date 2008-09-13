@@ -58,7 +58,9 @@ ins {
 }
 
 tr.rselected {
-    background-color: #E1F1B9;
+    background-color: #d4d4d4;
+    opacity: 0.5;
+    filter: 0.5;
 }
 
 #snippet_window {
