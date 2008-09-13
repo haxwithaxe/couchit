@@ -9,6 +9,20 @@
 
 <link rel="alternate" type="application/atom+xml" href="{{ url_for('revisions_feed', cname=site.cname, pagename=page.title|replace(" ", "_"), feedtype='atom') }}" title="Atom Revisions Feed" />
 
+{% if DEBUG %}
+<script src="/static/js/lib/livepipe.js" type="text/javascript"></script>
+<script src="/static/js/lib/effects.js" type="text/javascript"></script>
+<script src="/static/js/lib/dragdrop.js" type="text/javascript"></script>
+<script src="/static/js/lib/tabs.js" type="text/javascript"></script>
+<script src="/static/js/lib/resizable.js" type="text/javascript"></script>
+<script src="/static/js/lib/textarea.js" type="text/javascript"></script>
+<script src="/static/js/lib/window.js" type="text/javascript"></script>
+<script src="/static/js/lib/showdown.js" type="text/javascript"></script>
+<script src="/static/js/src/page.js" type="text/javascript" charset="utf-8"></script>
+{% else %}
+<script src="/static/js/couchit-page.js" type="text/javascript"></script>
+{% endif %}
+
 {% endblock %}
 
 

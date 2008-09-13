@@ -14,17 +14,16 @@ css:
     theme.css:
         - slate.css
 javascript:
-    couchit-base.js:
+    couchit.js:
         - lib/prototype.js
+        - src/application.js
+    couchit-page.js:
         - lib/livepipe.js
         - lib/effects.js
-    couchit-ui.js:
         - lib/dragdrop.js
         - lib/tabs.js
         - lib/resizable.js
         - lib/textarea.js
         - lib/window.js
         - lib/showdown.js
-    couchit-app.js:
-        - src/application.js
         - src/page.js
