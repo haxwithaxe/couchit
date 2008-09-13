@@ -50,7 +50,6 @@ class MergeCSS(object):
             return "%s%s" % (mo.group(0)[0:4], mo.group(0)[7:])
             
     def run(self):
-       
         for fname, src_files in self.conf['css'].iteritems():
             output_css = ''
             for src_fname in src_files:

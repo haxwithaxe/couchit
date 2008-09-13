@@ -86,14 +86,6 @@ class CSSParser(object):
 
         for line in self.parse(data):
             self.css_output += "%s {%s}\n" % (line['tags'], line['rules'])
-             
-if __name__ == "__main__":
-    f = open('/Users/benoitc/Work/couchit/static/css/src/layout.css')  
-    test = f.read()
-    f.close()
-
-    o = CSSParser(test)
-    print str(o)    
         
                         
                 
