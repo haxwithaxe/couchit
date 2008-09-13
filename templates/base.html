@@ -26,66 +26,18 @@
    
    {% if site and site.theme %}
     <style type="text/css" media="screen">
-        body {
-            background-color: #{{ site.theme.background_color }};
-            color: #{{ site.theme.text_color }};
-        }
-        
-        a {
-            color: #{{ site.theme.link_color }};
-        }
+body{background-color:#{{ site.theme.background_color }};color:#{{ site.theme.text_color }};}
+a{color:#{{ site.theme.link_color }};}
+#page article, #pedit #pedit_wrapper{background-color:#{{ site.theme.page_fill_color }};border-right-color:#{{ site.theme.border_color }};border-left-color:#{{ site.theme.border_color }};border-bottom-color:#{{ site.theme.border_color }};color:#{{ site.theme.page_text_color }};}
+#phistory,#pdiff,#pdesign,#pedit{background-color:#{{ site.theme.page_fill_color }};border-color:#{{ site.theme.border_color }};color:#{{ site.theme.page_text_color }};}
+#phistory,#pdiff,#pdesign,#page{color:#{{ site.theme.page_text_color }};}
+#phistory a, #pdiff a, #pdesign a, #page a{color:#{{ site.theme.page_link_color }};}
+ul.subsection_tabs{background-color:#{{ site.theme.border_color }};}
+ul.subsection_tabs li.tab a, ul.subsection_tabs li.tab a:visited{color:#{{ site.theme.menu_inactive_color }};}
+.box{background-color:#{{ site.theme.page_fill_color }};}
+.box a{color:#{{ site.theme.page_link_color }};}
+.box h4{background-color:#{{site.theme.border_color}};color:#{{site.theme.menu_inactive_color }};}
 
-        #page article,
-        #pedit #pedit_wrapper {
-            background-color: #{{ site.theme.page_fill_color }};
-            border-right-color: #{{ site.theme.border_color }};
-            border-left-color: #{{ site.theme.border_color }};
-            border-bottom-color: #{{ site.theme.border_color }};
-            color: #{{ site.theme.page_text_color }};
-        }
-        
-       
-
-        #phistory, #pdiff, #pdesign, #pedit {
-            background-color: #{{ site.theme.page_fill_color }};
-            border-color: #{{ site.theme.border_color }};
-            color: #{{ site.theme.page_text_color }};
-        }
-        
-        #phistory , #pdiff, #pdesign, #page {
-            color: #{{ site.theme.page_text_color }};
-        }
-        
-       
-        #phistory a,
-        #pdiff a,
-        #pdesign a,
-        #page a {
-            color: #{{ site.theme.page_link_color }};
-        }
-        
-        ul.subsection_tabs {
-            background-color: #{{ site.theme.border_color }} ;
-        }
-        
-        ul.subsection_tabs li.tab a,
-        ul.subsection_tabs li.tab a:visited {
-            color: #{{ site.theme.menu_inactive_color }};
-        } 
-
-        .box {
-            background-color: #{{ site.theme.page_fill_color }};
-        }
-
-        .box a {
-            color: #{{ site.theme.page_link_color }};
-        }
-
-        .box h4 {
-            background-color: #{{ site.theme.border_color }};
-            color: #{{ site.theme.menu_inactive_color }};
-        }
-        
     </style>
     <link rel="stylesheet" href="/static/css/src/default.css" type="text/css" />
    {% endif %}
