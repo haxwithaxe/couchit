@@ -36,7 +36,7 @@ def strip_selector_space(string):
     """ remove newlines, insert space after comma, replace 
     two spaces with one space after comma """
     if isinstance(string, basestring):
-        string = re_comma2(', ', re_comma(', ', re_line.sub('', string)))
+        string = re_comma2.sub(', ', re_comma.sub(', ', re_line.sub('', string)))
     return string
     
 class CSSParser(object):
