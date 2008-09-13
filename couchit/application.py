@@ -50,7 +50,8 @@ class CouchitApp(object):
             response = e
 
         if request.session.should_save:
-            permanent = request.session.get('permanent', False)
+            print 'here'
+            permanent = request.session.get('permanent', True)
             max_age=None
             expires=None
             if permanent:

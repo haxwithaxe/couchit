@@ -16,14 +16,19 @@ css:
 javascript:
     couchit.js:
         - lib/prototype.js
+        - lib/effects.js
+        - lib/dragdrop.js
+        - lib/builder.js
+        - lib/slider.js
         - src/application.js
     couchit-page.js:
         - lib/livepipe.js
-        - lib/effects.js
-        - lib/dragdrop.js
         - lib/tabs.js
         - lib/resizable.js
         - lib/textarea.js
         - lib/window.js
         - lib/showdown.js
         - src/page.js
+    couchit-design.js:
+        - lib/yahoo.color.js
+        - lib/colorPicker.js

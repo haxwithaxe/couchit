@@ -1,20 +1,25 @@
 body {
     background-color: #e7e7e7;
+    color: #000;
 }
 
-a { color: #14456e;}
+
+a {
+    color: #14456e;
+}
 
 #page article {
+    color: #000;
     background-color: #fff;
-    border-right-color:#d4d4d4;
+    border-right-color: #d4d4d4;
     border-left-color: #d4d4d4;
     border-bottom-color: #d4d4d4;
 }
 
-
-#phistory, #pdiff {
+#phistory, #pdiff, #pdesign {
     background-color: #fff;
     border-color: #d4d4d4;
+    color: #000;
 }
 
 #pdiff h4 {
@@ -22,7 +27,7 @@ a { color: #14456e;}
 }
 
 ul.subsection_tabs {
-    background-color:#d4d4d4 ;
+    background-color: #d4d4d4 ;
 }
 
 ul.subsection_tabs li.tab a {
@@ -33,7 +38,7 @@ ul.subsection_tabs li.tab a.active {
     color: #000;
 }
 
-ul.page_infos  { 
+ul.page_infos {
     border-top-color: #ccc;
     border-bottom-color: #ccc;
 }
@@ -47,7 +52,6 @@ del {
     color: #000;
 }
 
-
 ins {
     background-color: #99ff99;
     color: #000;
@@ -59,7 +63,7 @@ tr.rselected {
 
 #snippet_window {
     background-color: #dedede;
-    color:#504845;
+    color: #504845;
     border: #ababab;
 }
 
@@ -68,7 +72,7 @@ tr.rselected {
 }
 
 input, textarea {
-    border-color:#C6C6C6 #EFEFEF #EFEFEF #C6C6C6;
+    border-color: #C6C6C6 #EFEFEF #EFEFEF #C6C6C6;
 }
 
 #snippet_window input[type="submit"] {
@@ -80,14 +84,16 @@ input, textarea {
     background-color: #fff;
 }
 
-.box h4 {
-    background-color: #f4f4f4;
-    color: #444;
+.box a {
+    color: #14456e;
 }
 
+.box h4 {
+    background-color: #d4d4d4;
+    color: #000;
+}
 
-input#srevert,
-input#scompare {
+input#srevert, input#scompare {
     background-color: #cec6b5;
     border-color: #7a7261;
 }
@@ -96,10 +102,10 @@ th.linenos {
     background-color: #f4f4f4;
     color: #666;
 }
-.linenos .special { 
+
+.linenos .special {
     color: #000;
 }
-
 
 table.difftabular {
     background-color: #fff;
@@ -112,27 +118,21 @@ tr.tabularh th.linenos {
     color: #000;
 }
 
-
 tr.changed {
     background-color: #ddf8cc;
 }
 
-tr.changed td.first {
+tr.changed td.first,
+tr.base td.first {
     border-top-color: #33aa33;
 }
-tr.changed .last {
-    border-bottom-color:  #33aa33;
-}
 
-tr.base td.first {
-    border-top-color: #aa3333;
-}
+tr.changed .last,
 tr.base .last {
-    border-bottom-color: #aa3333;
+    border-bottom-color: #33aa33;
 }
-
 
 .claim {
-    background-color: #000; 
+    background-color: #000;
     color: #fff;
 }

@@ -40,17 +40,11 @@ def site_required(f):
             cname = kwargs.get('cname', None)
             if cname is None:
                 return redirect('/')
-            if not 'sites' in request.session:
-                request.session['sites'] = {}
-            
-            if  request.session['sites']:
-                site = request.session['sites'].get(cname, None)
-            
+
             if site is None:
                 site = get_site(local.db, cname)
                 if site is None:
                     return redirect('/')
-            request.session['sites'][site.cname] = site
             request.site = site  
         return f(request, **kwargs)
     return decorated
@@ -314,7 +308,43 @@ def site_settings(request, cname):
     
 @site_required
 def site_design(request, cname):
-    return render_response('site/design.html', site=request.site)
+    DEFAULT_COLORS = dict(
+        background_color = 'E7E7E7',
+        text_color = '000000',
+        link_color = '14456E',
+        border_color = 'D4D4D4',
+        page_fill_color = 'FFFFFF',
+        page_text_color = '000000',
+        page_link_color = '14456E',
+        menu_inactive_color = '666666',
+    )
+    
+    if not request.site.theme or request.site.theme is None:
+        request.site.theme = DEFAULT_COLORS
+        
+    if request.method == 'POST':
+        site = get_site(local.db, cname)
+        style = request.form.get('style', 'default')
+        if style == 'default':
+            site.default_theme = True
+            site.theme = DEFAULT_COLORS
+        else:
+            site.default_theme = False
+            site.theme = dict(
+                background_color = request.form.get('background_color', 'E7E7E7'),
+                text_color = request.form.get('text_color', '000000'),
+                link_color = request.form.get('link_color', '14456E'),
+                border_color = request.form.get('border_color', 'D4D4D4'),
+                page_fill_color = request.form.get('page_fill_color', 'FFFFFF'),
+                page_text_color = request.form.get('page_text_color', '000000'),
+                page_link_color = request.form.get('page_link_color', '14456E'),
+                menu_inactive_color = request.form.get('menu_inactive_color', '666666')
+            )
+        site.store(local.db)
+        request.site = site 
+     
+    pages = all_pages(local.db, request.site.id)       
+    return render_response('site/design.html', pages=pages)
     
         
 def proxy(request):

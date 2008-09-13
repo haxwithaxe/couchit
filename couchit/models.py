@@ -40,6 +40,17 @@ class Site(Document):
     claimed = BooleanField(default=False)
     created = DateTimeField()
     updated = DateTimeField()
+    default_theme = BooleanField(default=True)
+    theme = DictField(Schema.build(
+        background_color = TextField(default='E7E7E7'),
+        text_color = TextField(default='000000'),
+        link_color = TextField(default='14456E'),
+        border_color = TextField(default='D4D4D4'),
+        page_fill_color = TextField(default='FFFFFF'),
+        page_text_color = TextField(default='000000'),
+        page_link_color = TextField(default='14456E'),
+        menu_inactive_color = TextField(default='666666')
+    ))
     
     itemType = TextField(default='site')
     

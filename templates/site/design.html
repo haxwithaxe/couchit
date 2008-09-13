@@ -1,58 +1,83 @@
 {% extends "base.html" %}
 
 {% block head %}
-<link rel="stylesheet" type="text/css" href="/static/css/colorPicker.css">
-<script src="/static/js/dragdrop.js" type="text/javascript"></script>
-<script src="/static/js/slider.js" type="text/javascript"></script>
-<script src="/static/js/builder.js" type="text/javascript"></script>
-<script src="/static/js/yahoo.color.js" type="text/javascript"></script>
-<script src="/static/js/colorPicker.js" type="text/javascript"></script>
+
+{% if DEBUG %}
+<link rel="stylesheet" type="text/css" href="/static/css/src/colorPicker.css">
+<script src="/static/js/lib/yahoo.color.js" type="text/javascript"></script>
+<script src="/static/js/lib/colorPicker.js" type="text/javascript"></script>
+{% else %}
+<script src="/static/js/couchit-design.js" type="text/javascript"></script>
+{% endif %}
+
 
 {% endblock %}
-{% block main %}
-<section id="color">
-    <form>
+{% block page %}
+<section id="pdesign">
+    <h4>Design your Couch</h4>
+    <p>Below are the current design settings for your site. You can change, preview, save, or restore to factory default settings any time.</p>
+    <form action="{{ url_for('site_design', cname=site.cname) }}" method='POST'>
+        <p><input type="radio" name="style" value="default"{% if site.default_theme %} checked='checked'{% endif %} id="style_default" /> Use the CouchIt default style</p>
+        <p><input type="radio" name="style" value="custom"{% if not site.default_theme %} checked='checked'{% endif %} id="style_custom"/> Use my custom style below</p>
         <table id="custom_form">
             <tr>
                 <th><label for="background_color">Background Color</label></th>
-                <td><input type="text" name="background_color" value="" id="background_color" /></td>
+                <td><input type="text" name="background_color" value="{{ site.theme.background_color }}" id="background_color" class="setColor" /></td>
             </tr>
             <tr>
                 <th><label for="text_color">Text Color</label></th>
-                <td><input type="text" name="text_color" value="" id="text_color" /></td>
+                <td><input type="text" name="text_color" value="{{ site.theme.text_color }}" id="text_color"  class="setColor" /></td>
             </tr>
             <tr>
                 <th><label for="link_color">Link Color</label></th>
-                <td><input type="text" name="link_color" value="" id="link_color" /></td>
+                <td><input type="text" name="link_color" value="{{ site.theme.link_color }}" id="link_color"  class="setColor" /></td>
             </tr>
             <tr>
-                <th><label for="sidebar_fill_color">Sidebar Fill Color</label></th>
-                <td><input type="text" name="sidebar_fill_color" value="" id="sidebar_fill_color" /></td>
+                <th><label for="border_color">Border Color</label></th>
+                <td><input type="text" name="border_color" value="{{ site.theme.border_color }}" id="border_color" class="setColor" /></td>
             </tr>
             <tr>
-                <th><label for="sidebar_link_color">Sidebar Link Color</label></th>
-                <td><input type="text" name="sidebar_link_color" value="" id="sidebar_link_color" /></td>
+                <th><label for="page_fill_color">Page Fill Color</label></th>
+                <td><input type="text" name="page_fill_color" value="{{ site.theme.page_fill_color }}" id="page_fill_color" class="setColor" /></td>
             </tr>
             <tr>
-                <th><label for="header_background">Header Background</label></th>
-                <td><input type="text" name="header_background" value="" id="header_background" /></td>
+                <th><label for="page_text_color">Page Text Color</label></th>
+                <td><input type="text" name="page_text_color" value="{{ site.theme.page_text_color }}" id="page_text_color" class="setColor" /></td>
             </tr>
             <tr>
-                <th><label for="link_color">Header Fill Menu</label></th>
-                <td><input type="text" name="header_background" value="" id="header_background" /></td>
+                <th><label for="page_link_color">Page Link Color</label></th>
+                <td><input type="text" name="page_link_color" value="{{ site.theme.page_link_color }}" id="page_link_color" class="setColor" /></td>
             </tr>
             <tr>
-                <th><label for="link_color">Header Menu Color</label></th>
-                <td><input type="text" name="header_background" value="" id="header_background" /></td>
+                <th><label for="menu_inactive_color">Sidebox title Color</label></th>
+                <td><input type="text" name="menu_inactive_color" value="{{ site.theme.menu_inactive_color }}" id="menu_inactive_color"  class="setColor" /></td>
             </tr>
         </table>
+        <p><input type="submit" name="sdesign" value="Save" id="sdesign" /></p>
     </form>
 
 
 </section>
-<script type="text/javascript" charset="utf-8">
-    $('custom_form').getElementsBySelector('input').each(function(el) {
-        new Control.ColorPicker(el.id);
-    });
-</script>
+
+{% endblock %}
+
+{% block sidebar %}
+    {% include("sidebar.html") %}
+{% endblock %}
+
+{% block footer %}
+    <script type="text/javascript" charset="utf-8">
+        Site.name = "{{ site.cname }}";
+        Site.url = "/" + "{{ site.cname }}"
+        new Create();
+        
+        $('custom_form').getElementsBySelector('input.setColor').each(function(el) {
+            new Control.ColorPicker(el.id);
+            el.observe("focus", function(e) {
+                $('style_custom').checked=true;
+            }, false);
+
+        });
+        
+    </script>
 {% endblock %}
