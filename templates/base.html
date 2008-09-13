@@ -10,6 +10,20 @@
     <link rel="stylesheet" href="/static/css/src/debug.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="/static/css/src/textarea.css">
     <link rel="stylesheet" href="/static/css/src/default.css" type="text/css" />
+    
+    <script src="/static/js/lib/prototype.js" type="text/javascript"></script>
+    <script src="/static/js/lib/livepipe.js" type="text/javascript"></script>
+    <script src="/static/js/lib/effects.js" type="text/javascript"></script>
+    
+    <script src="/static/js/lib/dragdrop.js" type="text/javascript"></script>
+    <script src="/static/js/lib/tabs.js" type="text/javascript"></script>
+    <script src="/static/js/lib/resizable.js" type="text/javascript"></script>
+    <script src="/static/js/lib/textarea.js" type="text/javascript"></script>
+    <script src="/static/js/lib/window.js" type="text/javascript"></script>
+    <script src="/static/js/lib/showdown.js" type="text/javascript"></script>
+    <script src="/static/js/src/application.js" type="text/javascript"></script>
+    <script src="/static/js/src/page.js" type="text/javascript" charset="utf-8"></script>
+    
     {% else %}
     <link rel="stylesheet" href="/static/css/screen.css" type="text/css" media="screen, projection">
     <link rel="stylesheet" href="/static/css/theme.css" type="text/css" media="screen, projection">
@@ -17,13 +31,15 @@
     <!--[if IE]>
       <link rel="stylesheet" href="/static/css/ie.css" type="text/css" media="screen, projection">
     <![endif]-->
+    
+    
+    <script src="/static/js/couchit-base.js" type="text/javascript"></script>
+       <script src="/static/js/couchit-ui.js" type="text/javascript"></script>
+       <script src="/static/js/couchit-app.js" type="text/javascript"></script>
     {% endif %}
    <link rel="stylesheet" href="/static/css/src/default.css" type="text/css" />
 
-    <script src="/static/js/prototype.js" type="text/javascript"></script>
-    <script src="/static/js/livepipe.js" type="text/javascript"></script>
-    <script src="/static/js/effects.js" type="text/javascript"></script>
-    <script src="/static/js/application.js" type="text/javascript"></script>
+    
     
     {% block head %}{% endblock %}
 

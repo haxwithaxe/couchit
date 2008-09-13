@@ -1,4 +1,5 @@
 css_path: ../static/css
+javascript_path: ../static/js
 css:
     ie.css:
         - ie.css
@@ -12,3 +13,18 @@ css:
         - colorPicker.css
     theme.css:
         - slate.css
+javascript:
+    couchit-base.js:
+        - lib/prototype.js
+        - lib/livepipe.js
+        - lib/effects.js
+    couchit-ui.js:
+        - lib/dragdrop.js
+        - lib/tabs.js
+        - lib/resizable.js
+        - lib/textarea.js
+        - lib/window.js
+        - lib/showdown.js
+    couchit-app.js:
+        - src/application.js
+        - src/page.js
