@@ -68,7 +68,20 @@ class CouchitApp(object):
             return response(environ, start_response)
         
         request.site = site
-       
+
+        print environ['PATH_INFO']
+        if not subdomain:
+            local.cname = cur_path[0]
+            path_info = '/'.join(cur_path[1:])
+            local.url_adapter = adapter = urls_map.bind(
+                    settings.SERVER_NAME, 
+                    environ.get('SCRIPT_NAME'),
+                    None, 
+                    environ['wsgi.url_scheme'],
+                    environ['REQUEST_METHOD'],
+                    path_info)
+                    
+
         # process urls
         try:
             endpoint, args = adapter.match()

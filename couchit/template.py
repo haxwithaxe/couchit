@@ -41,7 +41,11 @@ def pretty_type(value):
 template_env.filters['pretty_type'] = pretty_type
 
 def url_for(endpoint, _external=False, **values):
-    return local.url_adapter.build(endpoint, values, force_external=_external)
+    url = local.url_adapter.build(endpoint, values, force_external=_external)
+    if hasattr(local, 'cname'):
+        url = "/%s%s" % (local.cname, url)
+    return url
+
 template_env.globals['url_for'] = url_for
 
 template_env.globals['DEBUG'] = settings.DEBUG

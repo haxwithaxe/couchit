@@ -8,9 +8,9 @@
 
 <nav>
     <ul>
-        <li><a href="{{ url_for('site_changes', cname=site.cname) }}">recent changes</a></li>
-        <li><a href="{{ url_for('site_settings', cname=site.cname) }}">settings</a></li>
-        <li><a href="{{ url_for('site_design', cname=site.cname) }}">design</a></li>
+        <li><a href="{{ url_for('site_changes') }}">recent changes</a></li>
+        <li><a href="{{ url_for('site_settings') }}">settings</a></li>
+        <li><a href="{{ url_for('site_design') }}">design</a></li>
     </ul>
 </nav>
 
@@ -18,7 +18,7 @@
     <h4>Pages</h4>  
     <ul class="pagelist">
         {% for p in pages %}
-        <li><a href="{{ url_for('show_page', cname=site.cname, pagename=p.title|replace(" ", "_"), alias=site.alias)  }}">{{ p.title }}</a></li>
+        <li><a href="{{ url_for('show_page', pagename=p.title|replace(" ", "_"))  }}">{{ p.title }}</a></li>
         {% endfor %}
     </ul>
 </div>

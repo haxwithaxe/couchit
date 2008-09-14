@@ -287,7 +287,7 @@ def site_changes(request, cname, feedtype=None):
         
     
 
-def site_claim(request, cname):
+def site_claim(request):
     if request.method == "POST":
         site = get_site(local.db, cname)
         site.password = make_hash(request.form['password'])
@@ -303,7 +303,7 @@ def site_claim(request, cname):
     return render_response('site/claim.html')
     
 
-def site_settings(request, cname):
+def site_settings(request):
     return render_response('site/settings.html', site=request.site)
 
     
@@ -316,7 +316,7 @@ def site_logout(request, cname):
     return redirect(request.url)
     
 
-def site_design(request, cname):
+def site_design(request):
     DEFAULT_COLORS = dict(
         background_color = 'E7E7E7',
         text_color = '000000',
@@ -332,7 +332,7 @@ def site_design(request, cname):
         request.site.theme = DEFAULT_COLORS
         
     if request.method == 'POST':
-        site = get_site(local.db, cname)
+        site = get_site(local.db, request.site.cname)
         style = request.form.get('style', 'default')
         if style == 'default':
             site.default_theme = True

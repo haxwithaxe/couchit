@@ -16,7 +16,7 @@
 <section id="pdesign">
     <h4>Design your Couch</h4>
     <p>Below are the current design settings for your site. You can change, preview, save, or restore to factory default settings any time.</p>
-    <form action="{{ url_for('site_design', cname=site.cname) }}" method='POST'>
+    <form action="{{ url_for('site_design') }}" method='POST'>
         <p><input type="radio" name="style" value="default"{% if site.default_theme %} checked='checked'{% endif %} id="style_default" /> Use the CouchIt default style</p>
         <p><input type="radio" name="style" value="custom"{% if not site.default_theme %} checked='checked'{% endif %} id="style_custom"/> Use my custom style below</p>
         <table id="custom_form">
