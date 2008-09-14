@@ -38,17 +38,10 @@ def site_required(f):
         site = None
         if not hasattr(request, 'site'):
             cname = kwargs.get('cname', None)
-            alias = kwargs.get('alias', None)
-            if alias is not None:
-                site = get_site(local.db, alias, by_alias=True)
-                print "alias %s" % alias
-                print site
-            elif cname is not None:
+            if cname is not None:
                 site = get_site(local.db, cname)
-                print "cname %s, site %s" % (cname, site)
             if site is None:
-                print "bordel"
-                return redirect("http://%s" % settings.SERVER_NAME)
+                return redirect("/")
                 
             request.site = site  
         return f(request, **kwargs)
@@ -73,8 +66,8 @@ def home(request):
         return redirect('/%s' % site.cname)
     return render_response('home.html')
   
-@site_required  
-def show_page(request, cname=None, pagename=None, alias=None):
+  
+def show_page(request, cname=None, pagename=None):
     if pagename is None:
         pagename ='home'
     page = get_page(local.db, request.site.id, pagename)
@@ -95,7 +88,7 @@ def show_page(request, cname=None, pagename=None, alias=None):
     
     return render_response('page/show.html', page=page, pages=pages, lexers=LEXERS_CHOICE)
     
-@site_required
+
 def edit_page(request, cname=None, pagename=None):
     if pagename is None:
         pagename ='Home'
@@ -115,21 +108,23 @@ def edit_page(request, cname=None, pagename=None):
     
     return render_response('page/edit.html', page=page)
   
-@site_required  
+  
 def history_page(request, cname=None, pagename=None):
     if pagename is None:
         pagename ='Home'
     page = get_page(local.db, request.site.id, pagename)
-    if not Page:
+    
+    if not page:
         return NotFound
     
     revisions = page.revisions(local.db)
     
     # get all pages
     pages = all_pages(local.db, request.site.id)
+
     return render_response('page/history.html', page=page, pages=pages, revisions=revisions)
     
-@site_required
+
 def revision_page(request, cname=None, pagename=None, nb_revision=None):
     if pagename is None:
         pagename ='Home'
@@ -161,7 +156,7 @@ def revision_page(request, cname=None, pagename=None, nb_revision=None):
 
     return render_response('page/show.html', page=revision, pages=pages)
  
-@site_required   
+   
 def diff_page(request, cname=None, pagename=None):
     if pagename is None:
         pagename ='Home'
@@ -189,7 +184,7 @@ def diff_page(request, cname=None, pagename=None):
     rev2=rev2, revisions=all_revisions)
 
     
-@site_required  
+  
 def revisions_feed(request, cname=None, pagename=None, feedtype="atom"):
     if pagename is None:
         pagename ='Home'
@@ -247,7 +242,7 @@ def revisions_feed(request, cname=None, pagename=None, feedtype="atom"):
             })
         return send_json(json)
     
-@site_required
+
 def site_changes(request, cname, feedtype=None):
     pages = all_pages(local.db, request.site.id)
     changes = get_changes(local.db, request.site.id)
@@ -291,7 +286,7 @@ def site_changes(request, cname, feedtype=None):
     return render_response('site/changes.html', changes=changes, pages=pages)
         
     
-@site_required
+
 def site_claim(request, cname):
     if request.method == "POST":
         site = get_site(local.db, cname)
@@ -307,20 +302,20 @@ def site_claim(request, cname):
         
     return render_response('site/claim.html')
     
-@site_required
+
 def site_settings(request, cname):
     return render_response('site/settings.html', site=request.site)
 
-@site_required    
+    
 def site_login(request, cname):
     pass
     
-@site_required
+
 def site_logout(request, cname):
     request.session['%s_authenticated' % cname] = False
     return redirect(request.url)
     
-@site_required
+
 def site_design(request, cname):
     DEFAULT_COLORS = dict(
         background_color = 'E7E7E7',
@@ -397,6 +392,4 @@ def proxy(request):
     
     response = BCResponse(resp)
     response.content_type = content_type
-    return response
-            
-        
+    return response 

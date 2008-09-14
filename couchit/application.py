@@ -23,9 +23,9 @@ from couchit.http import BCRequest, session_store
 from couchit.utils import local, local_manager
 from couchit.urls import all_views, urls_map
 from couchit import settings
+from couchit.api import *
 from couchit import context_processors
 from couchit import views
-
 
 
 class CouchitApp(object):
@@ -39,8 +39,37 @@ class CouchitApp(object):
     
     def dispatch(self, environ, start_response):
         local.request = request = BCRequest(self, environ)
-        local.url_adapter = adapter = urls_map.bind_to_environ(environ, 
-                                        server_name=settings.SERVER_NAME)
+
+        local.url_adapter = adapter = urls_map.bind_to_environ(environ)
+
+        cur_path = [p for p in request.path.split('/') if p]
+        
+        # test if we are under a subdomain or domain alias
+        cur_server_name = request.url.split("/")[2].split(':')[0].split('.')
+        real_server_name = settings.SERVER_NAME.split(':', 1)[0].split('.')
+        offset = -len(real_server_name)
+
+        subdomain = ''
+        site = None
+        if cur_server_name[offset:] == real_server_name:
+            subdomain = '.'.join(filter(None, cur_server_name[:offset]))
+        else:
+            subdomain = '.'.join(filter(None, cur_server_name))
+        
+
+        if subdomain and subdomain != 'www': # get alias
+            request.alias = subdomain
+            site = get_site(local.db, subdomain, by_alias=True)
+        else: # get shortname
+            site = get_site(local.db, cur_path[0])
+            
+        if site is None: # create website
+            response = self.views['home'](request, **request.args)
+            return response(environ, start_response)
+        
+        request.site = site
+       
+        # process urls
         try:
             endpoint, args = adapter.match()
             response = self.views[endpoint](request, **args)

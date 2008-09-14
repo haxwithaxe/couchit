@@ -87,7 +87,7 @@ aside.hidden { display: none;}
     border-right: 4px solid;
     border-left: 4px solid;
     border-bottom: 4px solid;
-    background-image: url(../../images/roundedcorners.svg);
+    background-image: url(../../img/roundedcorners.svg);
     -moz-border-radius-bottomleft: 5px;
     -moz-border-radius-bottomright: 5px;
     -khtml-border-bottom-left-radius: 5px;
@@ -108,7 +108,7 @@ aside.hidden { display: none;}
     display: block;
     padding: 10px;
     border: 4px solid;
-    background-image: url(../../images/roundedcorners.svg);
+    background-image: url(../../img/roundedcorners.svg);
     -moz-border-radius: 5px;
     -khtml-border-radius: 5px;
     -webkit-radius: 5px;
@@ -399,7 +399,7 @@ a#doCreate.hidden {
     display: block;
    position: relative;
     width: 84%;
-    background-image: url(../../imG/roundedcorners.svg);
+    background-image: url(../../img/roundedcorners.svg);
        -moz-border-radius: 5px;  
        -webkit-border-radius: 5px;  
        -khtml-border-radius: 5px;  
@@ -535,7 +535,7 @@ div.help_error { display: block; font-weight: bold; font-size: 83%; width: 100%;
     margin: 0 auto 0 auto;
     padding: 10px;
     border: 4px solid;
-    background-image: url(../../images/roundedcorners.svg);
+    background-image: url(../../img/roundedcorners.svg);
     -moz-border-radius: 5px;
     -khtml-border-radius: 5px;
     -webkit-radius: 5px;

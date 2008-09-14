@@ -133,6 +133,7 @@ class Page(Document):
             return []
         rows = self.view(db, '_view/page/revisions', key=self.id)
         result = list(iter(rows))
+        print result
         if result: # order revisions
             result.sort(lambda a,b: cmp(a.updated, b.updated))
             result.reverse()
