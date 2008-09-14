@@ -117,7 +117,7 @@
 {% block footer %}
     <script type="text/javascript" charset="utf-8">
         Site.name = "{{ site.cname }}";
-        Site.url = "/" + "{{ site.cname }}"
+        Site.url = "{{ site_url }}";
         {% if not page.id %}
         Page.created = true;
         {% endif %}

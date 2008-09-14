@@ -32,21 +32,6 @@ FORBIDDEN_PAGES = ['site', 'delete', 'edit', 'create', 'history', 'changes']
 
 re_page = re.compile(r'^[- \w]+$', re.U)
 
-
-def site_required(f):
-    def decorated(request, **kwargs):
-        site = None
-        if not hasattr(request, 'site'):
-            cname = kwargs.get('cname', None)
-            if cname is not None:
-                site = get_site(local.db, cname)
-            if site is None:
-                return redirect("/")
-                
-            request.site = site  
-        return f(request, **kwargs)
-    return decorated
-
 def not_found(request):
     return render_response("not_found.html")
 
@@ -67,14 +52,14 @@ def home(request):
     return render_response('home.html')
   
   
-def show_page(request, cname=None, pagename=None):
+def show_page(request=None, pagename=None):
     if pagename is None:
         pagename ='home'
     page = get_page(local.db, request.site.id, pagename)
     if not page or page.id is None or not re_page.match(pagename):
         if pagename.lower() in FORBIDDEN_PAGES:
             redirect_url = "%s?error=%s" % (
-                url_for('show_page', cname=cname, pagename='home'),
+                url_for('show_page', pagename='home'),
                 u"Page name invalid."
             )
             return redirect(redirect_url)
@@ -89,7 +74,7 @@ def show_page(request, cname=None, pagename=None):
     return render_response('page/show.html', page=page, pages=pages, lexers=LEXERS_CHOICE)
     
 
-def edit_page(request, cname=None, pagename=None):
+def edit_page(request=None, pagename=None):
     if pagename is None:
         pagename ='Home'
     
@@ -103,13 +88,13 @@ def edit_page(request, cname=None, pagename=None):
     if request.method == "POST":
         page.content = request.form.get('content', '')
         page.store(local.db)
-        redirect_url = url_for('show_page', cname=cname, pagename=pagename)
+        redirect_url = url_for('show_page', pagename=pagename)
         return redirect(redirect_url)
     
     return render_response('page/edit.html', page=page)
   
   
-def history_page(request, cname=None, pagename=None):
+def history_page(request=None, pagename=None):
     if pagename is None:
         pagename ='Home'
     page = get_page(local.db, request.site.id, pagename)
@@ -125,7 +110,7 @@ def history_page(request, cname=None, pagename=None):
     return render_response('page/history.html', page=page, pages=pages, revisions=revisions)
     
 
-def revision_page(request, cname=None, pagename=None, nb_revision=None):
+def revision_page(request=None, pagename=None, nb_revision=None):
     if pagename is None:
         pagename ='Home'
     page = get_page(local.db, request.site.id, pagename)
@@ -148,7 +133,7 @@ def revision_page(request, cname=None, pagename=None, nb_revision=None):
     if request.method == "POST" and "srevert" in request.form:
         page.content = revision.content
         page.store(local.db)
-        return redirect(url_for("show_page", cname=request.site.cname, pagename=pagename))
+        return redirect(url_for("show_page", pagename=pagename))
         
     # get all pages
     pages = all_pages(local.db, request.site.id)
@@ -157,7 +142,7 @@ def revision_page(request, cname=None, pagename=None, nb_revision=None):
     return render_response('page/show.html', page=revision, pages=pages)
  
    
-def diff_page(request, cname=None, pagename=None):
+def diff_page(request=None, pagename=None):
     if pagename is None:
         pagename ='Home'
     page = get_page(local.db, request.site.id, pagename)
@@ -185,7 +170,7 @@ def diff_page(request, cname=None, pagename=None):
 
     
   
-def revisions_feed(request, cname=None, pagename=None, feedtype="atom"):
+def revisions_feed(request=None, pagename=None, feedtype="atom"):
     if pagename is None:
         pagename ='Home'
     page = get_page(local.db, request.site.id, pagename)
@@ -243,7 +228,7 @@ def revisions_feed(request, cname=None, pagename=None, feedtype="atom"):
         return send_json(json)
     
 
-def site_changes(request, cname, feedtype=None):
+def site_changes(request, feedtype=None):
     pages = all_pages(local.db, request.site.id)
     changes = get_changes(local.db, request.site.id)
 
@@ -289,7 +274,7 @@ def site_changes(request, cname, feedtype=None):
 
 def site_claim(request):
     if request.method == "POST":
-        site = get_site(local.db, cname)
+        site = get_site(local.db)
         site.password = make_hash(request.form['password'])
         site.email = request.form['email']
         site.privacy = request.form['privacy']
@@ -307,11 +292,11 @@ def site_settings(request):
     return render_response('site/settings.html', site=request.site)
 
     
-def site_login(request, cname):
+def site_login(request):
     pass
     
 
-def site_logout(request, cname):
+def site_logout(request):
     request.session['%s_authenticated' % cname] = False
     return redirect(request.url)
     

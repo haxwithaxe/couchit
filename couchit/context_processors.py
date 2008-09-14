@@ -21,3 +21,7 @@ from couchit.utils import local
 def site(request):
     site = getattr(request, 'site', '')
     return { 'site': site }
+
+@register_contextprocessor
+def site_url(request):
+    return { 'site_url': local.site_url }

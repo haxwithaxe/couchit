@@ -4,13 +4,13 @@
 {% endblock %}
 
 {% block head %}
-    <link rel="alternate" type="application/atom+xml" href="{{ url_for('revisions_feed', cname=site.cname, pagename=page.title|replace(" ", "_"), feedtype='atom') }}" title="Atom Revisions Feed" />
+    <link rel="alternate" type="application/atom+xml" href="{{ url_for('revisions_feed', pagename=page.title|replace(" ", "_"), feedtype='atom') }}" title="Atom Revisions Feed" />
 {% endblock %}
 
 {% block page %}
 <section id="pdiff">
-    <h3>Compare revisions of <a href="{{ url_for('show_page', cname=site.cname, pagename=page.title|replace(" ", "_")) }}">{{ page.title }}</a></h3>
-    <form id="fdiff" name="fdiff" action="{{ url_for('diff_page', cname=site.cname, pagename=page.title|replace(" ", "_")) }}" method="post">
+    <h3>Compare revisions of <a href="{{ url_for('show_page', pagename=page.title|replace(" ", "_")) }}">{{ page.title }}</a></h3>
+    <form id="fdiff" name="fdiff" action="{{ url_for('diff_page', pagename=page.title|replace(" ", "_")) }}" method="post">
         <p>From <select name="rev_from" id="rev_from">
             {% for rev in revisions %}
                 {% if rev.nb_revision == rev1.nb_revision %}
@@ -37,7 +37,7 @@
 {% block footer %}
 <script type="text/javascript">
     Site.name = "{{ site.cname }}";
-    Site.url = "/" + "{{ site.cname }}";
+    Site.url = "{{ site_url }}";
     new Create();
     new Diff();
 </script>

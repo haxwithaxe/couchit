@@ -26,7 +26,7 @@ from couchit import settings
 from couchit.api import *
 from couchit import context_processors
 from couchit import views
-
+from couchit.template import template_env
 
 class CouchitApp(object):
     def __init__(self):
@@ -68,6 +68,13 @@ class CouchitApp(object):
             return response(environ, start_response)
         
         request.site = site
+
+        if subdomain:
+            site_url = ''
+        else:
+            site_url = "/" + site.cname
+
+        local.site_url = site_url
 
         print environ['PATH_INFO']
         if not subdomain:
