@@ -118,3 +118,6 @@ class BCRequest(Request):
             self.session = session_store.new()
         else:
             self.session = session_store.get(self.sid)
+
+            
+            

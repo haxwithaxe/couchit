@@ -69,7 +69,8 @@ def home(request):
     return render_response('home.html')
   
 @site_required  
-def show_page(request, cname=None, pagename=None):
+def show_page(request, cname=None, pagename=None, alias=None):
+    print alias
     if pagename is None:
         pagename ='home'
     page = get_page(local.db, request.site.id, pagename)
@@ -244,7 +245,6 @@ def revisions_feed(request, cname=None, pagename=None, feedtype="atom"):
     
 @site_required
 def site_changes(request, cname, feedtype=None):
-    
     pages = all_pages(local.db, request.site.id)
     changes = get_changes(local.db, request.site.id)
 
@@ -289,22 +289,32 @@ def site_changes(request, cname, feedtype=None):
     
 @site_required
 def site_claim(request, cname):
-    password=''
-    if request.method == "POST" and "spassword" in request.form:
-        password = request.form['password']
-    elif request.method == "POST":
+    if request.method == "POST":
+        site = get_site(local.db, cname)
         site.password = make_hash(request.form['password'])
         site.email = request.form['email']
         site.privacy = request.form['privacy']
         site.claimed = True
         site.store(local.db)
+        request.site = site
+        
+        request.session['%s_authenticated' % site.cname] = True;
         return redirect('/%s' % site.cname)
         
-    return render_response('site/claim.html', site=request.site, password=password)
+    return render_response('site/claim.html')
     
 @site_required
 def site_settings(request, cname):
     return render_response('site/settings.html', site=request.site)
+
+@site_required    
+def site_login(request, cname):
+    pass
+    
+@site_required
+def site_logout(request, cname):
+    request.session['%s_authenticated' % cname] = False
+    return redirect(request.url)
     
 @site_required
 def site_design(request, cname):

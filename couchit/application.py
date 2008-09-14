@@ -58,12 +58,14 @@ class CouchitApp(object):
                 max_age = settings.SESSION_COOKIE_AGE
                 expires = time.time() + settings.SESSION_COOKIE_AGE
             session_store.save(request.session)
-            response.set_cookie(settings.SESSION_COOKIE_NAME, 
-                        request.session.sid, 
-                        expires=expires, max_age = max_age,
-                        path=settings.SESSION_COOKIE_PATH, 
-                        domain=settings.SESSION_COOKIE_DOMAIN, 
-                        secure=settings.SESSION_COOKIE_SECURE)
+            response.set_cookie(
+                settings.SESSION_COOKIE_NAME, 
+                request.session.sid, 
+                expires=expires, max_age = max_age,
+                path=settings.SESSION_COOKIE_PATH, 
+                domain=settings.SESSION_COOKIE_DOMAIN, 
+                secure=settings.SESSION_COOKIE_SECURE
+            )
 
         
         return response(environ, start_response)

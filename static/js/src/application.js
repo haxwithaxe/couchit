@@ -198,6 +198,48 @@ var Diff = Class.create({
          }
         });
     }
+});
+
+var Claim = Class.create({
+    initialize: function() {
+        var self = this;
+        this.email = $('email');
+        this.password = $('password')
+        $('fclaim').observe('submit', function(e) {
+            Event.stop(e);
+            if (self.validate()) {
+                this.submit();
+            }
+        }, false);
+    },
+    
+    validate: function() {
+        $$('.help_error').each(function(el) {
+            el.remove();
+        });
+        $$('.errors').each(function(el) {
+            el.removeClassName('errors');
+        });
+        nb_errors = 0;
+        if (!this.email.value.match(/(^[-!#$%&'*+/=?^_`{}|~0-9A-Z]+(\.[-!#$%&'*+/=?^_`{}|~0-9A-Z]+)*|^"([\001-\010\013\014\016-\037!#-\[\]-\177]|\\[\001-011\013\014\016-\177])*")@(?:[A-Z0-9-]+\.)+[A-Z]{2,6}$/i)) {
+            var div = new Element('div', {'class': 'help_error'}).update('Invalid email address.');
+            this.email.parentNode.insert(div);
+            $('row_email').addClassName('errors');
+            nb_errors += 1;
+        } 
+                
+        if (this.password.value.length <= 0) {
+            var div = new Element('div', {'class': 'help_error'}).update('You should set a password.');
+            this.password.parentNode.insert(div);
+            $('row_password').addClassName('errors');
+            nb_errors += 1;
+        }
+        
+        if (nb_errors > 0)
+            return false;
+        return true;
+        
+    }
 })
 
 

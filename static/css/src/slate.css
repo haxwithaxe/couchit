@@ -16,7 +16,10 @@ a {
     border-bottom-color: #d4d4d4;
 }
 
-#phistory, #pdiff, #pdesign {
+#phistory,
+#pdiff,
+#pdesign,
+#claim_wrapper {
     background-color: #fff;
     border-color: #d4d4d4;
     color: #000;
@@ -134,7 +137,13 @@ tr.base .last {
     border-bottom-color: #33aa33;
 }
 
-.claim {
+.claim, .logout {
     background-color: #000;
     color: #fff;
 }
+
+tr.errors {
+    background: #ff9898;
+    border: #ff0000;
+}
+

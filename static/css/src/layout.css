@@ -118,6 +118,7 @@ aside.hidden { display: none;}
 
 
 
+
 #pdiff h4 {
     border-bottom: 1px solid;
 }
@@ -297,24 +298,6 @@ code {
     overflow: auto;
 }
 
-.claim { 
-    float: right; 
-    display: block;
-    margin-right: 2.5em;
-    margin-bottom: 15px;
-    background-image: url("../../img/roundedcorners.svg"); 
-   	-moz-border-radius-bottomleft: 5px;
-    -moz-border-radius-bottomright: 5px;
-    -khtml-border-bottom-left-radius: 5px;
-    -webkit-border-bottom-left-radius: 5px;
-    -khtml-border-bottom-right-radius: 5px;
-    -webkit-border-bottom-right-radius: 5px;
-    border-bottom-left-radius: 5px;
-    border-bottom-right-radius: 5px;
-    padding: 5px;
-    
-    
-}
 
 
 /* window */
@@ -517,3 +500,47 @@ tr.base td.first {
 tr.base .last {
     border-bottom: 1px solid;
 }
+
+tr.errors {
+    padding: 0.3em;
+    border: 1px solid;
+}
+
+div.help_error { display: block; font-weight: bold; font-size: 83%; width: 100%; position: relative; }
+
+/* claim */
+
+.claim, .logout { 
+    float: right; 
+    display: block;
+    margin-right: 2.5em;
+    margin-bottom: 15px;
+    background-image: url("../../img/roundedcorners.svg"); 
+   	-moz-border-radius-bottomleft: 5px;
+    -moz-border-radius-bottomright: 5px;
+    -khtml-border-bottom-left-radius: 5px;
+    -webkit-border-bottom-left-radius: 5px;
+    -khtml-border-bottom-right-radius: 5px;
+    -webkit-border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    padding: 5px;
+    
+    
+}
+
+#claim_wrapper {
+    display: block;
+    width: 550px;
+    margin: 0 auto 0 auto;
+    padding: 10px;
+    border: 4px solid;
+    background-image: url(../../images/roundedcorners.svg);
+    -moz-border-radius: 5px;
+    -khtml-border-radius: 5px;
+    -webkit-radius: 5px;
+    border-radius: 5px;
+}
+
+
+

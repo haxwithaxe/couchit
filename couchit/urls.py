@@ -13,7 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from werkzeug.routing import Map, Rule, RequestRedirect,Submount
+from werkzeug.routing import Map, Rule, Subdomain, RequestRedirect,Submount
 
 from couchit import views
 
@@ -30,6 +30,8 @@ all_views = {
     'site_settings': views.site_settings,
     'site_claim': views.site_claim,
     'proxy': views.proxy,
+    'login': views.site_login,
+    'logout': views.site_logout
 }
 
 
@@ -42,6 +44,8 @@ urls_map = Map([
     Rule('/<cname>/site/settings', endpoint='site_settings'),
     Rule('/<cname>/site/changes', endpoint='site_changes'),
     Rule('/<cname>/site/changes.<feedtype>', endpoint='site_changes'),
+    Rule('/<cname>/login', endpoint='login'),
+    Rule('/<cname>/logout', endpoint='logout'),
     Rule('/<cname>/<pagename>/revisions.<feedtype>', endpoint='revisions_feed'),
     Rule('/<cname>/<pagename>/revision/<nb_revision>', endpoint='revision_page'),
     Rule('/<cname>/<pagename>/history', endpoint='history_page'),
@@ -49,4 +53,21 @@ urls_map = Map([
     Rule('/<cname>/<pagename>/diff', endpoint='diff_page'),
     Rule('/<cname>', defaults={'pagename': 'home' }, endpoint='show_page'),
     Rule('/<cname>/<pagename>', endpoint='show_page'),
+    Subdomain('<cname>',[
+        Rule('/', defaults={'pagename': 'home' }, endpoint='show_page'),
+        Rule('/proxy', endpoint='proxy'),
+        Rule('/site/design', endpoint='site_design'),
+        Rule('/site/claim', endpoint='site_claim'),
+        Rule('/site/settings', endpoint='site_settings'),
+        Rule('/site/changes', endpoint='site_changes'),
+        Rule('/site/changes.<feedtype>', endpoint='site_changes'),
+        Rule('/login', endpoint='login'),
+        Rule('/logout', endpoint='logout'),
+        Rule('/<pagename>/revisions.<feedtype>', endpoint='revisions_feed'),
+        Rule('/<pagename>/revision/<nb_revision>', endpoint='revision_page'),
+        Rule('/<pagename>/history', endpoint='history_page'),
+        Rule('/<pagename>/edit', endpoint='edit_page'),
+        Rule('/<pagename>/diff', endpoint='diff_page'),
+        Rule('/<pagename>', endpoint='show_page'),
+    ])
 ])

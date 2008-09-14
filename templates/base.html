@@ -29,8 +29,8 @@
 body{background-color:#{{ site.theme.background_color }};color:#{{ site.theme.text_color }};}
 a{color:#{{ site.theme.link_color }};}
 #page article, #pedit #pedit_wrapper{background-color:#{{ site.theme.page_fill_color }};border-right-color:#{{ site.theme.border_color }};border-left-color:#{{ site.theme.border_color }};border-bottom-color:#{{ site.theme.border_color }};color:#{{ site.theme.page_text_color }};}
-#phistory,#pdiff,#pdesign,#pedit{background-color:#{{ site.theme.page_fill_color }};border-color:#{{ site.theme.border_color }};color:#{{ site.theme.page_text_color }};}
-#phistory,#pdiff,#pdesign,#page{color:#{{ site.theme.page_text_color }};}
+#phistory,#pdiff,#pdesign,#pedit,#claim_wrapper{background-color:#{{ site.theme.page_fill_color }};border-color:#{{ site.theme.border_color }};color:#{{ site.theme.page_text_color }};}
+#phistory,#pdiff,#pdesign,#page,#claim_wrapper{color:#{{ site.theme.page_text_color }};}
 #phistory a, #pdiff a, #pdesign a, #page a{color:#{{ site.theme.page_link_color }};}
 ul.subsection_tabs{background-color:#{{ site.theme.border_color }};}
 ul.subsection_tabs li.tab a, ul.subsection_tabs li.tab a:visited{color:#{{ site.theme.menu_inactive_color }};}
@@ -65,7 +65,7 @@ tr.rselected{background-color:#{{site.theme.border_color}};color:#{{site.theme.m
         
         <footer class="footer_wrapper">
             {% block footer %}{% endblock %}
-            <p>Powered by <a href="http://couchit.net">CouchIt</a></p>
+            <p>Powered by <a href="http://couch.it">CouchIt</a></p>
         </footer>
         
     </div>
