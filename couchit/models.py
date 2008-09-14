@@ -31,6 +31,7 @@ def _genslug():
 
 
 class Site(Document):
+    alias = TextField()
     cname = TextField()
     title = TextField()
     subtitle = TextField()

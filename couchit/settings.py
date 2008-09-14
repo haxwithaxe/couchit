@@ -17,6 +17,8 @@ import os
 
 DEBUG = True
 
+SERVER_NAME = 'couch.it:5000'
+
 # database
 SERVER_URI ='http://127.0.0.1:5984'
 DATABASE_NAME ='couchit'

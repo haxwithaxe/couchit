@@ -40,8 +40,12 @@ ALL_LEXERS=get_all_lexers()
 
 ALL_COLORSHEME = list(get_all_styles())
 
-def get_site(db, name):
-    rows = Site.view(db, '_view/site/by_cname', key=name)
+def get_site(db, name, by_alias=False):
+    if by_alias:
+        vn = '_view/site/alias'
+    else:
+        vn = '_view/site/by_cname'
+    rows = Site.view(db, vn, key=name)
     lrows = list(iter(rows))
     if lrows:
         return lrows[0]

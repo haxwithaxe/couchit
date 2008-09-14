@@ -39,7 +39,8 @@ class CouchitApp(object):
     
     def dispatch(self, environ, start_response):
         local.request = request = BCRequest(self, environ)
-        local.url_adapter = adapter = urls_map.bind_to_environ(environ)
+        local.url_adapter = adapter = urls_map.bind_to_environ(environ, 
+                                        server_name=settings.SERVER_NAME)
         try:
             endpoint, args = adapter.match()
             response = self.views[endpoint](request, **args)
@@ -50,7 +51,6 @@ class CouchitApp(object):
             response = e
 
         if request.session.should_save:
-            print 'here'
             permanent = request.session.get('permanent', True)
             max_age=None
             expires=None

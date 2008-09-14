@@ -38,13 +38,18 @@ def site_required(f):
         site = None
         if not hasattr(request, 'site'):
             cname = kwargs.get('cname', None)
-            if cname is None:
-                return redirect('/')
-
-            if site is None:
+            alias = kwargs.get('alias', None)
+            if alias is not None:
+                site = get_site(local.db, alias, by_alias=True)
+                print "alias %s" % alias
+                print site
+            elif cname is not None:
                 site = get_site(local.db, cname)
-                if site is None:
-                    return redirect('/')
+                print "cname %s, site %s" % (cname, site)
+            if site is None:
+                print "bordel"
+                return redirect("http://%s" % settings.SERVER_NAME)
+                
             request.site = site  
         return f(request, **kwargs)
     return decorated
@@ -70,7 +75,6 @@ def home(request):
   
 @site_required  
 def show_page(request, cname=None, pagename=None, alias=None):
-    print alias
     if pagename is None:
         pagename ='home'
     page = get_page(local.db, request.site.id, pagename)

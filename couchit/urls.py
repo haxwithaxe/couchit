@@ -52,9 +52,9 @@ urls_map = Map([
     Rule('/<cname>/<pagename>/edit', endpoint='edit_page'),
     Rule('/<cname>/<pagename>/diff', endpoint='diff_page'),
     Rule('/<cname>', defaults={'pagename': 'home' }, endpoint='show_page'),
-    Rule('/<cname>/<pagename>', endpoint='show_page'),
-    Subdomain('<cname>',[
-        Rule('/', defaults={'pagename': 'home' }, endpoint='show_page'),
+    Rule('/<cname>/<pagename>', endpoint='show_page', subdomain=''),
+    Subdomain('<string:alias>',[
+        Rule('/', defaults={ 'pagename': 'home' }, endpoint='show_page'),
         Rule('/proxy', endpoint='proxy'),
         Rule('/site/design', endpoint='site_design'),
         Rule('/site/claim', endpoint='site_claim'),
@@ -70,4 +70,4 @@ urls_map = Map([
         Rule('/<pagename>/diff', endpoint='diff_page'),
         Rule('/<pagename>', endpoint='show_page'),
     ])
-])
+], default_subdomain='')
