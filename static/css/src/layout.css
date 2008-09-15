@@ -278,8 +278,19 @@ span.lineChange {
     position: relative;
     clear: both;
     width: 100%;
-    margin-top: 15px;
+    padding-top: 25px;
 }
+
+footer ul.menu {
+    list-style: none;
+    text-align: center;
+    padding-bottom: 15px;
+}
+footer ul.menu li {
+    display: inline;
+    padding: 0 5px 0 5px;
+}
+p.powered { text-align: center;}
 
 #page_wrapper {
     display: block;
@@ -561,3 +572,8 @@ h5.settings {
     border-bottom: 1px solid;
 }
 
+#home_wrapper {
+    margin: 0 auto 0 auto;
+    width: 550px;
+    text-align: center;
+}

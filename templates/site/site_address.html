@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Site Address
+{% endblock %}
+
+{% block header %}{% endblock %}
+
+{% block fullpage %}
+<div id="claim_wrapper">
+    <form name="faddress" id="faddress" action="{{ url_for('site_address') }}" method="post">   
+        <h2>Site Address</h2>
+        
+        <p class="errors" id="error">{% if error %}<strong>Error:</strong>{{ error }}{% endif %}</p>
+
+        <p><input type="text" name="alias" id="alias" value="{% if site.alias %}{{ site.alias }}{% endif %}" /><strong>.couch.it</strong></p>
+        <p><input type="submit" id="saddress" name="address" value="Change site address" /> or <a href="{{ url_for('site_settings') }}" class="cancel">Cancel</a></p>
+    </form>
+</div>                             
+{% endblock %}
+
+{% block footer %}
+<script type="text/javascript">
+    new SiteAddress();
+</script>
+{% endblock %}
+
+

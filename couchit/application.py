@@ -48,20 +48,24 @@ class CouchitApp(object):
 
         subdomain = ''
         site = None
+        alias = None
+        cname = None
         if cur_server_name[offset:] == real_server_name:
             subdomain = '.'.join(filter(None, cur_server_name[:offset]))
-        else:
-            subdomain = '.'.join(filter(None, cur_server_name))
-        
+            alias = subdomain 
+        else: # redirect to main server if it isn't a subdomain
+            response = redirect('http://%s' % settings.SERVER_NAME)
+            return response(environ, start_response)
 
         if subdomain and subdomain != 'www': # get alias
             request.alias = subdomain
             site = get_site(local.db, subdomain, by_alias=True)
         elif cur_path: # get shortname
             site = get_site(local.db, cur_path[0])
+            cname = cur_path[0]
             
         if site is None: # create website
-            response = self.views['home'](request, **request.args)
+            response = self.views['home'](request, cname=cname, alias=alias, **request.args)
             return response(environ, start_response)
         
         request.site = site

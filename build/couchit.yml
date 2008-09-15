@@ -14,21 +14,24 @@ css:
     theme.css:
         - slate.css
 javascript:
-    couchit.js:
+    prototype.js:
         - lib/prototype.js
+    scriptaculous.js:
         - lib/effects.js
         - lib/dragdrop.js
         - lib/builder.js
         - lib/slider.js
-        - src/application.js
-    couchit-page.js:
+    livepipe.js:
         - lib/livepipe.js
         - lib/tabs.js
         - lib/resizable.js
         - lib/textarea.js
         - lib/window.js
         - lib/showdown.js
+    couchit-application.js:
+        - src/application.js
+    couchit-page.js:
         - src/page.js
-    couchit-design.js:
+    colorpicker.js:
         - lib/yahoo.color.js
         - lib/colorPicker.js

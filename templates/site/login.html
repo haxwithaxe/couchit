@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Login to this site
+{% endblock %}
+
+{% block header %}{% endblock %}
+
+{% block fullpage %}
+<div id="claim_wrapper">
+    <form name="fpassword" id="fpassword" action="{{ url_for('site_login') }}" method="post">
+        <input type="hidden" name="back" value="{{ back }}" />
+        <h2>Please enter a pasword for the site</h2>
+        {% if site.privacy == 'private' %}
+        <h4>Password is required to view and edit site.</h4>
+        {% endif %}
+        {% if site.privacy == 'public' %}
+        <h4>Password is required to edit site.</h4>
+        {% endif %}
+        
+        
+        {% if error %}
+        <p class="errors">{{ error }}</p>
+        {% endif %}
+        {% if notify %}
+        <p class="notify">{{ notify }}</p>
+        {% endif %}
+        <p><input type="password" name="password" id="password" value="password" /> (<a href="{{ site_url }}/site/forgot-password?back={{ back }}">I forgot the password)</a></p>
+        <p><input type="checkbox" id="remerber" name="remember" /><label for="remember">Remember me</label></p>
+        <p><input type="submit" id="spassword" name="spassword" value="Login"></p>
+    </form>
+</div>                             
+{% endblock %}
+
+

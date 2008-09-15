@@ -73,9 +73,13 @@ def can_edit(f):
 def not_found(request):
     return render_response("not_found.html")
 
-def home(request):
+def home(request, cname=None, alias=None):
     if request.method == "POST":
         site = Site()
+        if 'cname' in request.form:
+            site.cname = request.form['cname']
+        if 'alias' in request.form:
+            site.alias = request.form['alias']
         site.store(local.db)
         content = ''
         if 'content' in request.form:
@@ -86,8 +90,12 @@ def home(request):
             content=content
         )
         page.store(local.db)
-        return redirect('/%s' % site.cname)
-    return render_response('home.html')
+        if site.alias:
+            redirect_url = 'http://%s.%s' % (site.alias, settings.SERVER_NAME)
+        else:
+            redirect_url = '/%s' % site.cname
+        return redirect(redirect_url)
+    return render_response('home.html', cname=cname, alias=alias)
   
   
 def show_page(request=None, pagename=None):
@@ -366,7 +374,9 @@ def site_export(request, feedtype="atom"):
 @login_required
 def site_delete(request):
     if request.method == "POST":
-        del request.session['%s_authenticated' % request.site.cname]
+        authkey = '%s_authenticated' % request.site.cname
+        if authkey in request.session:
+            del request.session[authkey]
         del local.db[request.site.id]
         redirect_url = "http://%s" % settings.SERVER_NAME
         return redirect(redirect_url)

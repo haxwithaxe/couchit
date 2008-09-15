@@ -2,10 +2,27 @@
 
 {% block title %}Welcome{% endblock %}
 {% block fullpage %}
-    <h1>Couchit</a>
-    <form action="/" name="fcreate" method="POST">
-        <p><textarea id="content" name="content" cols="60" rows="15" tabindex="1"></textarea></p>
-        <p><input type="submit" name="snew" value="Create a site" tabindex="2" /></p>
-    </form>
+
+<div id="home_wrapper"> 
+    <section id="home">
+        {% if cname or alias %}
+        <h1>Site Not Found</h1>
+        <p>There's no site with that address. Want to make one? Just type some text in the space below and press "create".</p>
+        {% else %}
+        <h1>Couchit</h1>
+        {% endif %}
+        <form action="/" name="fcreate" method="POST">
+            {% if cname %}
+                <input type="hidden" name="cname" value="{{ cname }}" />
+            {% endif %}
+             {% if alias %}
+                <input type="hidden" name="alias" value="{{ alias }}" />
+            {% endif %}
+        
+            <p><textarea id="content" name="content" cols="60" rows="15" tabindex="1"></textarea></p>
+            <p><input type="submit" name="snew" value="Create a site" tabindex="2" /></p>
+        </form>
+    <section>
+</div>
 {% endblock %}
 
