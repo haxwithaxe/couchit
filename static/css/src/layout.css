@@ -181,7 +181,7 @@ ul.subsection_tabs li.tab-edit a.active {
     padding-left: 20px;
 }
 
-.page_delete {
+#page_delete {
 
     background: transparent url(../../img/icon_delete.png) 0 0 no-repeat;
     padding-left: 20px;

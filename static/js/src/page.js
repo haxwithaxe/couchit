@@ -51,7 +51,20 @@ var PageUI = Class.create({
             Event.stop(e);
             self.tabs.setActiveTab("pview");
             return false;
-        })
+        });
+        
+        var page_delete = $('page_delete');
+        
+        if (page_delete)
+            page_delete.observe('click', function(e) {
+                Event.stop(e);
+                var y = window.confirm("Are you sure you want to delete this page?\n\n"+
+                    "Click OK to continue, or click Cancel to stay on this page.");
+                if (!y) {
+                    return false;
+                }
+                document.location.href=this.href;
+            }, false);
         
     },
     

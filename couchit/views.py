@@ -105,7 +105,7 @@ def show_page(request=None, pagename=None):
     
     return render_response('page/show.html', page=page, pages=pages, lexers=LEXERS_CHOICE)
 
-def edit_page(request=None, pagename=None):
+def edit_page(request, pagename=None):
     if pagename is None:
         pagename ='Home'
     
@@ -124,7 +124,23 @@ def edit_page(request=None, pagename=None):
     
     return render_response('page/edit.html', page=page)
   
-  
+def delete_page(request, pagename):
+    if pagename == 'Home': #security reason
+        return redirect(url_for('show_page', pagename='Home'))
+    
+    page = get_page(local.db, request.site.id, pagename)
+    if not page or page.id is None:
+        raise NotFound
+    
+    del local.db[page.id]
+    
+    if local.site_url:
+        redirect_url = local.site_url
+    else:
+        redirect_url = '/'
+    return redirect(redirect_url)
+    
+
 def history_page(request=None, pagename=None):
     if pagename is None:
         pagename ='Home'

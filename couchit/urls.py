@@ -21,6 +21,7 @@ all_views = {
     'home': views.home,
     'show_page': views.show_page,
     'edit_page': views.edit_page,
+    'delete_page': views.delete_page,
     'history_page': views.history_page,
     'revision_page': views.revision_page,
     'diff_page': views.diff_page,
@@ -59,6 +60,7 @@ urls_map = Map([
     Rule('/<pagename>/revision/<nb_revision>', endpoint='revision_page'),
     Rule('/<pagename>/history', endpoint='history_page'),
     Rule('/<pagename>/edit', endpoint='edit_page'),
+    Rule('/<pagename>/delete', endpoint='delete_page'),
     Rule('/<pagename>/diff', endpoint='diff_page'),
     Rule('/', defaults={'pagename': 'home' }, endpoint='show_page'),
     Rule('/<pagename>', endpoint='show_page')

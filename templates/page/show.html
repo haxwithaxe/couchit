@@ -51,6 +51,9 @@
             <h2>{{ page.title }}</h2>
             <ul class="page_infos">
                 <li><time title="GMT" datetime="{{ page.updated|rfc3339 }}">{{ page.updated|formatdatetime }}</time></li>
+                {% if page.title != "Home" %}
+                <li><a id="page_delete" href="{{ url_for('delete_page', pagename=page.title|replace(" ", "_")) }}">delete</a></li>   
+                {% endif %}
                 <li class="last"><a class="page_history" href="{{ url_for('show_page', pagename=page.title|replace(" ", "_")) }}/history">history</a></li>
             </ul>
         </header>
