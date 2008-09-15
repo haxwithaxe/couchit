@@ -57,7 +57,7 @@ class CouchitApp(object):
         if subdomain and subdomain != 'www': # get alias
             request.alias = subdomain
             site = get_site(local.db, subdomain, by_alias=True)
-        else: # get shortname
+        elif cur_path: # get shortname
             site = get_site(local.db, cur_path[0])
             
         if site is None: # create website
@@ -85,7 +85,7 @@ class CouchitApp(object):
         else:
             local.url_adapter = adapter = urls_map.bind_to_environ(environ)
             
-        # process urls
+        # process urls   
         try:
             endpoint, args = adapter.match()
             response = self.views[endpoint](request, **args)
@@ -93,7 +93,8 @@ class CouchitApp(object):
             response = views.not_found(request)
             response.status_code = 404
         except HTTPException, e:
-            response = e
+            response = e.get_response(environ)
+
 
         if request.session.should_save:
             permanent = request.session.get('permanent', False)
@@ -106,7 +107,7 @@ class CouchitApp(object):
             response.set_cookie(
                 settings.SESSION_COOKIE_NAME, 
                 request.session.sid, 
-                expires=expires, max_age = max_age,
+                expires=expires, max_age=max_age,
                 path=settings.SESSION_COOKIE_PATH, 
                 domain=settings.SESSION_COOKIE_DOMAIN, 
                 secure=settings.SESSION_COOKIE_SECURE

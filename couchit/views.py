@@ -25,12 +25,16 @@ from couchit.models import Site, Page, PasswordToken
 from couchit.api import *
 from couchit.http import BCResponse
 from couchit.template import render_response, url_for, render_template, send_json
-from couchit.utils import local, make_hash, datetime_tojson
+from couchit.utils import local, make_hash, datetime_tojson, to_str
 from couchit.utils.mail import send_mail
+
+import simplejson as json
 
 FORBIDDEN_PAGES = ['site', 'delete', 'edit', 'create', 'history', 'changes']
 
 re_page = re.compile(r'^[- \w]+$', re.U)
+re_address = re.compile(r'^[-_\w]+$')
+
 
 def not_logged(f):
     def decorated(request, **kwargs):
@@ -40,6 +44,24 @@ def not_logged(f):
             return redirect(redirect_url)
         return f(request, **kwargs)
     return decorated
+    
+def login_required(f):
+    def decorated(request, **kwargs):
+        authenticated = request.session.get('%s_authenticated' % request.site.cname, False)
+        if request.site.claimed and not authenticated:
+            redirect_url = url_for('site_login')
+            return redirect(redirect_url)
+        return f(request, **kwargs)
+    return decorated
+    
+def not_claimed(f):
+    def decorated(request, **kwargs):
+        if request.site.claimed:
+            redirect_url = local.site_url and local.site_url or "/"
+            return redirect(redirect_url)
+        return f(request, **kwargs)
+    return decorated
+             
         
 def not_found(request):
     return render_response("not_found.html")
@@ -82,7 +104,6 @@ def show_page(request=None, pagename=None):
     pages = all_pages(local.db, request.site.id)
     
     return render_response('page/show.html', page=page, pages=pages, lexers=LEXERS_CHOICE)
-    
 
 def edit_page(request=None, pagename=None):
     if pagename is None:
@@ -252,8 +273,7 @@ def site_changes(request, feedtype=None):
         for rev in changes:
             feed.add(rev.title, rev.content, 
                 updated=rev.updated,
-                url=url_for("show_page", 
-                    cname=request.site.cname, pagename=rev.title.replace(' ', '_')
+                url=url_for("show_page",pagename=rev.title.replace(' ', '_')
                 ),
                 id=rev.title.replace(' ', '_')
             )
@@ -266,8 +286,7 @@ def site_changes(request, feedtype=None):
                 'pages': []
             }
         for rev in changes:
-            url = url_for("show_page", 
-                        cname=request.site.cname, pagename=rev.title.replace(' ', '_')
+            url = url_for("show_page", pagename=rev.title.replace(' ', '_')
             )
             json['pages'].append({
                 'title': rev.title,
@@ -279,9 +298,55 @@ def site_changes(request, feedtype=None):
         return send_json(json)
 
     return render_response('site/changes.html', changes=changes, pages=pages)
-        
-    
 
+
+def site_export(request, feedtype="atom"):
+    pages = all_pages(local.db, request.site.id)
+    if pages:
+        pages.sort(lambda a,b: cmp(a.updated, b.updated))
+    if feedtype == "atom":
+        feed = AtomFeed(
+            title="%s: Latest changes" % request.site.title and request.site.title or request.site.cname,
+            subtitle=request.site.subtitle,
+            updated = pages[0].updated,
+            id = request.site.cname
+        )
+        for page in pages:
+            feed.add(page.title, page.content,
+            updated=page.updated, 
+            url=url_for("show_page", pagename=page.title.replace(' ', '_')),
+            id=page.title.replace(' ', '_')
+        )
+        return feed.get_response()
+    json = {
+        'title': "%s: Latest changes" % request.site.title and request.site.title or request.site.cname,
+        'subtitle': request.site.subtitle,
+        'updated':datetime_tojson(pages[0].updated),
+        'pages': []
+    }
+    for page in pages:
+        url = url_for("show_page", 
+                    pagename=page.title.replace(' ', '_')
+        )
+        json['pages'].append({
+            'title': page.title,
+            'content': page.content,
+            'url':  url,
+            'updated':datetime_tojson(page.updated),
+            'id':page.title.replace(' ', '_')
+        })
+    return send_json(json)
+    
+@login_required
+def site_delete(request):
+    if request.method == "POST":
+        del request.session['%s_authenticated' % request.site.cname]
+        del local.db[request.site.id]
+        redirect_url = "http://%s" % settings.SERVER_NAME
+        return redirect(redirect_url)
+    return render_response('site/delete.html')
+    
+@not_claimed
 def site_claim(request):
     if request.method == "POST":
         site = get_site(local.db, request.site.cname)
@@ -312,29 +377,93 @@ def site_claim(request):
         
     return render_response('site/claim.html')
     
-
+@login_required
 def site_settings(request):
+    if request.is_xhr and request.method == "POST":
+        data = json.loads(request.data)
+        site = get_site(local.db, request.site.cname)
+        site.title = data.get('title', site.title)
+        site.subtitle = data.get('subtitle', site.subtitle)
+        site.email = data.get('email', site.email)
+        site.privacy = data.get('privacy', site.privacy)
+        site.store(local.db)
+        request.site = site
+        return send_json({ 'ok': True })
+        
+    
+    site_address = None
+    if request.site.alias is not None and request.site.alias:
+        site_address = "http://%s.%s" % (request.site.alias, settings.SERVER_NAME)
+        
     # get all pages
     pages = all_pages(local.db, request.site.id)
-    return render_response('site/settings.html', pages=pages)
+    return render_response('site/settings.html', pages=pages, site_address=site_address)
+
+@login_required
+def site_address(request):
+    error = None
+    if request.is_xhr:
+        alias = request.values.get('alias')
+        if alias is None:
+            return send_json({
+                'ok': False,
+                'error': u"alias is empty or length < 3"
+            })
+        elif get_site(local.db, alias, True) and request.site.alias != alias:
+            return send_json({
+                'ok': False,
+                'error':  u"A site with this name has already been registered in couch.it"
+            })
+        return send_json({ 'ok': True })
+    
+    if request.method == "POST":
+        alias = request.form.get('alias')
+        if not alias or len(alias) <= 3:
+            error = u"alias is empty or length < 3"
+        elif not re_address.match(alias):
+            error = u"Address name is invalid. It should only contain string and _ or -."
+        elif get_site(local.db, alias, True) and request.site.alias != alias:
+            error = u"A site with this name has already been registered in couch.it"
+        else:
+            site = get_site(local.db, request.site.cname)
+            site.alias = alias
+            site.store(local.db)
+            request.site = site
+            redirect_url = "http://%s.%s" % (site.alias, settings.SERVER_NAME)
+            return redirect(redirect_url)
+            
+    return render_response('site/site_address.html', error=error)
 
 @not_logged    
 def site_login(request):
-    back=request.values.get('back', '')
     error = None
-    notify = request.session.get('notify', '')
-    if notify:
-        del request.session['notify']
+    
+    if request.method == "GET":
+        back=request.values.get('back', '')
+        notify = request.session.get('notify', '')
+        if notify:
+            del request.session['notify']
+    
     if request.method == "POST":
+        error = u'Password is invalid.'
         if validate_password(local.db, request.site.id, request.form['password']):
+            print "here"
             request.session['%s_authenticated' % request.site.cname] = True
-            if request.form['remember']:
+            if 'remember' in request.form:
                 request.session['permanent'] = True
-            back = request.form['back']
-            redirect_url = back and back or '/'
+            elif 'permanent' in request.session:
+                del request.session['permanent']
+            back = request.form.get('back', '')
+            if back:
+                redirect_url = back
+            else:
+                if local.site_url:
+                    redirect_url = local.site_url
+                else:
+                    redirect_url = '/'
             return redirect(redirect_url)
-        else:
-            error = u'Password is invalid.'
+            
+
     return render_response('site/login.html', back=back, error=error, notify=notify)
     
 
@@ -346,8 +475,11 @@ def site_logout(request):
         redirect_url = '/'
     return redirect(redirect_url)
 
-@not_logged
 def site_change_password(request):
+    authenticated = request.session.get('%s_authenticated' % request.site.cname, False)
+    if authenticated:
+        return change_password_authenticated(request)
+    
     error = None
     token = request.values.get('t', None)
     invalid_token = False
@@ -382,6 +514,30 @@ def site_change_password(request):
                 error=u'Password is empty.'
     return render_response('site/change_password.html', token=token, 
                 error=error, invalid_token=invalid_token)
+    
+                
+def change_password_authenticated(request):
+    error = None
+    if request.method == 'POST':
+        site = get_site(local.db, request.site.cname)
+        p1 = request.form.get('password', '')
+        p2 = request.form.get('old_password', '')
+        
+        if not p1:
+            error = u"New password can't be empty"
+        elif not p2:
+            error = u"Old password can't be empty"
+        elif make_hash(p2) != site.password:
+            error = u"Old password is invalid."
+        else:
+            h = make_hash(p1)
+            if (h != site.password):
+                site.password = h
+                site.store(local.db)
+            request.site = site
+            return redirect(url_for('site_settings'))
+        
+    return render_response('site/change_password_authenticated.html', error=error)
 
 @not_logged    
 def site_forgot_password(request):

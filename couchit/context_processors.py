@@ -24,13 +24,19 @@ def site(request):
 
 @register_contextprocessor
 def site_url(request):
+    if hasattr(local, 'site_url'):
+        site_url = local.site_url
+    else:
+        site_url = ''
     return {
-        'site_url': local.site_url,
+        'site_url': site_url,
         'current_url': request.url
     }
 
 @register_contextprocessor
 def authenticated(request):
-    authenticated = request.session.get('%s_authenticated' % request.site.cname, False)
+    authenticated = False
+    if hasattr(request, 'site'):
+        authenticated = request.session.get('%s_authenticated' % request.site.cname, False)
     return { 'authenticated': authenticated }
         

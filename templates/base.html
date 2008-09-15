@@ -48,9 +48,9 @@ tr.rselected{background-color:#{{site.theme.border_color}};color:#{{site.theme.m
     {% if site %}
         {% if site.claimed %}
         {% if authenticated %}
-            <a href="{{ url_for('logout') }}" class="logout">logout</a>
+            <a href="{{ url_for('site_logout') }}" class="logout">logout</a>
         {% else %}
-        <a href="{{ url_for('login') }}?back={{ current_url }}" class="logout">login</a>
+        <a href="{{ url_for('site_login') }}?back={{ current_url }}" class="logout">login</a>
         {% endif %}
      
         {% else %}
@@ -59,9 +59,9 @@ tr.rselected{background-color:#{{site.theme.border_color}};color:#{{site.theme.m
     {% endif %}
     
     <div id="container">
-        <header>
-            <h1></h1>
-            <h2></h2>
+        <header id="site_header">
+            <h1>{% if site.title %}{{ site.title }}{% endif %}</h1>
+            <h2>{% if site.subtitle %}{{ site.subtitle }}{% endif %}</h2>
         </header>
         
         <div id="page_wrapper">

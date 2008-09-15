@@ -200,6 +200,129 @@ var Diff = Class.create({
     }
 });
 
+var Settings = Class.create({
+   initialize: function() {
+       var self = this;
+       this.observer = null;
+       this.title = $('site_header').getElementsBySelector("h1")[0];
+       this.subtitle = $('site_header').getElementsBySelector("h2")[0];
+       
+       $$('input').each(function(el) {
+          new Form.Element.Observer(
+              el,
+              0.2, 
+              function(el, value) {
+                  if (el.id == "site_title") 
+                    self.title.update(value); 
+                  if (el.id == "site_subtitle")
+                    self.subtitle.update(value);
+                    
+                   if(self.observer) clearTimeout(self.observer);
+                   self.observer = setTimeout(self.save.bind(self), 400);
+              }
+         );
+       });
+   },
+   
+   save: function() {
+       var data = {}
+       try {
+           data = {
+               'title': $('site_title').getValue(),
+               'subtitle': $('site_subtitle').getValue(),
+               'email': $('email').getValue(),
+               'privacy': $$('input:checked[type="radio"][name="privacy"]').pluck('value')[0]
+           }
+       } catch(e) {
+           data = {
+                'title': $('site_title').getValue(),
+                'subtitle': $('site_subtitle').getValue()
+            }
+       }
+       
+       
+       url = $('fsettings').action;
+       new Ajax.Request(url, {
+         method: 'post',
+         postBody: Object.toJSON(data),
+         contentType: 'application/json', 
+         requestHeaders: {Accept: 'application/json'},
+         onSuccess: function(response) {   
+            data = response.responseText.evalJSON(true);
+            
+        }
+       });
+   }
+});
+
+
+var SiteAddress = Class.create({
+    initialize: function() {
+        var self = this;
+        if (!$('error').innerHTML)
+            $('error').hide();
+            
+        new Form.Element.Observer(
+              "alias",
+              0.2, 
+              function(el, value) {
+                  if (value.length > 3 && !value.match(/^(\w+)$/)) {
+                       $('error').update("<strong>Error:</strong> "+ 
+                       $('alias').value + " is invalid, "+ 
+                       "only use letters and numbers.");
+                       $('error').show();
+                  } else {
+                      $('error').hide()
+                  }
+              }
+         );
+
+         $('faddress').observe('submit', function(e) {
+            Event.stop(e);
+            var error = null;
+            var value = $('alias').getValue();
+            
+            if (value.length <= 3) {
+                error = "length < 3";
+            } else if (!value.match(/^(\w+)$/)) {
+                error = value + " is invalid, only use letters and numbers."
+            } 
+            if (error) {
+                $('error').update("<strong>Error:</strong> "+error);
+                $('error').show();
+                return false;
+            } else {
+                self.valid_name();
+            }
+
+         }, false)
+        
+    },
+    
+    valid_name: function() {
+        url = $('faddress').action;
+        new Ajax.Request(url, {
+          method: 'get',
+          contentType: 'application/json',
+          parameters: {
+              'alias': $('alias').getValue()
+          }, 
+          requestHeaders: {Accept: 'application/json'},
+          onSuccess: function(response) {   
+             data = response.responseText.evalJSON(true);
+             if (data['ok']) {
+                 $('faddress').submit();
+             } else {
+                 $('error').update("<strong>Error:</strong> "+data['error']);
+                 $('error').show();
+             }
+         }
+        });
+    }
+    
+    
+})
+
 var Claim = Class.create({
     initialize: function() {
         var self = this;

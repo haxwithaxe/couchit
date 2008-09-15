@@ -36,10 +36,10 @@ class PasswordToken(Document):
 class Site(Document):
     alias = TextField()
     cname = TextField()
-    title = TextField()
-    subtitle = TextField()
+    title = TextField(default='')
+    subtitle = TextField(default='')
     password = TextField()
-    email = TextField()
+    email = TextField(default='')
     privacy = TextField(default='open')
     claimed = BooleanField(default=False)
     created = DateTimeField()

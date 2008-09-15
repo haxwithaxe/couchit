@@ -83,7 +83,10 @@ def all_pages(db, siteid):
     if siteid is None:
         return []
     rows = Page.view(db, '_view/page/all_pages', key=siteid)
-    return list(iter(rows))
+    pages = list(iter(rows))
+    if pages:
+        pages.sort(lambda a,b: cmp(a.title, b.title))
+    return pages
     
     
 def get_changes(db, siteid):

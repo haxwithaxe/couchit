@@ -30,10 +30,13 @@ all_views = {
     'site_settings': views.site_settings,
     'site_claim': views.site_claim,
     'proxy': views.proxy,
-    'login': views.site_login,
-    'logout': views.site_logout,
+    'site_login': views.site_login,
+    'site_logout': views.site_logout,
     'forgot_password': views.site_forgot_password,
-    'change_password': views.site_change_password
+    'change_password': views.site_change_password,
+    'site_address': views.site_address,
+    'site_export': views.site_export,
+    'site_delete': views.site_delete
 }
 
 
@@ -42,13 +45,16 @@ urls_map = Map([
     Rule('/proxy', endpoint='proxy'),
     Rule('/site/design', endpoint='site_design'),
     Rule('/site/claim', endpoint='site_claim'),
+    Rule('/site/delete', endpoint='site_delete'),
     Rule('/site/forgot-password', endpoint='forgot_password'),
     Rule('/site/change-password', endpoint='change_password'),
+    Rule('/site/change-site-address', endpoint='site_address'),
     Rule('/site/settings', endpoint='site_settings'),
     Rule('/site/changes', endpoint='site_changes'),
     Rule('/site/changes.<feedtype>', endpoint='site_changes'),
-    Rule('/login', endpoint='login'),
-    Rule('/logout', endpoint='logout'),
+    Rule('/site/export.<feedtype>', endpoint='site_export'),
+    Rule('/site/login', endpoint='site_login'),
+    Rule('/site/logout', endpoint='site_logout'),
     Rule('/<pagename>/revisions.<feedtype>', endpoint='revisions_feed'),
     Rule('/<pagename>/revision/<nb_revision>', endpoint='revision_page'),
     Rule('/<pagename>/history', endpoint='history_page'),

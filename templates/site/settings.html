@@ -13,22 +13,30 @@
             <tr>
                 <th>Title</th>
                 <td><input type="text" name="site_title" id="site_title" value="{{ site.title }}" /></td>
+                <td>Appears at the top of every page</td>
             </tr>
             <tr>
                 <th>Subtitle</th>
-                <td><input type="text" name="site_subtitle" id="site_subtitle" value="{{ subtitle }}" /></td>
+                <td><input type="text" name="site_subtitle" id="site_subtitle" value="{{ site.subtitle }}" /></td>
+                <td>Appears below the title</td>
+            </tr>
+            <tr>
+                <th>Site address</th>
+                <td>{% if site_address %}<strong>{{ site_address }}</strong> (<a href="{{ site_url }}/site/change-site-address">change</a>){% else %}<a href="{{ site_url }}/site/change-site-address">Give your site an address</a>{% endif %}</td>
+                <td>{% if not site_address %}Give your website an address that's easy to remembe{% endif %}</td>
             </tr>
             {% if site.claimed %}
                 <tr>
                     <th>Password</th>
                     <td><a href="{{ site_url }}/site/change-password">Change password</a></td>
-                    
+                    <td></td>
                 </tr>
                 <tr>
                     <th>Email address:</th>
-                    <td><input type="email" name="email" id="email" value="" /></td>
+                    <td><input type="email" name="email" id="email" value="{{ site.email }}" /></td>
+                    <td></td>
                 </tr>
-            {% endif %}
+            
             
             <tr>
                 <th>Kind of site:</th>
@@ -52,9 +60,17 @@
                     </table>
                 </td>
             </tr>
+            {% endif %}
         </table>
-        <p><input type="submit" id="ssettings" name="ssettings" value="Claim site" /> or <a href="{% if site_url %}{{ site_url }}{% else %}/{% endif %}">Cancel</a></p>
     </form>
+    <p>&nbsp;</p>
+    <h5 class="settings">Export your content</h5>
+    
+    <p>Export your content to <a href="{{ site_url }}/site/export.atom">Atom Syndication Format</a> or <a href="{{ site_url }}/site/export.json">JSON Format</a> (only the latest version of your pages is included).</p>
+    <h5 class="settings">Delete site</h5>
+    <p><a href="{{ url_for('site_delete') }}">Delete this site.</a> Deleting this site will immediately take it down.</p>
+       
+    
 </section>
                        
 {% endblock %}
@@ -68,5 +84,6 @@
     Site.name = "{{ site.cname }}";
     Site.url = "{{ site_url }}";
     new Create();
+    new Settings();
 </script>
 {% endblock %}

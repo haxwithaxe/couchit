@@ -547,5 +547,9 @@ p.notify, p.errors {
     border-radius: 5px;
 }
 
-
+h5.settings {
+    padding-bottom: 0;
+    margin-bottom: 0.8em;
+    border-bottom: 1px solid;
+}
 
