@@ -122,7 +122,11 @@ class CouchitApp(object):
         
         if request.site.privacy == "private" and not authenticated and endpoint!='site_login':
             response = redirect(url_for('site_login'))
-        
+        elif not subdomain and request.site.alias:
+            redirect_url = "http://%s.%s/%s" % (request.site.alias, settings.SERVER_NAME, 
+                                    path_info)
+            print redirect_url
+            response = redirect(redirect_url)
         
             
         return response(environ, start_response)
