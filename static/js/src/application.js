@@ -363,7 +363,7 @@ var Claim = Class.create({
         return true;
         
     }
-})
+});
 
 
 document.observe("dom:loaded", function() {

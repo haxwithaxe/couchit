@@ -205,7 +205,7 @@ var PageUI = Class.create({
                     }).join('\n')
                     snippet = "\n\n    :::" + $('snippet_language').getValue() +
                     "\n" + code;
-                    obj.insertAfterSelection(snippet);
+                    obj.replaceSelection(snippet);
                     self.snippet_window.close();
                     $('snippet_content').value = "";
                 } else {
@@ -222,12 +222,12 @@ var PageUI = Class.create({
                          }).join('\n');
                          
                          snippet = " \n\n    :::" + data['language'] + "\n"  + code;
-                         obj.insertAfterSelection(snippet);
+                         obj.replaceSelection(snippet);
                          self.snippet_window.close();
                          $('snippet_content').value = "";
                       },
                       onFailure: function() {
-                          alert("fuck")
+                          alert("mmm... error while trying to fetch content from friendpaste:(")
                       }
                     });
                 }
@@ -240,7 +240,20 @@ var PageUI = Class.create({
                 Event.stop(e);
                 self.snippet_window.close();
                 return false;
-            })
+            });
+            
+            $('snippet_url', 'snippet_language', 'snippet_content').each(function(el) {
+                el.observe("focus", function(e) {
+                    if (this.id == "snippet_url")
+                        $('sfp').checked = true;
+                    else
+                        $('si').checked = true;
+                }, false);
+            });
+            
+            
+            
+            
           },{  
               id: 'markdown_snippet_button'  
           });
