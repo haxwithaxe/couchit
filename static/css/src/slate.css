@@ -19,7 +19,8 @@ a {
 #phistory,
 #pdiff,
 #pdesign,
-#claim_wrapper {
+#claim_wrapper,
+#psettings {
     background-color: #fff;
     border-color: #d4d4d4;
     color: #000;
@@ -147,3 +148,6 @@ tr.errors {
     border: #ff0000;
 }
 
+p.notice {
+     background: #FFF6BF; color: #514721; border-color: #FFD324;
+}

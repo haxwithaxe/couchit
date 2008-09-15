@@ -16,7 +16,7 @@
                     <ol>
                         {% for change in page.changes %}
                             {% if change['type'] != 'unmod' %}
-                        <li>{{ change['type']|pretty_type }} "<span class="lineChange">{{ change['changed']['lines']|join('\n')|trim|striptags|truncate(40) }}"</li> 
+                        <li>{{ change['type']|pretty_type }} <span class="lineChange">&quot;{{ change['changed']['lines']|join('\n')|trim|striptags|truncate(40) }}&quot;</span></li> 
                             {% endif %}  
                         {% endfor %}
                     </ol>
@@ -27,8 +27,6 @@
                     <span class="created">Created page.</span>
                         {% endif %}
                     {% endif %}
-
-
                 </td>
             </tr>
         {% endfor %}
@@ -37,9 +35,9 @@
 {% endblock %}
 
 {% block footer %}
-<script type="text/javascript" charset="utf-8">
+<script type="text/javascript">
     Site.name = "{{ site.cname }}";
-    Site.url = "/" + "{{ site.cname }}"
+    Site.url = "/" + "{{ site.cname }}";
     new Create();
 </script>
 {% endblock %}

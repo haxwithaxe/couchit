@@ -31,26 +31,30 @@ all_views = {
     'site_claim': views.site_claim,
     'proxy': views.proxy,
     'login': views.site_login,
-    'logout': views.site_logout
+    'logout': views.site_logout,
+    'forgot_password': views.site_forgot_password,
+    'change_password': views.site_change_password
 }
 
 
 
 urls_map = Map([
-    Rule('/proxy', endpoint='proxy', ),
-    Rule('/site/design', endpoint='site_design', ),
-    Rule('/site/claim', endpoint='site_claim', ),
-    Rule('/site/settings', endpoint='site_settings', ),
-    Rule('/site/changes', endpoint='site_changes', ),
-    Rule('/site/changes.<feedtype>', endpoint='site_changes', ),
-    Rule('/login', endpoint='login', ),
-    Rule('/logout', endpoint='logout', ),
-    Rule('/<pagename>/revisions.<feedtype>', endpoint='revisions_feed', ),
-    Rule('/<pagename>/revision/<nb_revision>', endpoint='revision_page', ),
-    Rule('/<pagename>/history', endpoint='history_page', ),
-    Rule('/<pagename>/edit', endpoint='edit_page', ),
-    Rule('/<pagename>/diff', endpoint='diff_page', ),
-    Rule('/', defaults={'pagename': 'home' }, endpoint='show_page', ),
-    Rule('/<pagename>', endpoint='show_page', )
+    Rule('/proxy', endpoint='proxy'),
+    Rule('/site/design', endpoint='site_design'),
+    Rule('/site/claim', endpoint='site_claim'),
+    Rule('/site/forgot-password', endpoint='forgot_password'),
+    Rule('/site/change-password', endpoint='change_password'),
+    Rule('/site/settings', endpoint='site_settings'),
+    Rule('/site/changes', endpoint='site_changes'),
+    Rule('/site/changes.<feedtype>', endpoint='site_changes'),
+    Rule('/login', endpoint='login'),
+    Rule('/logout', endpoint='logout'),
+    Rule('/<pagename>/revisions.<feedtype>', endpoint='revisions_feed'),
+    Rule('/<pagename>/revision/<nb_revision>', endpoint='revision_page'),
+    Rule('/<pagename>/history', endpoint='history_page'),
+    Rule('/<pagename>/edit', endpoint='edit_page'),
+    Rule('/<pagename>/diff', endpoint='diff_page'),
+    Rule('/', defaults={'pagename': 'home' }, endpoint='show_page'),
+    Rule('/<pagename>', endpoint='show_page')
 ])
 

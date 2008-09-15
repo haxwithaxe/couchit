@@ -18,7 +18,7 @@
 <script src="/static/js/lib/textarea.js" type="text/javascript"></script>
 <script src="/static/js/lib/window.js" type="text/javascript"></script>
 <script src="/static/js/lib/showdown.js" type="text/javascript"></script>
-<script src="/static/js/src/page.js" type="text/javascript" charset="utf-8"></script>
+<script src="/static/js/src/page.js" type="text/javascript"></script>
 {% else %}
 <script src="/static/js/couchit-page.js" type="text/javascript"></script>
 {% endif %}
@@ -115,13 +115,13 @@
 
 
 {% block footer %}
-    <script type="text/javascript" charset="utf-8">
-        Site.name = "{{ site.cname }}";
-        Site.url = "{{ site_url }}";
-        {% if not page.id %}
-        Page.created = true;
-        {% endif %}
-        new Create();
-        new PageUI();
-    </script>
+<script type="text/javascript">
+Site.name = "{{ site.cname }}";
+Site.url = "{{ site_url }}";
+{% if not page.id %}
+Page.created = true;
+{% endif %}
+new Create();
+new PageUI();
+</script>
 {% endblock %}

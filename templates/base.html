@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<html lang="en">
 
 <head>
     <meta charset="utf-8" />
     <title>couchit - {% block title %}{% endblock %}</title>
     {% if DEBUG %}
     <link rel="stylesheet" href="/static/css/src/debug.css" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="/static/css/src/textarea.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/src/textarea.css" />
     <script src="/static/js/lib/prototype.js" type="text/javascript"></script>
     <script src="/static/js/lib/effects.js" type="text/javascript"></script>
     <script src="/static/js/lib/dragdrop.js" type="text/javascript"></script>
@@ -15,11 +15,11 @@
     <script src="/static/js/lib/slider.js" type="text/javascript"></script>
     <script src="/static/js/src/application.js" type="text/javascript"></script>
     {% else %}
-    <link rel="stylesheet" href="/static/css/screen.css" type="text/css" media="screen, projection">
-    <link rel="stylesheet" href="/static/css/theme.css" type="text/css" media="screen, projection">
-    <link rel="stylesheet" href="/static/css/print.css" type="text/css" media="print"> 
+    <link rel="stylesheet" href="/static/css/screen.css" type="text/css" media="screen, projection" />
+    <link rel="stylesheet" href="/static/css/theme.css" type="text/css" media="screen, projection" />
+    <link rel="stylesheet" href="/static/css/print.css" type="text/css" media="print" /> 
     <!--[if IE]>
-      <link rel="stylesheet" href="/static/css/ie.css" type="text/css" media="screen, projection">
+      <link rel="stylesheet" href="/static/css/ie.css" type="text/css" media="screen, projection" />
     <![endif]-->
     <script src="/static/js/couchit.js" type="text/javascript"></script>
     {% endif %}
@@ -29,9 +29,9 @@
 body{background-color:#{{ site.theme.background_color }};color:#{{ site.theme.text_color }};}
 a{color:#{{ site.theme.link_color }};}
 #page article, #pedit #pedit_wrapper{background-color:#{{ site.theme.page_fill_color }};border-right-color:#{{ site.theme.border_color }};border-left-color:#{{ site.theme.border_color }};border-bottom-color:#{{ site.theme.border_color }};color:#{{ site.theme.page_text_color }};}
-#phistory,#pdiff,#pdesign,#pedit,#claim_wrapper{background-color:#{{ site.theme.page_fill_color }};border-color:#{{ site.theme.border_color }};color:#{{ site.theme.page_text_color }};}
-#phistory,#pdiff,#pdesign,#page,#claim_wrapper{color:#{{ site.theme.page_text_color }};}
-#phistory a, #pdiff a, #pdesign a, #page a{color:#{{ site.theme.page_link_color }};}
+#phistory,#pdiff,#pdesign,#pedit,#claim_wrapper,#psettings{background-color:#{{ site.theme.page_fill_color }};border-color:#{{ site.theme.border_color }};color:#{{ site.theme.page_text_color }};}
+#phistory,#pdiff,#pdesign,#page,#claim_wrapper,#psettings{color:#{{ site.theme.page_text_color }};}
+#phistory a, #pdiff a, #pdesign a, #page a, #psettings a{color:#{{ site.theme.page_link_color }};}
 ul.subsection_tabs{background-color:#{{ site.theme.border_color }};}
 ul.subsection_tabs li.tab a, ul.subsection_tabs li.tab a:visited{color:#{{ site.theme.menu_inactive_color }};}
 .box{background-color:#{{ site.theme.page_fill_color }};}
@@ -50,7 +50,7 @@ tr.rselected{background-color:#{{site.theme.border_color}};color:#{{site.theme.m
         {% if authenticated %}
             <a href="{{ url_for('logout') }}" class="logout">logout</a>
         {% else %}
-        <a href="{{ url_for('login') }}" class="logout">login</a>
+        <a href="{{ url_for('login') }}?back={{ current_url }}" class="logout">login</a>
         {% endif %}
      
         {% else %}
@@ -59,6 +59,10 @@ tr.rselected{background-color:#{{site.theme.border_color}};color:#{{site.theme.m
     {% endif %}
     
     <div id="container">
+        <header>
+            <h1></h1>
+            <h2></h2>
+        </header>
         
         <div id="page_wrapper">
             {% block fullpage %}
@@ -73,9 +77,11 @@ tr.rselected{background-color:#{{site.theme.border_color}};color:#{{site.theme.m
         </div>
         
         <footer class="footer_wrapper">
-            {% block footer %}{% endblock %}
+           
             <p>Powered by <a href="http://couch.it">CouchIt</a></p>
         </footer>
+        
+         {% block footer %}{% endblock %}
         
     </div>
 </body>

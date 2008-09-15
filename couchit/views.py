@@ -21,7 +21,7 @@ from werkzeug.contrib.atom import AtomFeed
 from werkzeug.routing import NotFound
 from werkzeug.utils import url_unquote
 from couchit import settings
-from couchit.models import Site, Page
+from couchit.models import Site, Page, PasswordToken
 from couchit.api import *
 from couchit.http import BCResponse
 from couchit.template import render_response, url_for, render_template, send_json
@@ -32,6 +32,15 @@ FORBIDDEN_PAGES = ['site', 'delete', 'edit', 'create', 'history', 'changes']
 
 re_page = re.compile(r'^[- \w]+$', re.U)
 
+def not_logged(f):
+    def decorated(request, **kwargs):
+        authenticated = request.session.get('%s_authenticated' % request.site.cname, False)
+        if authenticated:
+            redirect_url = local.site_url and local.site_url or "/"
+            return redirect(redirect_url)
+        return f(request, **kwargs)
+    return decorated
+        
 def not_found(request):
     return render_response("not_found.html")
 
@@ -55,6 +64,7 @@ def home(request):
 def show_page(request=None, pagename=None):
     if pagename is None:
         pagename ='home'
+        
     page = get_page(local.db, request.site.id, pagename)
     if not page or page.id is None or not re_page.match(pagename):
         if pagename.lower() in FORBIDDEN_PAGES:
@@ -304,11 +314,28 @@ def site_claim(request):
     
 
 def site_settings(request):
-    return render_response('site/settings.html', site=request.site)
+    # get all pages
+    pages = all_pages(local.db, request.site.id)
+    return render_response('site/settings.html', pages=pages)
 
-    
+@not_logged    
 def site_login(request):
-    pass
+    back=request.values.get('back', '')
+    error = None
+    notify = request.session.get('notify', '')
+    if notify:
+        del request.session['notify']
+    if request.method == "POST":
+        if validate_password(local.db, request.site.id, request.form['password']):
+            request.session['%s_authenticated' % request.site.cname] = True
+            if request.form['remember']:
+                request.session['permanent'] = True
+            back = request.form['back']
+            redirect_url = back and back or '/'
+            return redirect(redirect_url)
+        else:
+            error = u'Password is invalid.'
+    return render_response('site/login.html', back=back, error=error, notify=notify)
     
 
 def site_logout(request):
@@ -318,7 +345,70 @@ def site_logout(request):
     else:
         redirect_url = '/'
     return redirect(redirect_url)
-    
+
+@not_logged
+def site_change_password(request):
+    error = None
+    token = request.values.get('t', None)
+    invalid_token = False
+    if request.method == 'GET':
+        if token is None or not validate_token(local.db, request.site.id, token):
+            error = u"Invalid token. Please verify url in your mail."
+            invalid_token = True
+    if request.method == 'POST':
+        token = request.form.get('token', '')
+        password = request.form.get('password')
+        if not validate_token(local.db, request.site.id, token):
+            error = u"Invalid token. Please verify url in your mail."
+            invalid_token = True
+        else:
+            if password:
+                site = get_site(local.db, request.site.cname)
+                site.password = make_hash(request.form['password'])
+                site.store(local.db)
+            
+                # delete token
+                del local.db[token]
+            
+                request.session['%s_authenticated' % request.site.cname] = True
+                request.site = site
+                if local.site_url:
+                    redirect_url = local.site_url
+                else:
+                    redirect_url = '/'
+            
+                return redirect(redirect_url)
+            else:
+                error=u'Password is empty.'
+    return render_response('site/change_password.html', token=token, 
+                error=error, invalid_token=invalid_token)
+
+@not_logged    
+def site_forgot_password(request):
+    back=request.values.get('back', '')
+    if request.method == 'POST':
+        back = request.form['back']
+        
+        # create token
+        otoken = PasswordToken(site=request.site.id)
+        otoken.store(local.db)
+        
+        if request.site.alias:
+            site_url = "http://%s.%s" % (request.site.alias, settings.SERVER_NAME)
+        else:
+            site_url = "http://%s/%s" % (settings.SERVER_NAME, request.site.cname)
+        
+        # send email
+        mail_subject = u"Password to your couchit site"
+        mail_content = render_template('site/forgot_password.txt', url=site_url, token=otoken.id)
+        send_mail(mail_subject, mail_content, "CouchIt <feedback@couch.it>", 
+            [request.site.email], fail_silently=True)
+            
+        request.session['notify'] = u"We've sent out the secret link. Go check your email!"
+        redirect_url = url_for('login', back=back)
+        return redirect(redirect_url)
+        
+    return render_response('site/forgot_password.html', back=back)
 
 def site_design(request):
     DEFAULT_COLORS = dict(
@@ -373,7 +463,6 @@ def proxy(request):
             "Content-Type": os.environ["CONTENT_TYPE"],
             "Accept": os.environ["ACCEPT"]
         }
-        print headers
         body = input_stream.read()
         r = urllib2.Request(url, body, headers)
         y = urllib2.urlopen(r)
@@ -382,7 +471,6 @@ def proxy(request):
             "Content-Type": request.environ["CONTENT_TYPE"],
             "Accept": request.environ["HTTP_ACCEPT"]
         }
-        print request.environ
         r = urllib2.Request(url, headers=headers)
         y = urllib2.urlopen(r)
         

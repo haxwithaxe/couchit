@@ -17,12 +17,13 @@ from pygments.styles import get_all_styles
 
 from couchdb.client import ResourceNotFound
 from couchit.models import Site, Page
-from couchit.utils import utf8
+from couchit.utils import utf8, make_hash
 from couchit.utils.diff import diff_blocks
 
 
 __all__ = ['get_site', 'get_page', 'get_pageof',
-'all_pages', 'get_diff', 'LEXERS_CHOICE', 'get_changes']
+'all_pages', 'get_diff', 'LEXERS_CHOICE', 'get_changes', 
+'validate_password', 'validate_token']
 
 def _get_lexers():
     lexers = get_all_lexers()
@@ -51,6 +52,19 @@ def get_site(db, name, by_alias=False):
         return lrows[0]
     return None
     
+def validate_password(db, siteid, password):
+    rows = Site.view(db, '_view/site/password', key=[siteid, make_hash(password)])
+    lrows = list(iter(rows))
+    if lrows:
+        return True
+    return False
+
+def validate_token(db, siteid, token):
+    rows = Site.view(db, '_view/site/token', key=[token, siteid])
+    lrows = list(iter(rows))
+    if lrows:
+        return True
+    return False
 
 def get_page(db, siteid, name):
     rows = Page.view(db, '_view/page/by_slug', key=[siteid, name.lower()])

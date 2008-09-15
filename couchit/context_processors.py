@@ -24,7 +24,10 @@ def site(request):
 
 @register_contextprocessor
 def site_url(request):
-    return { 'site_url': local.site_url }
+    return {
+        'site_url': local.site_url,
+        'current_url': request.url
+    }
 
 @register_contextprocessor
 def authenticated(request):

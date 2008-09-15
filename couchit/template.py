@@ -125,7 +125,7 @@ def tabular(value, r1, r2):
                 pos = 1
                 for line in change['changed']['lines']:
                     rst = rst + "<tr class=\"%s\"><th class=\"linenos\"></th><th class=\"linenos\">%s</th>\
-                    <th class=\"diffp\">+</th><td class=\"c wrap %s\">%s</td></tr" % (
+                    <th class=\"diffp\">+</th><td class=\"c wrap %s\">%s</td></tr>" % (
                         class_,
                         change['base']['offset'],
                         class_end,

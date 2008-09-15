@@ -39,9 +39,6 @@ class CouchitApp(object):
     
     def dispatch(self, environ, start_response):
         local.request = request = BCRequest(self, environ)
-
-        local.url_adapter = adapter = urls_map.bind_to_environ(environ)
-
         cur_path = [p for p in request.path.split('/') if p]
         
         # test if we are under a subdomain or domain alias
@@ -73,7 +70,6 @@ class CouchitApp(object):
             site_url = ''
         else:
             site_url = "/" + site.cname
-
         local.site_url = site_url
         
         if not subdomain:
@@ -86,8 +82,9 @@ class CouchitApp(object):
                     environ['wsgi.url_scheme'],
                     environ['REQUEST_METHOD'],
                     path_info)
-                    
-
+        else:
+            local.url_adapter = adapter = urls_map.bind_to_environ(environ)
+            
         # process urls
         try:
             endpoint, args = adapter.match()
@@ -99,7 +96,7 @@ class CouchitApp(object):
             response = e
 
         if request.session.should_save:
-            permanent = request.session.get('permanent', True)
+            permanent = request.session.get('permanent', False)
             max_age=None
             expires=None
             if permanent:

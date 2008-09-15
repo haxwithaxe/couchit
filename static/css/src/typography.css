@@ -99,7 +99,7 @@ table.difftabular th.linenos {
     text-align: center;
 }
 
-.claim {
+.claim, .logout, .login {
     font-weight: bold;
     text-decoration: none;
 }

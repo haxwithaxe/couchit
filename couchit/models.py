@@ -18,7 +18,7 @@ from couchdb.schema import *
 from couchit.utils import make_hash
 from couchit.utils.diff import unified_diff, diff_blocks
 
-__all__ = ['Page', 'Site']
+__all__ = ['Page', 'Site', 'PasswordToken']
 
 
 class ArrayField(Field):
@@ -29,6 +29,9 @@ def _genslug():
     from random import choice
     return ''.join([choice(charset) for i in range(8)])
 
+class PasswordToken(Document):
+    site = TextField()
+    itemType = TextField(default='token')
 
 class Site(Document):
     alias = TextField()
@@ -121,10 +124,8 @@ class Page(Document):
                 _changes = []
                 for row in changes:
                     for change in row:
-                        print change
                         _changes.append(change)
                 self.changes = _changes
-                print self.changes
                 db[self.id] = self._data
         return self
 
@@ -133,7 +134,6 @@ class Page(Document):
             return []
         rows = self.view(db, '_view/page/revisions', key=self.id)
         result = list(iter(rows))
-        print result
         if result: # order revisions
             result.sort(lambda a,b: cmp(a.updated, b.updated))
             result.reverse()

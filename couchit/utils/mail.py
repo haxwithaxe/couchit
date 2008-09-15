@@ -2,7 +2,7 @@
 #
 # Copyright (c) 2008 Django Software Foundation and individual contributors.
 #
-# adapted for couchit waiting an easier system
+# adapted for couchit waiting an easier/better system
 """
 Tools for sending email.
 """

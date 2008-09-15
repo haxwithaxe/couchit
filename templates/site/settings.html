@@ -6,56 +6,67 @@
 
 
 {% block page %}
-<form name="fsettings" id="fsettings" action="{{ url_for('site_settings', cname=site.cname) }}" method="post">
-    <h2>Settings</h2>
-    <table class="">
-        <tr>
-            <th>Title</th>
-            <td><input type="text" name="title" id="title" value="{{ site.title }}" /></td>
-        </tr>
-        <tr>
-            <th>Subtitle</th>
-            <td><input type="text" name="subtitle" id="subtitle" value="{{ subtitle }}" /></td>
-        </tr>
-        {% if site.password %}
+<section id="psettings">
+    <form name="fsettings" id="fsettings" action="{{ url_for('site_settings') }}" method="post">
+        <h2>Settings</h2>
+        <table class="">
+            <tr>
+                <th>Title</th>
+                <td><input type="text" name="site_title" id="site_title" value="{{ site.title }}" /></td>
+            </tr>
+            <tr>
+                <th>Subtitle</th>
+                <td><input type="text" name="site_subtitle" id="site_subtitle" value="{{ subtitle }}" /></td>
+            </tr>
+            {% if site.claimed %}
+                <tr>
+                    <th>Password</th>
+                    <td><a href="{{ site_url }}/site/change-password">Change password</a></td>
+                    
+                </tr>
+                <tr>
+                    <th>Email address:</th>
+                    <td><input type="email" name="email" id="email" value="" /></td>
+                </tr>
+            {% endif %}
             
-        {% endif %}
-        <tr>
-            <th>Site password:</th>
-            <td><input type="password" name="password" id="password" value="{{ password }}" /></td>
-        </tr>
-        <tr>
-            <th>Email address:</th>
-            <td><input type="email" name="email" id="email" value="" /></td>
-        </tr>
-        <tr>
-            <th>Kind of site:</th>
-            <td>
-                <table class="privacy">
-                    <tr>
-                        <td class="first-row"><input type="radio" name="privacy" value="private"{% if site.privacy == "private" %} checked="checked"{% endif %} /></td>
-                        <td class="first-row">Private</td>
-                        <td class="wrap first-row">Require password to view and edit site.</td>
-                    </tr>
-                    <tr>
-                        <td><input type="radio" name="privacy" value="public"{% if site.privacy == "public" %} checked="checked"{% endif %} /></td>
-                        <td>Public</td>
-                        <td class="wrap">Require password to edit site.</td>
-                    </tr>
-                    <tr>
-                        <td><input type="radio" name="privacy" value="open"{% if site.privacy == "open" %} checked="checked"{% endif %} /></td>
-                        <td>Open</td>
-                        <td class="wrap">Everyone can view and edit.</td>
-                    </tr>
-                </table>
-            </td>
-        </tr>
-    </table>
-    <p><input type="submit" id="ssettings" name="ssettings" value="Claim site"> or <a href="" />Cancel</a></p>
-</form>
+            <tr>
+                <th>Kind of site:</th>
+                <td>
+                    <table class="privacy">
+                        <tr>
+                            <td class="first-row"><input type="radio" name="privacy" value="private"{% if site.privacy == "private" %} checked="checked"{% endif %} /></td>
+                            <td class="first-row">Private</td>
+                            <td class="wrap first-row">Require password to view and edit site.</td>
+                        </tr>
+                        <tr>
+                            <td><input type="radio" name="privacy" value="public"{% if site.privacy == "public" %} checked="checked"{% endif %} /></td>
+                            <td>Public</td>
+                            <td class="wrap">Require password to edit site.</td>
+                        </tr>
+                        <tr>
+                            <td><input type="radio" name="privacy" value="open"{% if site.privacy == "open" %} checked="checked"{% endif %} /></td>
+                            <td>Open</td>
+                            <td class="wrap">Everyone can view and edit.</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <p><input type="submit" id="ssettings" name="ssettings" value="Claim site" /> or <a href="{% if site_url %}{{ site_url }}{% else %}/{% endif %}">Cancel</a></p>
+    </form>
+</section>
                        
 {% endblock %}
 
 {% block sidebar %}
-    
+{% include "sidebar.html" %}
+{% endblock %}
+
+{% block footer %}
+<script type="text/javascript">
+    Site.name = "{{ site.cname }}";
+    Site.url = "{{ site_url }}";
+    new Create();
+</script>
 {% endblock %}
