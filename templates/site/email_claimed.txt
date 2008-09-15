@@ -1,0 +1,10 @@
+Thanks for claiming your site at couch.it! It's at:
+
+{{ url }}
+
+recover password: {{ url }}/site/forgot-password
+
+Let us know if you have any thoughts or problems -- just
+reply to this email (or email feedback@couch.it).
+
+ - benoît chesneau, couch.it
