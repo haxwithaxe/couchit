@@ -38,8 +38,11 @@
 {% endif %}
 
 <ul id="tabs_wiki" class="subsection_tabs">  
-     <li class="tab tab-view"><a href="#pview">VIEW</a></li>  
-     <li class="tab tab-edit"><a href="#pedit">EDIT</a></li>  
+     <li class="tab tab-view"><a href="#pview">VIEW</a></li>
+     {% if can_edit %}
+     <li class="tab tab-edit"><a href="#pedit">EDIT</a></li> 
+     {% endif %}
+       
 </ul>
 <section id="pview">
     {% if page.id %}
@@ -51,7 +54,7 @@
             <h2>{{ page.title }}</h2>
             <ul class="page_infos">
                 <li><time title="GMT" datetime="{{ page.updated|rfc3339 }}">{{ page.updated|formatdatetime }}</time></li>
-                {% if page.title != "Home" %}
+                {% if page.title != "Home" and can_edit %}
                 <li><a id="page_delete" href="{{ url_for('delete_page', pagename=page.title|replace(" ", "_")) }}">delete</a></li>   
                 {% endif %}
                 <li class="last"><a class="page_history" href="{{ url_for('show_page', pagename=page.title|replace(" ", "_")) }}/history">history</a></li>
@@ -65,6 +68,9 @@
     </article>
     {% endif %}
 </section>
+{% if can_edit %}
+    
+
 <section id="pedit">
     <div id="pedit_wrapper">
         <form name="fedit" id="fedit" action="{{ url_for('edit_page', pagename=page.title|replace(" ", "_")) }}" method="POST">
@@ -108,7 +114,7 @@
         <p><input type="submit" id="ssnippet" name="ssnippet" value="Insert snippet" /><input type="submit" id="cancelSnippet" name="cancelSnippet" value="Cancel" /></p>
      </form>
  </div>
- 
+ {% endif %}
 {% endblock %}
 
 {% block sidebar %}
@@ -121,10 +127,12 @@
 <script type="text/javascript">
 Site.name = "{{ site.cname }}";
 Site.url = "{{ site_url }}";
+{% if can_edit %}
 {% if not page.id %}
 Page.created = true;
 {% endif %}
 new Create();
 new PageUI();
+{% endif %}
 </script>
 {% endblock %}

@@ -42,7 +42,6 @@ var PageUI = Class.create({
             }
         });
         
-
         Event.observe(window, 'resize', function(e) {
             var new_height = document.viewport.getHeight() - 150;
             $('content').setStyle({'height': new_height + 'px'});

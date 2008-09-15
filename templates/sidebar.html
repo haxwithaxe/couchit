@@ -1,3 +1,5 @@
+
+{% if can_edit %}
 <div id="createPage">
     <a href="#" id="doCreate">Create new page</a>
     <form id="fnewpage" name="fnewpage" method="get">
@@ -5,12 +7,17 @@
         <p><input type="submit" name="screate" id="screate" value="Create" /> or <a href="#" class="cancelCreate">Cancel</a></p>
     </form>
 </div>
+{% endif %}
+
 
 <nav>
     <ul>
         <li><a href="{{ url_for('site_changes') }}">recent changes</a></li>
-        <li><a href="{{ url_for('site_settings') }}">settings</a></li>
-        <li><a href="{{ url_for('site_design') }}">design</a></li>
+        {% if can_edit %}
+         <li><a href="{{ url_for('site_settings') }}">settings</a></li>
+         <li><a href="{{ url_for('site_design') }}">design</a></li> 
+        {% endif %}
+        
     </ul>
 </nav>
 

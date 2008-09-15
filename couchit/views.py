@@ -62,6 +62,13 @@ def not_claimed(f):
         return f(request, **kwargs)
     return decorated
              
+def can_edit(f):
+    def decorated(request, **kwargs):
+        if not request.can_edit:
+            redirect_url = local.site_url and local.site_url or "/"
+            return redirect(redirect_url)
+        return f(request, **kwargs)
+    return decorated            
         
 def not_found(request):
     return render_response("not_found.html")
@@ -105,6 +112,7 @@ def show_page(request=None, pagename=None):
     
     return render_response('page/show.html', page=page, pages=pages, lexers=LEXERS_CHOICE)
 
+@can_edit
 def edit_page(request, pagename=None):
     if pagename is None:
         pagename ='Home'
@@ -123,7 +131,8 @@ def edit_page(request, pagename=None):
         return redirect(redirect_url)
     
     return render_response('page/edit.html', page=page)
-  
+
+@can_edit  
 def delete_page(request, pagename):
     if pagename == 'Home': #security reason
         return redirect(url_for('show_page', pagename='Home'))
@@ -352,7 +361,8 @@ def site_export(request, feedtype="atom"):
             'id':page.title.replace(' ', '_')
         })
     return send_json(json)
-    
+
+@can_edit    
 @login_required
 def site_delete(request):
     if request.method == "POST":
@@ -361,7 +371,8 @@ def site_delete(request):
         redirect_url = "http://%s" % settings.SERVER_NAME
         return redirect(redirect_url)
     return render_response('site/delete.html')
-    
+
+@can_edit 
 @not_claimed
 def site_claim(request):
     if request.method == "POST":
@@ -392,7 +403,8 @@ def site_claim(request):
         return redirect(redirect_url)
         
     return render_response('site/claim.html')
-    
+
+@can_edit    
 @login_required
 def site_settings(request):
     if request.is_xhr and request.method == "POST":
@@ -415,6 +427,7 @@ def site_settings(request):
     pages = all_pages(local.db, request.site.id)
     return render_response('site/settings.html', pages=pages, site_address=site_address)
 
+@can_edit
 @login_required
 def site_address(request):
     error = None
@@ -531,7 +544,7 @@ def site_change_password(request):
     return render_response('site/change_password.html', token=token, 
                 error=error, invalid_token=invalid_token)
     
-                
+@can_edit                
 def change_password_authenticated(request):
     error = None
     if request.method == 'POST':
@@ -582,6 +595,7 @@ def site_forgot_password(request):
         
     return render_response('site/forgot_password.html', back=back)
 
+@can_edit
 def site_design(request):
     DEFAULT_COLORS = dict(
         background_color = 'E7E7E7',

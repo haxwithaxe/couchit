@@ -38,7 +38,9 @@
 <script type="text/javascript">
     Site.name = "{{ site.cname }}";
     Site.url = "{{ site_url }}";
+    {% if can_edit %}
     new Create();
+    {% endif %}
     new Diff();
 </script>
 {% endblock %}

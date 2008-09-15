@@ -26,7 +26,7 @@ from couchit import settings
 from couchit.api import *
 from couchit import context_processors
 from couchit import views
-from couchit.template import template_env
+from couchit.template import template_env, url_for
 
 class CouchitApp(object):
     def __init__(self):
@@ -85,6 +85,12 @@ class CouchitApp(object):
         else:
             local.url_adapter = adapter = urls_map.bind_to_environ(environ)
             
+        authenticated = request.session.get('%s_authenticated' % request.site.cname, False)
+        can_edit = True 
+        if request.site.privacy == "public" and not authenticated:
+            can_edit = False
+        request.can_edit = can_edit
+        
         # process urls   
         try:
             endpoint, args = adapter.match()
@@ -114,6 +120,11 @@ class CouchitApp(object):
             )
 
         
+        if request.site.privacy == "private" and not authenticated and endpoint!='site_login':
+            response = redirect(url_for('site_login'))
+        
+        
+            
         return response(environ, start_response)
 
     def __call__(self, environ, start_response):

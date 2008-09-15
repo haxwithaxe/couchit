@@ -36,7 +36,14 @@ def site_url(request):
 @register_contextprocessor
 def authenticated(request):
     authenticated = False
+    can_edit = True
     if hasattr(request, 'site'):
         authenticated = request.session.get('%s_authenticated' % request.site.cname, False)
-    return { 'authenticated': authenticated }
+        if request.site.privacy == "public" and not authenticated:
+            can_edit = False
+            
+    return { 
+        'authenticated': authenticated,
+        'can_edit': can_edit
+     }
         
