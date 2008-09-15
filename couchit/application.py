@@ -75,8 +75,7 @@ class CouchitApp(object):
             site_url = "/" + site.cname
 
         local.site_url = site_url
-
-        print environ['PATH_INFO']
+        
         if not subdomain:
             local.cname = cur_path[0]
             path_info = '/'.join(cur_path[1:])

@@ -26,7 +26,7 @@ from couchit.api import *
 from couchit.http import BCResponse
 from couchit.template import render_response, url_for, render_template, send_json
 from couchit.utils import local, make_hash, datetime_tojson
-
+from couchit.utils.mail import send_mail
 
 FORBIDDEN_PAGES = ['site', 'delete', 'edit', 'create', 'history', 'changes']
 
@@ -274,7 +274,7 @@ def site_changes(request, feedtype=None):
 
 def site_claim(request):
     if request.method == "POST":
-        site = get_site(local.db)
+        site = get_site(local.db, request.site.cname)
         site.password = make_hash(request.form['password'])
         site.email = request.form['email']
         site.privacy = request.form['privacy']
@@ -282,8 +282,23 @@ def site_claim(request):
         site.store(local.db)
         request.site = site
         
+        if site.alias:
+            site_url = "http://%s.%s" % (site.alias, settings.SERVER_NAME)
+        else:
+            site_url = "http://%s/%s" % (settings.SERVER_NAME, site.cname)
+        
+        mail_subject = u"You claimed %s" % site_url
+        mail_content = render_template("site/email_claimed.txt", url=site_url)
+        send_mail(mail_subject, mail_content, "CouchIt <feedback@couch.it>", 
+            [site.email], fail_silently=True)
+            
+        if local.site_url:
+            redirect_url = local.site_url
+        else:
+            redirect_url = '/'
+        
         request.session['%s_authenticated' % site.cname] = True;
-        return redirect('/%s' % site.cname)
+        return redirect(redirect_url)
         
     return render_response('site/claim.html')
     
@@ -297,8 +312,12 @@ def site_login(request):
     
 
 def site_logout(request):
-    request.session['%s_authenticated' % cname] = False
-    return redirect(request.url)
+    request.session['%s_authenticated' % request.site.cname] = False
+    if local.site_url:
+        redirect_url = local.site_url
+    else:
+        redirect_url = '/'
+    return redirect(redirect_url)
     
 
 def site_design(request):

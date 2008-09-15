@@ -39,6 +39,21 @@ SESSION_COOKIE_DOMAIN = None
 SESSION_COOKIE_PATH = '/'
 SESSION_COOKIE_SECURE = False
 
+###########
+# EMAIL   #
+###########
+# Host for sending e-mail.
+EMAIL_HOST = 'smtp.gmail.com'
 
+# Port for sending e-mail.
+EMAIL_PORT = 25
+
+# Optional SMTP authentication information for EMAIL_HOST.
+EMAIL_HOST_USER = 'benoitc@e-engura.com'
+EMAIL_HOST_PASSWORD = 'ubts970d'
+EMAIL_USE_TLS = True
+
+
+# for ajax proxy
 ALLOWED_HOSTS = ['www.friendpaste.com', 'friendpaste.com', 
 'pypaste.com', 'www.pypaste.com']

@@ -25,3 +25,9 @@ def site(request):
 @register_contextprocessor
 def site_url(request):
     return { 'site_url': local.site_url }
+
+@register_contextprocessor
+def authenticated(request):
+    authenticated = request.session.get('%s_authenticated' % request.site.cname, False)
+    return { 'authenticated': authenticated }
+        

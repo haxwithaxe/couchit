@@ -45,8 +45,17 @@ tr.rselected{background-color:#{{site.theme.border_color}};color:#{{site.theme.m
     {% block head %}{% endblock %}
 </head>
 <body>
-    {% if site and not site.claimed %}
-     <a href="{{ url_for('site_claim', cname=site.cname) }}" class="claim">Claim this site</a>
+    {% if site %}
+        {% if site.claimed %}
+        {% if authenticated %}
+            <a href="{{ url_for('logout') }}" class="logout">logout</a>
+        {% else %}
+        <a href="{{ url_for('login') }}" class="logout">login</a>
+        {% endif %}
+     
+        {% else %}
+     <a href="{{ url_for('site_claim') }}" class="claim">Claim this site</a>
+        {% endif %}
     {% endif %}
     
     <div id="container">
