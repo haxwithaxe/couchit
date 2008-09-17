@@ -13,13 +13,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import random
 import re
+from time import asctime, gmtime, time
 import urllib2
+import uuid
 from jinja2.filters import do_truncate, do_striptags
 from werkzeug import redirect
 from werkzeug.contrib.atom import AtomFeed
 from werkzeug.routing import NotFound
-from werkzeug.utils import url_unquote
+from werkzeug.utils import url_unquote, generate_etag
 from couchit import settings
 from couchit.models import Site, Page, PasswordToken
 from couchit.api import *
@@ -74,7 +77,29 @@ def not_found(request):
     return render_response("not_found.html")
 
 def home(request, cname=None, alias=None):
-    if request.method == "POST":
+    def randomid():
+        return str(uuid.uuid4()).replace('-','')
+        
+    def validate(request):
+        createid = request.session.get('createid')
+        spamid = request.session.get('spamid')
+        spaminput = request.session.get('spaminput')
+        
+        if createid is None or spaminput is None or spamid is None:
+            return False
+            
+        if request.form.get(spamid, False) or request.form.get(spaminput, False):
+            return False
+            
+        if not request.form.get(createid, False):
+            return False
+            
+        del request.session['createid']
+        del request.session['spamid']
+        del request.session['spaminput']
+        return True
+    
+    if request.method == "POST" and validate(request):
         site = Site()
         if 'cname' in request.form:
             site.cname = request.form['cname']
@@ -95,7 +120,21 @@ def home(request, cname=None, alias=None):
         else:
             redirect_url = '/%s' % site.cname
         return redirect(redirect_url)
-    return render_response('home.html', cname=cname, alias=alias)
+
+    # try to fight bots
+    b1 = "c%s" % randomid()
+    b2 = "c%s" % randomid()
+    spamid = randomid()
+    spaminput = randomid()
+    createid = randomid()
+    
+    request.session['createid'] = createid
+    request.session['spamid'] = spamid
+    request.session['spaminput'] = spaminput
+    print "1 %s" % createid
+    return render_response('home.html', cname=cname, alias=alias,
+                b1=b1, b2=b2, spamid=spamid, spaminput=spaminput, createid=createid)
+  
   
   
 def show_page(request=None, pagename=None):
@@ -118,7 +157,10 @@ def show_page(request=None, pagename=None):
     # get all pages
     pages = all_pages(local.db, request.site.id)
     
-    return render_response('page/show.html', page=page, pages=pages, lexers=LEXERS_CHOICE)
+    
+   
+    return render_response('page/show.html', page=page, pages=pages, 
+        lexers=LEXERS_CHOICE)
 
 @can_edit
 def edit_page(request, pagename=None):

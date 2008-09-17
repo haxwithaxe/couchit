@@ -46,6 +46,7 @@ class CouchitApp(object):
         real_server_name = settings.SERVER_NAME.split(':', 1)[0].split('.')
         offset = -len(real_server_name)
 
+        response = None
         subdomain = ''
         site = None
         alias = None
@@ -70,44 +71,44 @@ class CouchitApp(object):
                 response = self.views['couchit_%s' % cname](request, **request.args)
             else:
                 response = self.views['home'](request, cname=cname, alias=alias, **request.args)
-            return response(environ, start_response)
-        
-        request.site = site
-
-        if subdomain:
-            site_url = ''
-        else:
-            site_url = "/" + site.cname
-        local.site_url = site_url
-        
-        if not subdomain:
-            local.cname = cur_path[0]
-            path_info = '/'.join(cur_path[1:])
-            local.url_adapter = adapter = urls_map.bind(
-                    settings.SERVER_NAME, 
-                    environ.get('SCRIPT_NAME'),
-                    None, 
-                    environ['wsgi.url_scheme'],
-                    environ['REQUEST_METHOD'],
-                    path_info)
-        else:
-            local.url_adapter = adapter = urls_map.bind_to_environ(environ)
             
-        authenticated = request.session.get('%s_authenticated' % request.site.cname, False)
-        can_edit = True 
-        if request.site.privacy == "public" and not authenticated:
-            can_edit = False
-        request.can_edit = can_edit
+        if response is None:
+            request.site = site
+
+            if subdomain:
+                site_url = ''
+            else:
+                site_url = "/" + site.cname
+            local.site_url = site_url
         
-        # process urls   
-        try:
-            endpoint, args = adapter.match()
-            response = self.views[endpoint](request, **args)
-        except NotFound, e:
-            response = views.not_found(request)
-            response.status_code = 404
-        except HTTPException, e:
-            response = e.get_response(environ)
+            if not subdomain:
+                local.cname = cur_path[0]
+                path_info = '/'.join(cur_path[1:])
+                local.url_adapter = adapter = urls_map.bind(
+                        settings.SERVER_NAME, 
+                        environ.get('SCRIPT_NAME'),
+                        None, 
+                        environ['wsgi.url_scheme'],
+                        environ['REQUEST_METHOD'],
+                        path_info)
+            else:
+                local.url_adapter = adapter = urls_map.bind_to_environ(environ)
+            
+            authenticated = request.session.get('%s_authenticated' % request.site.cname, False)
+            can_edit = True 
+            if request.site.privacy == "public" and not authenticated:
+                can_edit = False
+            request.can_edit = can_edit
+        
+            # process urls   
+            try:
+                endpoint, args = adapter.match()
+                response = self.views[endpoint](request, **args)
+            except NotFound, e:
+                response = views.not_found(request)
+                response.status_code = 404
+            except HTTPException, e:
+                response = e.get_response(environ)
 
 
         if request.session.should_save:
@@ -127,14 +128,14 @@ class CouchitApp(object):
                 secure=settings.SESSION_COOKIE_SECURE
             )
 
-        
-        if request.site.privacy == "private" and not authenticated and endpoint!='site_login' and endpoint!='forgot_password' and endpoint !='change_password':
-            response = redirect(url_for('site_login'))
-        elif not subdomain and request.site.alias:
-            redirect_url = "http://%s.%s/%s" % (request.site.alias, settings.SERVER_NAME, 
-                                    path_info)
-            print redirect_url
-            response = redirect(redirect_url)
+        if hasattr(request, 'site'):
+            if request.site.privacy == "private" and not authenticated and endpoint!='site_login' and endpoint!='forgot_password' and endpoint !='change_password':
+                response = redirect(url_for('site_login'))
+            elif not subdomain and request.site.alias:
+                redirect_url = "http://%s.%s/%s" % (request.site.alias, settings.SERVER_NAME, 
+                                        path_info)
+                print redirect_url
+                response = redirect(redirect_url)
         
             
         return response(environ, start_response)

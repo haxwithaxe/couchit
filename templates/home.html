@@ -1,6 +1,13 @@
 {% extends "base.html" %}
 
 {% block title %}Welcome{% endblock %}
+
+{% block head %}
+<style type="text/css">
+.{{ b1 }} { visibility: normal; }
+.{{ b2 }} { display: none; }
+</style>
+{% endblock %}
 {% block fullpage %}
 <header><h1></h1></header>
 <div id="home_wrapper"> 
@@ -11,7 +18,7 @@
         {% else %}
         <h1>Couchit</h1>
         {% endif %}
-        <form action="/" name="fcreate" method="POST">
+        <form action="/" name="fcreate" method="post">
             {% if cname %}
                 <input type="hidden" name="cname" value="{{ cname }}" />
             {% endif %}
@@ -19,8 +26,12 @@
                 <input type="hidden" name="alias" value="{{ alias }}" />
             {% endif %}
         
-            <p><textarea id="content" name="content" cols="60" rows="15" tabindex="1"></textarea></p>
-            <p><input type="submit" name="snew" value="Create a site" tabindex="2" /></p>
+            <p><textarea class="{{ b1 }}" id="content" name="content" cols="60" rows="15" tabindex="1"></textarea></p>
+            <p><input class="{{ b2 }}" type="text" name="{{ spaminput }}" value="" /></p>
+            <p>
+                <input class="{{ b1 }}" type="submit" name="{{ createid }}" value="Create a site" tabindex="2" />
+                <input class="{{ b2 }}" type="submit" name="{{ spamid }}" value="Create a site" tabindex="2" />
+            </p>
         </form>
     </section>
 </div>
