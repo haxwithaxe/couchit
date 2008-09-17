@@ -1,0 +1,1550 @@
+2008-09-16 02:25:23: (log.c.75) server started 
+2008-09-16 10:24:02: (request.c.294) fd: 11 request-len: 414 
+GET / HTTP/1.1
+User-Agent: Mozilla/5.0 (Macintosh; U; PPC Mac OS X 10_5_5; en-us) AppleWebKit/528.4+ (KHTML, like Gecko) Version/3.1.2 Safari/525.20.1
+Accept-Encoding: gzip, deflate
+Accept: application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5
+Accept-Language: en-us
+Cookie: COUCHIT_SID=11602dd110ecbb7663b0b60162aa6cc0897a8edf
+Connection: keep-alive
+Host: couch.it
+
+ 
+2008-09-16 10:24:02: (response.c.212) -- splitting Request-URI 
+2008-09-16 10:24:02: (response.c.213) Request-URI  :  / 
+2008-09-16 10:24:02: (response.c.214) URI-scheme   :  http 
+2008-09-16 10:24:02: (response.c.215) URI-authority:  couch.it 
+2008-09-16 10:24:02: (response.c.216) URI-path     :  / 
+2008-09-16 10:24:02: (response.c.217) URI-query    :   
+2008-09-16 10:24:02: (response.c.212) -- splitting Request-URI 
+2008-09-16 10:24:02: (response.c.213) Request-URI  :  /couchit.fcgi/ 
+2008-09-16 10:24:02: (response.c.214) URI-scheme   :  http 
+2008-09-16 10:24:02: (response.c.215) URI-authority:  couch.it 
+2008-09-16 10:24:02: (response.c.216) URI-path     :  /couchit.fcgi/ 
+2008-09-16 10:24:02: (response.c.217) URI-query    :   
+2008-09-16 10:24:02: (response.c.267) -- sanatising URI 
+2008-09-16 10:24:02: (response.c.268) URI-path     :  /couchit.fcgi/ 
+2008-09-16 10:24:02: (mod_access.c.135) -- mod_access_uri_handler called 
+2008-09-16 10:24:02: (mod_fastcgi.c.3563) handling it in mod_fastcgi 
+2008-09-16 10:24:02: (response.c.382) -- before doc_root 
+2008-09-16 10:24:02: (response.c.383) Doc-Root     : /Users/benoitc/Work/couchit 
+2008-09-16 10:24:02: (response.c.384) Rel-Path     : /couchit.fcgi 
+2008-09-16 10:24:02: (response.c.385) Path         :  
+2008-09-16 10:24:02: (response.c.433) -- after doc_root 
+2008-09-16 10:24:02: (response.c.434) Doc-Root     : /Users/benoitc/Work/couchit/ 
+2008-09-16 10:24:02: (response.c.435) Rel-Path     : /couchit.fcgi 
+2008-09-16 10:24:02: (response.c.436) Path         : /Users/benoitc/Work/couchit/couchit.fcgi 
+2008-09-16 10:24:02: (response.c.453) -- logical -> physical 
+2008-09-16 10:24:02: (response.c.454) Doc-Root     : /Users/benoitc/Work/couchit/ 
+2008-09-16 10:24:02: (response.c.455) Rel-Path     : /couchit.fcgi 
+2008-09-16 10:24:02: (response.c.456) Path         : /Users/benoitc/Work/couchit/couchit.fcgi 
+2008-09-16 10:24:03: (response.c.116) Response-Header: 
+HTTP/1.1 200 OK
+Transfer-Encoding: chunked
+Content-Type: text/html; charset=utf-8
+Date: Tue, 16 Sep 2008 08:24:03 GMT
+Server: lighttpd/1.4.19
+
+ 
+2008-09-16 10:24:03: (request.c.294) fd: 13 request-len: 389 
+GET /static/css/print.css HTTP/1.1
+User-Agent: Mozilla/5.0 (Macintosh; U; PPC Mac OS X 10_5_5; en-us) AppleWebKit/528.4+ (KHTML, like Gecko) Version/3.1.2 Safari/525.20.1
+Referer: http://couch.it/
+Accept: text/css,*/*;q=0.1
+Accept-Language: en-us
+Accept-Encoding: gzip, deflate
+Cookie: COUCHIT_SID=11602dd110ecbb7663b0b60162aa6cc0897a8edf
+Connection: keep-alive
+Host: couch.it
+
+ 
+2008-09-16 10:24:03: (response.c.212) -- splitting Request-URI 
+2008-09-16 10:24:03: (response.c.213) Request-URI  :  /static/css/print.css 
+2008-09-16 10:24:03: (response.c.214) URI-scheme   :  http 
+2008-09-16 10:24:03: (response.c.215) URI-authority:  couch.it 
+2008-09-16 10:24:03: (response.c.216) URI-path     :  /static/css/print.css 
+2008-09-16 10:24:03: (response.c.217) URI-query    :   
+2008-09-16 10:24:03: (response.c.212) -- splitting Request-URI 
+2008-09-16 10:24:03: (response.c.213) Request-URI  :  /static/css/print.css 
+2008-09-16 10:24:03: (response.c.214) URI-scheme   :  http 
+2008-09-16 10:24:03: (response.c.215) URI-authority:  couch.it 
+2008-09-16 10:24:03: (response.c.216) URI-path     :  /static/css/print.css 
+2008-09-16 10:24:03: (response.c.217) URI-query    :   
+2008-09-16 10:24:03: (response.c.267) -- sanatising URI 
+2008-09-16 10:24:03: (response.c.268) URI-path     :  /static/css/print.css 
+2008-09-16 10:24:03: (mod_access.c.135) -- mod_access_uri_handler called 
+2008-09-16 10:24:03: (response.c.382) -- before doc_root 
+2008-09-16 10:24:03: (response.c.383) Doc-Root     : /Users/benoitc/Work/couchit 
+2008-09-16 10:24:03: (response.c.384) Rel-Path     : /static/css/print.css 
+2008-09-16 10:24:03: (response.c.385) Path         :  
+2008-09-16 10:24:03: (response.c.433) -- after doc_root 
+2008-09-16 10:24:03: (response.c.434) Doc-Root     : /Users/benoitc/Work/couchit/ 
+2008-09-16 10:24:03: (response.c.435) Rel-Path     : /static/css/print.css 
+2008-09-16 10:24:03: (response.c.436) Path         : /Users/benoitc/Work/couchit/static/css/print.css 
+2008-09-16 10:24:03: (response.c.453) -- logical -> physical 
+2008-09-16 10:24:03: (response.c.454) Doc-Root     : /Users/benoitc/Work/couchit/ 
+2008-09-16 10:24:03: (response.c.455) Rel-Path     : /static/css/print.css 
+2008-09-16 10:24:03: (response.c.456) Path         : /Users/benoitc/Work/couchit/static/css/print.css 
+2008-09-16 10:24:03: (response.c.473) -- handling physical path 
+2008-09-16 10:24:03: (response.c.474) Path         : /Users/benoitc/Work/couchit/static/css/print.css 
+2008-09-16 10:24:03: (response.c.481) -- file found 
+2008-09-16 10:24:03: (response.c.482) Path         : /Users/benoitc/Work/couchit/static/css/print.css 
+2008-09-16 10:24:03: (response.c.631) -- handling subrequest 
+2008-09-16 10:24:03: (response.c.632) Path         : /Users/benoitc/Work/couchit/static/css/print.css 
+2008-09-16 10:24:03: (mod_access.c.135) -- mod_access_uri_handler called 
+2008-09-16 10:24:03: (mod_staticfile.c.394) -- handling file as static file 
+2008-09-16 10:24:03: (response.c.643) -- subrequest finished 
+2008-09-16 10:24:03: (response.c.116) Response-Header: 
+HTTP/1.1 200 OK
+Content-Type: text/css
+Accept-Ranges: bytes
+ETag: "648373279"
+Last-Modified: Mon, 15 Sep 2008 23:25:46 GMT
+Content-Length: 884
+Date: Tue, 16 Sep 2008 08:24:03 GMT
+Server: lighttpd/1.4.19
+
+ 
+2008-09-16 10:24:03: (request.c.294) fd: 14 request-len: 390 
+GET /static/css/screen.css HTTP/1.1
+User-Agent: Mozilla/5.0 (Macintosh; U; PPC Mac OS X 10_5_5; en-us) AppleWebKit/528.4+ (KHTML, like Gecko) Version/3.1.2 Safari/525.20.1
+Referer: http://couch.it/
+Accept: text/css,*/*;q=0.1
+Accept-Language: en-us
+Accept-Encoding: gzip, deflate
+Cookie: COUCHIT_SID=11602dd110ecbb7663b0b60162aa6cc0897a8edf
+Connection: keep-alive
+Host: couch.it
+
+ 
+2008-09-16 10:24:03: (response.c.212) -- splitting Request-URI 
+2008-09-16 10:24:03: (response.c.213) Request-URI  :  /static/css/screen.css 
+2008-09-16 10:24:03: (response.c.214) URI-scheme   :  http 
+2008-09-16 10:24:03: (response.c.215) URI-authority:  couch.it 
+2008-09-16 10:24:03: (response.c.216) URI-path     :  /static/css/screen.css 
+2008-09-16 10:24:03: (response.c.217) URI-query    :   
+2008-09-16 10:24:03: (response.c.212) -- splitting Request-URI 
+2008-09-16 10:24:03: (response.c.213) Request-URI  :  /static/css/screen.css 
+2008-09-16 10:24:03: (response.c.214) URI-scheme   :  http 
+2008-09-16 10:24:03: (response.c.215) URI-authority:  couch.it 
+2008-09-16 10:24:03: (response.c.216) URI-path     :  /static/css/screen.css 
+2008-09-16 10:24:03: (response.c.217) URI-query    :   
+2008-09-16 10:24:03: (response.c.267) -- sanatising URI 
+2008-09-16 10:24:03: (response.c.268) URI-path     :  /static/css/screen.css 
+2008-09-16 10:24:03: (mod_access.c.135) -- mod_access_uri_handler called 
+2008-09-16 10:24:03: (response.c.382) -- before doc_root 
+2008-09-16 10:24:03: (response.c.383) Doc-Root     : /Users/benoitc/Work/couchit 
+2008-09-16 10:24:03: (response.c.384) Rel-Path     : /static/css/screen.css 
+2008-09-16 10:24:03: (response.c.385) Path         :  
+2008-09-16 10:24:03: (response.c.433) -- after doc_root 
+2008-09-16 10:24:03: (response.c.434) Doc-Root     : /Users/benoitc/Work/couchit/ 
+2008-09-16 10:24:03: (response.c.435) Rel-Path     : /static/css/screen.css 
+2008-09-16 10:24:03: (response.c.436) Path         : /Users/benoitc/Work/couchit/static/css/screen.css 
+2008-09-16 10:24:03: (response.c.453) -- logical -> physical 
+2008-09-16 10:24:03: (response.c.454) Doc-Root     : /Users/benoitc/Work/couchit/ 
+2008-09-16 10:24:03: (response.c.455) Rel-Path     : /static/css/screen.css 
+2008-09-16 10:24:03: (response.c.456) Path         : /Users/benoitc/Work/couchit/static/css/screen.css 
+2008-09-16 10:24:03: (response.c.473) -- handling physical path 
+2008-09-16 10:24:03: (response.c.474) Path         : /Users/benoitc/Work/couchit/static/css/screen.css 
+2008-09-16 10:24:03: (response.c.481) -- file found 
+2008-09-16 10:24:03: (response.c.482) Path         : /Users/benoitc/Work/couchit/static/css/screen.css 
+2008-09-16 10:24:03: (response.c.631) -- handling subrequest 
+2008-09-16 10:24:03: (response.c.632) Path         : /Users/benoitc/Work/couchit/static/css/screen.css 
+2008-09-16 10:24:03: (mod_access.c.135) -- mod_access_uri_handler called 
+2008-09-16 10:24:03: (mod_staticfile.c.394) -- handling file as static file 
+2008-09-16 10:24:03: (response.c.643) -- subrequest finished 
+2008-09-16 10:24:03: (response.c.116) Response-Header: 
+HTTP/1.1 200 OK
+Content-Type: text/css
+Accept-Ranges: bytes
+ETag: "122471022"
+Last-Modified: Mon, 15 Sep 2008 23:25:46 GMT
+Content-Length: 13032
+Date: Tue, 16 Sep 2008 08:24:03 GMT
+Server: lighttpd/1.4.19
+
+ 
+2008-09-16 10:24:03: (request.c.294) fd: 15 request-len: 389 
+GET /static/css/theme.css HTTP/1.1
+User-Agent: Mozilla/5.0 (Macintosh; U; PPC Mac OS X 10_5_5; en-us) AppleWebKit/528.4+ (KHTML, like Gecko) Version/3.1.2 Safari/525.20.1
+Referer: http://couch.it/
+Accept: text/css,*/*;q=0.1
+Accept-Language: en-us
+Accept-Encoding: gzip, deflate
+Cookie: COUCHIT_SID=11602dd110ecbb7663b0b60162aa6cc0897a8edf
+Connection: keep-alive
+Host: couch.it
+
+ 
+2008-09-16 10:24:03: (response.c.212) -- splitting Request-URI 
+2008-09-16 10:24:03: (response.c.213) Request-URI  :  /static/css/theme.css 
+2008-09-16 10:24:03: (response.c.214) URI-scheme   :  http 
+2008-09-16 10:24:03: (response.c.215) URI-authority:  couch.it 
+2008-09-16 10:24:03: (response.c.216) URI-path     :  /static/css/theme.css 
+2008-09-16 10:24:03: (response.c.217) URI-query    :   
+2008-09-16 10:24:03: (response.c.212) -- splitting Request-URI 
+2008-09-16 10:24:03: (response.c.213) Request-URI  :  /static/css/theme.css 
+2008-09-16 10:24:03: (response.c.214) URI-scheme   :  http 
+2008-09-16 10:24:03: (response.c.215) URI-authority:  couch.it 
+2008-09-16 10:24:03: (response.c.216) URI-path     :  /static/css/theme.css 
+2008-09-16 10:24:03: (response.c.217) URI-query    :   
+2008-09-16 10:24:03: (response.c.267) -- sanatising URI 
+2008-09-16 10:24:03: (response.c.268) URI-path     :  /static/css/theme.css 
+2008-09-16 10:24:03: (mod_access.c.135) -- mod_access_uri_handler called 
+2008-09-16 10:24:03: (response.c.382) -- before doc_root 
+2008-09-16 10:24:03: (response.c.383) Doc-Root     : /Users/benoitc/Work/couchit 
+2008-09-16 10:24:03: (response.c.384) Rel-Path     : /static/css/theme.css 
+2008-09-16 10:24:03: (response.c.385) Path         :  
+2008-09-16 10:24:03: (response.c.433) -- after doc_root 
+2008-09-16 10:24:03: (response.c.434) Doc-Root     : /Users/benoitc/Work/couchit/ 
+2008-09-16 10:24:03: (response.c.435) Rel-Path     : /static/css/theme.css 
+2008-09-16 10:24:03: (response.c.436) Path         : /Users/benoitc/Work/couchit/static/css/theme.css 
+2008-09-16 10:24:03: (response.c.453) -- logical -> physical 
+2008-09-16 10:24:03: (response.c.454) Doc-Root     : /Users/benoitc/Work/couchit/ 
+2008-09-16 10:24:03: (response.c.455) Rel-Path     : /static/css/theme.css 
+2008-09-16 10:24:03: (response.c.456) Path         : /Users/benoitc/Work/couchit/static/css/theme.css 
+2008-09-16 10:24:03: (response.c.473) -- handling physical path 
+2008-09-16 10:24:03: (response.c.474) Path         : /Users/benoitc/Work/couchit/static/css/theme.css 
+2008-09-16 10:24:03: (response.c.481) -- file found 
+2008-09-16 10:24:03: (response.c.482) Path         : /Users/benoitc/Work/couchit/static/css/theme.css 
+2008-09-16 10:24:03: (response.c.631) -- handling subrequest 
+2008-09-16 10:24:03: (response.c.632) Path         : /Users/benoitc/Work/couchit/static/css/theme.css 
+2008-09-16 10:24:03: (mod_access.c.135) -- mod_access_uri_handler called 
+2008-09-16 10:24:03: (mod_staticfile.c.394) -- handling file as static file 
+2008-09-16 10:24:03: (response.c.643) -- subrequest finished 
+2008-09-16 10:24:03: (response.c.116) Response-Header: 
+HTTP/1.1 200 OK
+Content-Type: text/css
+Accept-Ranges: bytes
+ETag: "1103250784"
+Last-Modified: Mon, 15 Sep 2008 23:25:46 GMT
+Content-Length: 1771
+Date: Tue, 16 Sep 2008 08:24:03 GMT
+Server: lighttpd/1.4.19
+
+ 
+2008-09-16 10:24:03: (request.c.294) fd: 11 request-len: 365 
+GET /favicon.ico HTTP/1.1
+User-Agent: Mozilla/5.0 (Macintosh; U; PPC Mac OS X 10_5_5; en-us) AppleWebKit/528.4+ (KHTML, like Gecko) Version/3.1.2 Safari/525.20.1
+Referer: http://couch.it/
+Accept: */*
+Accept-Language: en-us
+Accept-Encoding: gzip, deflate
+Cookie: COUCHIT_SID=11602dd110ecbb7663b0b60162aa6cc0897a8edf
+Connection: keep-alive
+Host: couch.it
+
+ 
+2008-09-16 10:24:03: (response.c.212) -- splitting Request-URI 
+2008-09-16 10:24:03: (response.c.213) Request-URI  :  /favicon.ico 
+2008-09-16 10:24:03: (response.c.214) URI-scheme   :  http 
+2008-09-16 10:24:03: (response.c.215) URI-authority:  couch.it 
+2008-09-16 10:24:03: (response.c.216) URI-path     :  /favicon.ico 
+2008-09-16 10:24:03: (response.c.217) URI-query    :   
+2008-09-16 10:24:03: (response.c.212) -- splitting Request-URI 
+2008-09-16 10:24:03: (response.c.213) Request-URI  :  /static/favicon.ico 
+2008-09-16 10:24:03: (response.c.214) URI-scheme   :  http 
+2008-09-16 10:24:03: (response.c.215) URI-authority:  couch.it 
+2008-09-16 10:24:03: (response.c.216) URI-path     :  /static/favicon.ico 
+2008-09-16 10:24:03: (response.c.217) URI-query    :   
+2008-09-16 10:24:03: (response.c.267) -- sanatising URI 
+2008-09-16 10:24:03: (response.c.268) URI-path     :  /static/favicon.ico 
+2008-09-16 10:24:03: (mod_access.c.135) -- mod_access_uri_handler called 
+2008-09-16 10:24:03: (response.c.382) -- before doc_root 
+2008-09-16 10:24:03: (response.c.383) Doc-Root     : /Users/benoitc/Work/couchit 
+2008-09-16 10:24:03: (response.c.384) Rel-Path     : /static/favicon.ico 
+2008-09-16 10:24:03: (response.c.385) Path         :  
+2008-09-16 10:24:03: (response.c.433) -- after doc_root 
+2008-09-16 10:24:03: (response.c.434) Doc-Root     : /Users/benoitc/Work/couchit/ 
+2008-09-16 10:24:03: (response.c.435) Rel-Path     : /static/favicon.ico 
+2008-09-16 10:24:03: (response.c.436) Path         : /Users/benoitc/Work/couchit/static/favicon.ico 
+2008-09-16 10:24:03: (response.c.453) -- logical -> physical 
+2008-09-16 10:24:03: (response.c.454) Doc-Root     : /Users/benoitc/Work/couchit/ 
+2008-09-16 10:24:03: (response.c.455) Rel-Path     : /static/favicon.ico 
+2008-09-16 10:24:03: (response.c.456) Path         : /Users/benoitc/Work/couchit/static/favicon.ico 
+2008-09-16 10:24:03: (response.c.473) -- handling physical path 
+2008-09-16 10:24:03: (response.c.474) Path         : /Users/benoitc/Work/couchit/static/favicon.ico 
+2008-09-16 10:24:03: (response.c.530) -- file not found 
+2008-09-16 10:24:03: (response.c.531) Path         : /Users/benoitc/Work/couchit/static/favicon.ico 
+2008-09-16 10:24:03: (response.c.116) Response-Header: 
+HTTP/1.1 404 Not Found
+Content-Type: text/html
+Content-Length: 345
+Date: Tue, 16 Sep 2008 08:24:03 GMT
+Server: lighttpd/1.4.19
+
+ 
+2008-09-16 10:24:23: (request.c.294) fd: 11 request-len: 511 
+POST / HTTP/1.1
+User-Agent: Mozilla/5.0 (Macintosh; U; PPC Mac OS X 10_5_5; en-us) AppleWebKit/528.4+ (KHTML, like Gecko) Version/3.1.2 Safari/525.20.1
+Content-Type: application/x-www-form-urlencoded
+Referer: http://couch.it/
+Accept: application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5
+Accept-Language: en-us
+Accept-Encoding: gzip, deflate
+Cookie: COUCHIT_SID=11602dd110ecbb7663b0b60162aa6cc0897a8edf
+Content-Length: 31
+Connection: keep-alive
+Host: couch.it
+
+ 
+2008-09-16 10:24:23: (response.c.212) -- splitting Request-URI 
+2008-09-16 10:24:23: (response.c.213) Request-URI  :  / 
+2008-09-16 10:24:23: (response.c.214) URI-scheme   :  http 
+2008-09-16 10:24:23: (response.c.215) URI-authority:  couch.it 
+2008-09-16 10:24:23: (response.c.216) URI-path     :  / 
+2008-09-16 10:24:23: (response.c.217) URI-query    :   
+2008-09-16 10:24:23: (response.c.212) -- splitting Request-URI 
+2008-09-16 10:24:23: (response.c.213) Request-URI  :  /couchit.fcgi/ 
+2008-09-16 10:24:23: (response.c.214) URI-scheme   :  http 
+2008-09-16 10:24:23: (response.c.215) URI-authority:  couch.it 
+2008-09-16 10:24:23: (response.c.216) URI-path     :  /couchit.fcgi/ 
+2008-09-16 10:24:23: (response.c.217) URI-query    :   
+2008-09-16 10:24:23: (response.c.267) -- sanatising URI 
+2008-09-16 10:24:23: (response.c.268) URI-path     :  /couchit.fcgi/ 
+2008-09-16 10:24:23: (mod_access.c.135) -- mod_access_uri_handler called 
+2008-09-16 10:24:23: (mod_fastcgi.c.3563) handling it in mod_fastcgi 
+2008-09-16 10:24:23: (response.c.382) -- before doc_root 
+2008-09-16 10:24:23: (response.c.383) Doc-Root     : /Users/benoitc/Work/couchit 
+2008-09-16 10:24:23: (response.c.384) Rel-Path     : /couchit.fcgi 
+2008-09-16 10:24:23: (response.c.385) Path         :  
+2008-09-16 10:24:23: (response.c.433) -- after doc_root 
+2008-09-16 10:24:23: (response.c.434) Doc-Root     : /Users/benoitc/Work/couchit/ 
+2008-09-16 10:24:23: (response.c.435) Rel-Path     : /couchit.fcgi 
+2008-09-16 10:24:23: (response.c.436) Path         : /Users/benoitc/Work/couchit/couchit.fcgi 
+2008-09-16 10:24:23: (response.c.453) -- logical -> physical 
+2008-09-16 10:24:23: (response.c.454) Doc-Root     : /Users/benoitc/Work/couchit/ 
+2008-09-16 10:24:23: (response.c.455) Rel-Path     : /couchit.fcgi 
+2008-09-16 10:24:23: (response.c.456) Path         : /Users/benoitc/Work/couchit/couchit.fcgi 
+2008-09-16 10:24:24: (response.c.116) Response-Header: 
+HTTP/1.1 302 Found
+Transfer-Encoding: chunked
+Content-Type: text/html; charset=utf-8
+Location: http://couch.it/Spdbg9mH
+Date: Tue, 16 Sep 2008 08:24:24 GMT
+Server: lighttpd/1.4.19
+
+ 
+2008-09-16 10:24:25: (request.c.294) fd: 11 request-len: 449 
+GET /Spdbg9mH HTTP/1.1
+User-Agent: Mozilla/5.0 (Macintosh; U; PPC Mac OS X 10_5_5; en-us) AppleWebKit/528.4+ (KHTML, like Gecko) Version/3.1.2 Safari/525.20.1
+Accept-Encoding: gzip, deflate
+Referer: http://couch.it/
+Accept: application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5
+Accept-Language: en-us
+Cookie: COUCHIT_SID=11602dd110ecbb7663b0b60162aa6cc0897a8edf
+Connection: keep-alive
+Host: couch.it
+
+ 
+2008-09-16 10:24:25: (response.c.212) -- splitting Request-URI 
+2008-09-16 10:24:25: (response.c.213) Request-URI  :  /Spdbg9mH 
+2008-09-16 10:24:25: (response.c.214) URI-scheme   :  http 
+2008-09-16 10:24:25: (response.c.215) URI-authority:  couch.it 
+2008-09-16 10:24:25: (response.c.216) URI-path     :  /Spdbg9mH 
+2008-09-16 10:24:25: (response.c.217) URI-query    :   
+2008-09-16 10:24:25: (response.c.212) -- splitting Request-URI 
+2008-09-16 10:24:25: (response.c.213) Request-URI  :  /couchit.fcgi/Spdbg9mH 
+2008-09-16 10:24:25: (response.c.214) URI-scheme   :  http 
+2008-09-16 10:24:25: (response.c.215) URI-authority:  couch.it 
+2008-09-16 10:24:25: (response.c.216) URI-path     :  /couchit.fcgi/Spdbg9mH 
+2008-09-16 10:24:25: (response.c.217) URI-query    :   
+2008-09-16 10:24:25: (response.c.267) -- sanatising URI 
+2008-09-16 10:24:25: (response.c.268) URI-path     :  /couchit.fcgi/Spdbg9mH 
+2008-09-16 10:24:25: (mod_access.c.135) -- mod_access_uri_handler called 
+2008-09-16 10:24:25: (mod_fastcgi.c.3563) handling it in mod_fastcgi 
+2008-09-16 10:24:25: (response.c.382) -- before doc_root 
+2008-09-16 10:24:25: (response.c.383) Doc-Root     : /Users/benoitc/Work/couchit 
+2008-09-16 10:24:25: (response.c.384) Rel-Path     : /couchit.fcgi 
+2008-09-16 10:24:25: (response.c.385) Path         :  
+2008-09-16 10:24:25: (response.c.433) -- after doc_root 
+2008-09-16 10:24:25: (response.c.434) Doc-Root     : /Users/benoitc/Work/couchit/ 
+2008-09-16 10:24:25: (response.c.435) Rel-Path     : /couchit.fcgi 
+2008-09-16 10:24:25: (response.c.436) Path         : /Users/benoitc/Work/couchit/couchit.fcgi 
+2008-09-16 10:24:25: (response.c.453) -- logical -> physical 
+2008-09-16 10:24:25: (response.c.454) Doc-Root     : /Users/benoitc/Work/couchit/ 
+2008-09-16 10:24:25: (response.c.455) Rel-Path     : /couchit.fcgi 
+2008-09-16 10:24:25: (response.c.456) Path         : /Users/benoitc/Work/couchit/couchit.fcgi 
+2008-09-16 10:24:26: (response.c.116) Response-Header: 
+HTTP/1.1 200 OK
+Transfer-Encoding: chunked
+Content-Type: text/html; charset=utf-8
+Date: Tue, 16 Sep 2008 08:24:26 GMT
+Server: lighttpd/1.4.19
+
+ 
+2008-09-16 10:24:26: (request.c.294) fd: 13 request-len: 384 
+GET /static/js/prototype.js HTTP/1.1
+User-Agent: Mozilla/5.0 (Macintosh; U; PPC Mac OS X 10_5_5; en-us) AppleWebKit/528.4+ (KHTML, like Gecko) Version/3.1.2 Safari/525.20.1
+Referer: http://couch.it/Spdbg9mH
+Accept: */*
+Accept-Language: en-us
+Accept-Encoding: gzip, deflate
+Cookie: COUCHIT_SID=11602dd110ecbb7663b0b60162aa6cc0897a8edf
+Connection: keep-alive
+Host: couch.it
+
+ 
+2008-09-16 10:24:26: (response.c.212) -- splitting Request-URI 
+2008-09-16 10:24:26: (response.c.213) Request-URI  :  /static/js/prototype.js 
+2008-09-16 10:24:26: (response.c.214) URI-scheme   :  http 
+2008-09-16 10:24:26: (response.c.215) URI-authority:  couch.it 
+2008-09-16 10:24:26: (response.c.216) URI-path     :  /static/js/prototype.js 
+2008-09-16 10:24:26: (response.c.217) URI-query    :   
+2008-09-16 10:24:26: (response.c.212) -- splitting Request-URI 
+2008-09-16 10:24:26: (response.c.213) Request-URI  :  /static/js/prototype.js 
+2008-09-16 10:24:26: (response.c.214) URI-scheme   :  http 
+2008-09-16 10:24:26: (response.c.215) URI-authority:  couch.it 
+2008-09-16 10:24:26: (response.c.216) URI-path     :  /static/js/prototype.js 
+2008-09-16 10:24:26: (response.c.217) URI-query    :   
+2008-09-16 10:24:26: (response.c.267) -- sanatising URI 
+2008-09-16 10:24:26: (response.c.268) URI-path     :  /static/js/prototype.js 
+2008-09-16 10:24:26: (mod_access.c.135) -- mod_access_uri_handler called 
+2008-09-16 10:24:26: (response.c.382) -- before doc_root 
+2008-09-16 10:24:26: (response.c.383) Doc-Root     : /Users/benoitc/Work/couchit 
+2008-09-16 10:24:26: (response.c.384) Rel-Path     : /static/js/prototype.js 
+2008-09-16 10:24:26: (response.c.385) Path         :  
+2008-09-16 10:24:26: (response.c.433) -- after doc_root 
+2008-09-16 10:24:26: (response.c.434) Doc-Root     : /Users/benoitc/Work/couchit/ 
+2008-09-16 10:24:26: (response.c.435) Rel-Path     : /static/js/prototype.js 
+2008-09-16 10:24:26: (response.c.436) Path         : /Users/benoitc/Work/couchit/static/js/prototype.js 
+2008-09-16 10:24:26: (response.c.453) -- logical -> physical 
+2008-09-16 10:24:26: (response.c.454) Doc-Root     : /Users/benoitc/Work/couchit/ 
+2008-09-16 10:24:26: (response.c.455) Rel-Path     : /static/js/prototype.js 
+2008-09-16 10:24:26: (response.c.456) Path         : /Users/benoitc/Work/couchit/static/js/prototype.js 
+2008-09-16 10:24:26: (response.c.473) -- handling physical path 
+2008-09-16 10:24:26: (response.c.474) Path         : /Users/benoitc/Work/couchit/static/js/prototype.js 
+2008-09-16 10:24:26: (response.c.481) -- file found 
+2008-09-16 10:24:26: (response.c.482) Path         : /Users/benoitc/Work/couchit/static/js/prototype.js 
+2008-09-16 10:24:26: (response.c.631) -- handling subrequest 
+2008-09-16 10:24:26: (response.c.632) Path         : /Users/benoitc/Work/couchit/static/js/prototype.js 
+2008-09-16 10:24:26: (mod_access.c.135) -- mod_access_uri_handler called 
+2008-09-16 10:24:26: (mod_staticfile.c.394) -- handling file as static file 
+2008-09-16 10:24:26: (response.c.643) -- subrequest finished 
+2008-09-16 10:24:26: (response.c.116) Response-Header: 
+HTTP/1.1 200 OK
+Content-Type: text/javascript
+Accept-Ranges: bytes
+ETag: "-1620566533"
+Last-Modified: Mon, 15 Sep 2008 23:26:01 GMT
+Content-Length: 73509
+Date: Tue, 16 Sep 2008 08:24:26 GMT
+Server: lighttpd/1.4.19
+
+ 
+2008-09-16 10:24:26: (request.c.294) fd: 14 request-len: 388 
+GET /static/js/scriptaculous.js HTTP/1.1
+User-Agent: Mozilla/5.0 (Macintosh; U; PPC Mac OS X 10_5_5; en-us) AppleWebKit/528.4+ (KHTML, like Gecko) Version/3.1.2 Safari/525.20.1
+Referer: http://couch.it/Spdbg9mH
+Accept: */*
+Accept-Language: en-us
+Accept-Encoding: gzip, deflate
+Cookie: COUCHIT_SID=11602dd110ecbb7663b0b60162aa6cc0897a8edf
+Connection: keep-alive
+Host: couch.it
+
+ 
+2008-09-16 10:24:26: (response.c.212) -- splitting Request-URI 
+2008-09-16 10:24:26: (response.c.213) Request-URI  :  /static/js/scriptaculous.js 
+2008-09-16 10:24:26: (response.c.214) URI-scheme   :  http 
+2008-09-16 10:24:26: (response.c.215) URI-authority:  couch.it 
+2008-09-16 10:24:26: (response.c.216) URI-path     :  /static/js/scriptaculous.js 
+2008-09-16 10:24:26: (response.c.217) URI-query    :   
+2008-09-16 10:24:26: (response.c.212) -- splitting Request-URI 
+2008-09-16 10:24:26: (response.c.213) Request-URI  :  /static/js/scriptaculous.js 
+2008-09-16 10:24:26: (response.c.214) URI-scheme   :  http 
+2008-09-16 10:24:26: (response.c.215) URI-authority:  couch.it 
+2008-09-16 10:24:26: (response.c.216) URI-path     :  /static/js/scriptaculous.js 
+2008-09-16 10:24:26: (response.c.217) URI-query    :   
+2008-09-16 10:24:26: (response.c.267) -- sanatising URI 
+2008-09-16 10:24:26: (response.c.268) URI-path     :  /static/js/scriptaculous.js 
+2008-09-16 10:24:26: (mod_access.c.135) -- mod_access_uri_handler called 
+2008-09-16 10:24:26: (response.c.382) -- before doc_root 
+2008-09-16 10:24:26: (response.c.383) Doc-Root     : /Users/benoitc/Work/couchit 
+2008-09-16 10:24:26: (response.c.384) Rel-Path     : /static/js/scriptaculous.js 
+2008-09-16 10:24:26: (response.c.385) Path         :  
+2008-09-16 10:24:26: (response.c.433) -- after doc_root 
+2008-09-16 10:24:26: (response.c.434) Doc-Root     : /Users/benoitc/Work/couchit/ 
+2008-09-16 10:24:26: (response.c.435) Rel-Path     : /static/js/scriptaculous.js 
+2008-09-16 10:24:26: (response.c.436) Path         : /Users/benoitc/Work/couchit/static/js/scriptaculous.js 
+2008-09-16 10:24:26: (response.c.453) -- logical -> physical 
+2008-09-16 10:24:26: (response.c.454) Doc-Root     : /Users/benoitc/Work/couchit/ 
+2008-09-16 10:24:26: (response.c.455) Rel-Path     : /static/js/scriptaculous.js 
+2008-09-16 10:24:26: (response.c.456) Path         : /Users/benoitc/Work/couchit/static/js/scriptaculous.js 
+2008-09-16 10:24:26: (response.c.473) -- handling physical path 
+2008-09-16 10:24:26: (response.c.474) Path         : /Users/benoitc/Work/couchit/static/js/scriptaculous.js 
+2008-09-16 10:24:26: (response.c.481) -- file found 
+2008-09-16 10:24:26: (response.c.482) Path         : /Users/benoitc/Work/couchit/static/js/scriptaculous.js 
+2008-09-16 10:24:26: (response.c.631) -- handling subrequest 
+2008-09-16 10:24:26: (response.c.632) Path         : /Users/benoitc/Work/couchit/static/js/scriptaculous.js 
+2008-09-16 10:24:26: (mod_access.c.135) -- mod_access_uri_handler called 
+2008-09-16 10:24:26: (mod_staticfile.c.394) -- handling file as static file 
+2008-09-16 10:24:26: (response.c.643) -- subrequest finished 
+2008-09-16 10:24:26: (response.c.116) Response-Header: 
+HTTP/1.1 200 OK
+Content-Type: text/javascript
+Accept-Ranges: bytes
+ETag: "-144041778"
+Last-Modified: Mon, 15 Sep 2008 23:26:14 GMT
+Content-Length: 53397
+Date: Tue, 16 Sep 2008 08:24:26 GMT
+Server: lighttpd/1.4.19
+
+ 
+2008-09-16 10:24:26: (request.c.294) fd: 15 request-len: 394 
+GET /static/js/couchit-application.js HTTP/1.1
+User-Agent: Mozilla/5.0 (Macintosh; U; PPC Mac OS X 10_5_5; en-us) AppleWebKit/528.4+ (KHTML, like Gecko) Version/3.1.2 Safari/525.20.1
+Referer: http://couch.it/Spdbg9mH
+Accept: */*
+Accept-Language: en-us
+Accept-Encoding: gzip, deflate
+Cookie: COUCHIT_SID=11602dd110ecbb7663b0b60162aa6cc0897a8edf
+Connection: keep-alive
+Host: couch.it
+
+ 
+2008-09-16 10:24:26: (response.c.212) -- splitting Request-URI 
+2008-09-16 10:24:26: (response.c.213) Request-URI  :  /static/js/couchit-application.js 
+2008-09-16 10:24:26: (response.c.214) URI-scheme   :  http 
+2008-09-16 10:24:26: (response.c.215) URI-authority:  couch.it 
+2008-09-16 10:24:26: (response.c.216) URI-path     :  /static/js/couchit-application.js 
+2008-09-16 10:24:26: (response.c.217) URI-query    :   
+2008-09-16 10:24:26: (response.c.212) -- splitting Request-URI 
+2008-09-16 10:24:26: (response.c.213) Request-URI  :  /static/js/couchit-application.js 
+2008-09-16 10:24:26: (response.c.214) URI-scheme   :  http 
+2008-09-16 10:24:26: (response.c.215) URI-authority:  couch.it 
+2008-09-16 10:24:26: (response.c.216) URI-path     :  /static/js/couchit-application.js 
+2008-09-16 10:24:26: (response.c.217) URI-query    :   
+2008-09-16 10:24:26: (response.c.267) -- sanatising URI 
+2008-09-16 10:24:26: (response.c.268) URI-path     :  /static/js/couchit-application.js 
+2008-09-16 10:24:26: (mod_access.c.135) -- mod_access_uri_handler called 
+2008-09-16 10:24:26: (response.c.382) -- before doc_root 
+2008-09-16 10:24:26: (response.c.383) Doc-Root     : /Users/benoitc/Work/couchit 
+2008-09-16 10:24:26: (response.c.384) Rel-Path     : /static/js/couchit-application.js 
+2008-09-16 10:24:26: (response.c.385) Path         :  
+2008-09-16 10:24:26: (response.c.433) -- after doc_root 
+2008-09-16 10:24:26: (response.c.434) Doc-Root     : /Users/benoitc/Work/couchit/ 
+2008-09-16 10:24:26: (response.c.435) Rel-Path     : /static/js/couchit-application.js 
+2008-09-16 10:24:26: (response.c.436) Path         : /Users/benoitc/Work/couchit/static/js/couchit-application.js 
+2008-09-16 10:24:26: (response.c.453) -- logical -> physical 
+2008-09-16 10:24:26: (response.c.454) Doc-Root     : /Users/benoitc/Work/couchit/ 
+2008-09-16 10:24:26: (response.c.455) Rel-Path     : /static/js/couchit-application.js 
+2008-09-16 10:24:26: (response.c.456) Path         : /Users/benoitc/Work/couchit/static/js/couchit-application.js 
+2008-09-16 10:24:26: (response.c.473) -- handling physical path 
+2008-09-16 10:24:26: (response.c.474) Path         : /Users/benoitc/Work/couchit/static/js/couchit-application.js 
+2008-09-16 10:24:26: (response.c.481) -- file found 
+2008-09-16 10:24:26: (response.c.482) Path         : /Users/benoitc/Work/couchit/static/js/couchit-application.js 
+2008-09-16 10:24:26: (response.c.631) -- handling subrequest 
+2008-09-16 10:24:26: (response.c.632) Path         : /Users/benoitc/Work/couchit/static/js/couchit-application.js 
+2008-09-16 10:24:26: (mod_access.c.135) -- mod_access_uri_handler called 
+2008-09-16 10:24:26: (mod_staticfile.c.394) -- handling file as static file 
+2008-09-16 10:24:26: (response.c.643) -- subrequest finished 
+2008-09-16 10:24:26: (response.c.116) Response-Header: 
+HTTP/1.1 200 OK
+Content-Type: text/javascript
+Accept-Ranges: bytes
+ETag: "819662111"
+Last-Modified: Mon, 15 Sep 2008 23:26:20 GMT
+Content-Length: 6797
+Date: Tue, 16 Sep 2008 08:24:26 GMT
+Server: lighttpd/1.4.19
+
+ 
+2008-09-16 10:24:26: (request.c.294) fd: 11 request-len: 403 
+GET /static/css/src/default.css HTTP/1.1
+User-Agent: Mozilla/5.0 (Macintosh; U; PPC Mac OS X 10_5_5; en-us) AppleWebKit/528.4+ (KHTML, like Gecko) Version/3.1.2 Safari/525.20.1
+Referer: http://couch.it/Spdbg9mH
+Accept: text/css,*/*;q=0.1
+Accept-Language: en-us
+Accept-Encoding: gzip, deflate
+Cookie: COUCHIT_SID=11602dd110ecbb7663b0b60162aa6cc0897a8edf
+Connection: keep-alive
+Host: couch.it
+
+ 
+2008-09-16 10:24:26: (response.c.212) -- splitting Request-URI 
+2008-09-16 10:24:26: (response.c.213) Request-URI  :  /static/css/src/default.css 
+2008-09-16 10:24:26: (response.c.214) URI-scheme   :  http 
+2008-09-16 10:24:26: (response.c.215) URI-authority:  couch.it 
+2008-09-16 10:24:26: (response.c.216) URI-path     :  /static/css/src/default.css 
+2008-09-16 10:24:26: (response.c.217) URI-query    :   
+2008-09-16 10:24:26: (response.c.212) -- splitting Request-URI 
+2008-09-16 10:24:26: (response.c.213) Request-URI  :  /static/css/src/default.css 
+2008-09-16 10:24:26: (response.c.214) URI-scheme   :  http 
+2008-09-16 10:24:26: (response.c.215) URI-authority:  couch.it 
+2008-09-16 10:24:26: (response.c.216) URI-path     :  /static/css/src/default.css 
+2008-09-16 10:24:26: (response.c.217) URI-query    :   
+2008-09-16 10:24:26: (response.c.267) -- sanatising URI 
+2008-09-16 10:24:26: (response.c.268) URI-path     :  /static/css/src/default.css 
+2008-09-16 10:24:26: (mod_access.c.135) -- mod_access_uri_handler called 
+2008-09-16 10:24:26: (response.c.382) -- before doc_root 
+2008-09-16 10:24:26: (response.c.383) Doc-Root     : /Users/benoitc/Work/couchit 
+2008-09-16 10:24:26: (response.c.384) Rel-Path     : /static/css/src/default.css 
+2008-09-16 10:24:26: (response.c.385) Path         :  
+2008-09-16 10:24:26: (response.c.433) -- after doc_root 
+2008-09-16 10:24:26: (response.c.434) Doc-Root     : /Users/benoitc/Work/couchit/ 
+2008-09-16 10:24:26: (response.c.435) Rel-Path     : /static/css/src/default.css 
+2008-09-16 10:24:26: (response.c.436) Path         : /Users/benoitc/Work/couchit/static/css/src/default.css 
+2008-09-16 10:24:26: (response.c.453) -- logical -> physical 
+2008-09-16 10:24:26: (response.c.454) Doc-Root     : /Users/benoitc/Work/couchit/ 
+2008-09-16 10:24:26: (response.c.455) Rel-Path     : /static/css/src/default.css 
+2008-09-16 10:24:26: (response.c.456) Path         : /Users/benoitc/Work/couchit/static/css/src/default.css 
+2008-09-16 10:24:26: (response.c.473) -- handling physical path 
+2008-09-16 10:24:26: (response.c.474) Path         : /Users/benoitc/Work/couchit/static/css/src/default.css 
+2008-09-16 10:24:26: (response.c.481) -- file found 
+2008-09-16 10:24:26: (response.c.482) Path         : /Users/benoitc/Work/couchit/static/css/src/default.css 
+2008-09-16 10:24:26: (response.c.631) -- handling subrequest 
+2008-09-16 10:24:26: (response.c.632) Path         : /Users/benoitc/Work/couchit/static/css/src/default.css 
+2008-09-16 10:24:26: (mod_access.c.135) -- mod_access_uri_handler called 
+2008-09-16 10:24:26: (mod_staticfile.c.394) -- handling file as static file 
+2008-09-16 10:24:26: (response.c.643) -- subrequest finished 
+2008-09-16 10:24:26: (response.c.116) Response-Header: 
+HTTP/1.1 200 OK
+Content-Type: text/css
+Accept-Ranges: bytes
+ETag: "-70120087"
+Last-Modified: Sat, 13 Sep 2008 18:53:59 GMT
+Content-Length: 3392
+Date: Tue, 16 Sep 2008 08:24:26 GMT
+Server: lighttpd/1.4.19
+
+ 
+2008-09-16 10:24:26: (request.c.294) fd: 11 request-len: 383 
+GET /static/js/livepipe.js HTTP/1.1
+User-Agent: Mozilla/5.0 (Macintosh; U; PPC Mac OS X 10_5_5; en-us) AppleWebKit/528.4+ (KHTML, like Gecko) Version/3.1.2 Safari/525.20.1
+Referer: http://couch.it/Spdbg9mH
+Accept: */*
+Accept-Language: en-us
+Accept-Encoding: gzip, deflate
+Cookie: COUCHIT_SID=11602dd110ecbb7663b0b60162aa6cc0897a8edf
+Connection: keep-alive
+Host: couch.it
+
+ 
+2008-09-16 10:24:26: (response.c.212) -- splitting Request-URI 
+2008-09-16 10:24:26: (response.c.213) Request-URI  :  /static/js/livepipe.js 
+2008-09-16 10:24:26: (response.c.214) URI-scheme   :  http 
+2008-09-16 10:24:26: (response.c.215) URI-authority:  couch.it 
+2008-09-16 10:24:26: (response.c.216) URI-path     :  /static/js/livepipe.js 
+2008-09-16 10:24:26: (response.c.217) URI-query    :   
+2008-09-16 10:24:26: (response.c.212) -- splitting Request-URI 
+2008-09-16 10:24:26: (response.c.213) Request-URI  :  /static/js/livepipe.js 
+2008-09-16 10:24:26: (response.c.214) URI-scheme   :  http 
+2008-09-16 10:24:26: (response.c.215) URI-authority:  couch.it 
+2008-09-16 10:24:26: (response.c.216) URI-path     :  /static/js/livepipe.js 
+2008-09-16 10:24:26: (response.c.217) URI-query    :   
+2008-09-16 10:24:26: (response.c.267) -- sanatising URI 
+2008-09-16 10:24:26: (response.c.268) URI-path     :  /static/js/livepipe.js 
+2008-09-16 10:24:26: (mod_access.c.135) -- mod_access_uri_handler called 
+2008-09-16 10:24:26: (response.c.382) -- before doc_root 
+2008-09-16 10:24:26: (response.c.383) Doc-Root     : /Users/benoitc/Work/couchit 
+2008-09-16 10:24:26: (response.c.384) Rel-Path     : /static/js/livepipe.js 
+2008-09-16 10:24:26: (response.c.385) Path         :  
+2008-09-16 10:24:26: (response.c.433) -- after doc_root 
+2008-09-16 10:24:26: (response.c.434) Doc-Root     : /Users/benoitc/Work/couchit/ 
+2008-09-16 10:24:26: (response.c.435) Rel-Path     : /static/js/livepipe.js 
+2008-09-16 10:24:26: (response.c.436) Path         : /Users/benoitc/Work/couchit/static/js/livepipe.js 
+2008-09-16 10:24:26: (response.c.453) -- logical -> physical 
+2008-09-16 10:24:26: (response.c.454) Doc-Root     : /Users/benoitc/Work/couchit/ 
+2008-09-16 10:24:26: (response.c.455) Rel-Path     : /static/js/livepipe.js 
+2008-09-16 10:24:26: (response.c.456) Path         : /Users/benoitc/Work/couchit/static/js/livepipe.js 
+2008-09-16 10:24:26: (response.c.473) -- handling physical path 
+2008-09-16 10:24:26: (response.c.474) Path         : /Users/benoitc/Work/couchit/static/js/livepipe.js 
+2008-09-16 10:24:26: (response.c.481) -- file found 
+2008-09-16 10:24:26: (response.c.482) Path         : /Users/benoitc/Work/couchit/static/js/livepipe.js 
+2008-09-16 10:24:26: (response.c.631) -- handling subrequest 
+2008-09-16 10:24:26: (response.c.632) Path         : /Users/benoitc/Work/couchit/static/js/livepipe.js 
+2008-09-16 10:24:26: (mod_access.c.135) -- mod_access_uri_handler called 
+2008-09-16 10:24:26: (mod_staticfile.c.394) -- handling file as static file 
+2008-09-16 10:24:26: (response.c.643) -- subrequest finished 
+2008-09-16 10:24:26: (response.c.116) Response-Header: 
+HTTP/1.1 200 OK
+Content-Type: text/javascript
+Accept-Ranges: bytes
+ETag: "-1419018996"
+Last-Modified: Mon, 15 Sep 2008 23:26:28 GMT
+Content-Length: 48282
+Date: Tue, 16 Sep 2008 08:24:26 GMT
+Server: lighttpd/1.4.19
+
+ 
+2008-09-16 10:24:26: (request.c.294) fd: 13 request-len: 387 
+GET /static/js/couchit-page.js HTTP/1.1
+User-Agent: Mozilla/5.0 (Macintosh; U; PPC Mac OS X 10_5_5; en-us) AppleWebKit/528.4+ (KHTML, like Gecko) Version/3.1.2 Safari/525.20.1
+Referer: http://couch.it/Spdbg9mH
+Accept: */*
+Accept-Language: en-us
+Accept-Encoding: gzip, deflate
+Cookie: COUCHIT_SID=11602dd110ecbb7663b0b60162aa6cc0897a8edf
+Connection: keep-alive
+Host: couch.it
+
+ 
+2008-09-16 10:24:26: (response.c.212) -- splitting Request-URI 
+2008-09-16 10:24:26: (response.c.213) Request-URI  :  /static/js/couchit-page.js 
+2008-09-16 10:24:26: (response.c.214) URI-scheme   :  http 
+2008-09-16 10:24:26: (response.c.215) URI-authority:  couch.it 
+2008-09-16 10:24:26: (response.c.216) URI-path     :  /static/js/couchit-page.js 
+2008-09-16 10:24:26: (response.c.217) URI-query    :   
+2008-09-16 10:24:26: (response.c.212) -- splitting Request-URI 
+2008-09-16 10:24:26: (response.c.213) Request-URI  :  /static/js/couchit-page.js 
+2008-09-16 10:24:26: (response.c.214) URI-scheme   :  http 
+2008-09-16 10:24:26: (response.c.215) URI-authority:  couch.it 
+2008-09-16 10:24:26: (response.c.216) URI-path     :  /static/js/couchit-page.js 
+2008-09-16 10:24:26: (response.c.217) URI-query    :   
+2008-09-16 10:24:26: (response.c.267) -- sanatising URI 
+2008-09-16 10:24:26: (response.c.268) URI-path     :  /static/js/couchit-page.js 
+2008-09-16 10:24:26: (mod_access.c.135) -- mod_access_uri_handler called 
+2008-09-16 10:24:26: (response.c.382) -- before doc_root 
+2008-09-16 10:24:26: (response.c.383) Doc-Root     : /Users/benoitc/Work/couchit 
+2008-09-16 10:24:26: (response.c.384) Rel-Path     : /static/js/couchit-page.js 
+2008-09-16 10:24:26: (response.c.385) Path         :  
+2008-09-16 10:24:26: (response.c.433) -- after doc_root 
+2008-09-16 10:24:26: (response.c.434) Doc-Root     : /Users/benoitc/Work/couchit/ 
+2008-09-16 10:24:26: (response.c.435) Rel-Path     : /static/js/couchit-page.js 
+2008-09-16 10:24:26: (response.c.436) Path         : /Users/benoitc/Work/couchit/static/js/couchit-page.js 
+2008-09-16 10:24:26: (response.c.453) -- logical -> physical 
+2008-09-16 10:24:26: (response.c.454) Doc-Root     : /Users/benoitc/Work/couchit/ 
+2008-09-16 10:24:26: (response.c.455) Rel-Path     : /static/js/couchit-page.js 
+2008-09-16 10:24:26: (response.c.456) Path         : /Users/benoitc/Work/couchit/static/js/couchit-page.js 
+2008-09-16 10:24:26: (response.c.473) -- handling physical path 
+2008-09-16 10:24:26: (response.c.474) Path         : /Users/benoitc/Work/couchit/static/js/couchit-page.js 
+2008-09-16 10:24:26: (response.c.481) -- file found 
+2008-09-16 10:24:26: (response.c.482) Path         : /Users/benoitc/Work/couchit/static/js/couchit-page.js 
+2008-09-16 10:24:26: (response.c.631) -- handling subrequest 
+2008-09-16 10:24:26: (response.c.632) Path         : /Users/benoitc/Work/couchit/static/js/couchit-page.js 
+2008-09-16 10:24:26: (mod_access.c.135) -- mod_access_uri_handler called 
+2008-09-16 10:24:26: (mod_staticfile.c.394) -- handling file as static file 
+2008-09-16 10:24:26: (response.c.643) -- subrequest finished 
+2008-09-16 10:24:26: (response.c.116) Response-Header: 
+HTTP/1.1 200 OK
+Content-Type: text/javascript
+Accept-Ranges: bytes
+ETag: "-872252579"
+Last-Modified: Mon, 15 Sep 2008 23:26:07 GMT
+Content-Length: 5519
+Date: Tue, 16 Sep 2008 08:24:26 GMT
+Server: lighttpd/1.4.19
+
+ 
+2008-09-16 10:24:26: (request.c.294) fd: 11 request-len: 389 
+GET /static/img/window_close.gif HTTP/1.1
+User-Agent: Mozilla/5.0 (Macintosh; U; PPC Mac OS X 10_5_5; en-us) AppleWebKit/528.4+ (KHTML, like Gecko) Version/3.1.2 Safari/525.20.1
+Referer: http://couch.it/Spdbg9mH
+Accept: */*
+Accept-Language: en-us
+Accept-Encoding: gzip, deflate
+Cookie: COUCHIT_SID=11602dd110ecbb7663b0b60162aa6cc0897a8edf
+Connection: keep-alive
+Host: couch.it
+
+ 
+2008-09-16 10:24:26: (response.c.212) -- splitting Request-URI 
+2008-09-16 10:24:26: (response.c.213) Request-URI  :  /static/img/window_close.gif 
+2008-09-16 10:24:26: (response.c.214) URI-scheme   :  http 
+2008-09-16 10:24:26: (response.c.215) URI-authority:  couch.it 
+2008-09-16 10:24:26: (response.c.216) URI-path     :  /static/img/window_close.gif 
+2008-09-16 10:24:26: (response.c.217) URI-query    :   
+2008-09-16 10:24:26: (response.c.212) -- splitting Request-URI 
+2008-09-16 10:24:26: (response.c.213) Request-URI  :  /static/img/window_close.gif 
+2008-09-16 10:24:26: (response.c.214) URI-scheme   :  http 
+2008-09-16 10:24:26: (response.c.215) URI-authority:  couch.it 
+2008-09-16 10:24:26: (response.c.216) URI-path     :  /static/img/window_close.gif 
+2008-09-16 10:24:26: (response.c.217) URI-query    :   
+2008-09-16 10:24:26: (response.c.267) -- sanatising URI 
+2008-09-16 10:24:26: (response.c.268) URI-path     :  /static/img/window_close.gif 
+2008-09-16 10:24:26: (mod_access.c.135) -- mod_access_uri_handler called 
+2008-09-16 10:24:26: (response.c.382) -- before doc_root 
+2008-09-16 10:24:26: (response.c.383) Doc-Root     : /Users/benoitc/Work/couchit 
+2008-09-16 10:24:26: (response.c.384) Rel-Path     : /static/img/window_close.gif 
+2008-09-16 10:24:26: (response.c.385) Path         :  
+2008-09-16 10:24:26: (response.c.433) -- after doc_root 
+2008-09-16 10:24:26: (response.c.434) Doc-Root     : /Users/benoitc/Work/couchit/ 
+2008-09-16 10:24:26: (response.c.435) Rel-Path     : /static/img/window_close.gif 
+2008-09-16 10:24:26: (response.c.436) Path         : /Users/benoitc/Work/couchit/static/img/window_close.gif 
+2008-09-16 10:24:26: (response.c.453) -- logical -> physical 
+2008-09-16 10:24:26: (response.c.454) Doc-Root     : /Users/benoitc/Work/couchit/ 
+2008-09-16 10:24:26: (response.c.455) Rel-Path     : /static/img/window_close.gif 
+2008-09-16 10:24:26: (response.c.456) Path         : /Users/benoitc/Work/couchit/static/img/window_close.gif 
+2008-09-16 10:24:26: (response.c.473) -- handling physical path 
+2008-09-16 10:24:26: (response.c.474) Path         : /Users/benoitc/Work/couchit/static/img/window_close.gif 
+2008-09-16 10:24:26: (response.c.481) -- file found 
+2008-09-16 10:24:26: (response.c.482) Path         : /Users/benoitc/Work/couchit/static/img/window_close.gif 
+2008-09-16 10:24:26: (response.c.631) -- handling subrequest 
+2008-09-16 10:24:26: (response.c.632) Path         : /Users/benoitc/Work/couchit/static/img/window_close.gif 
+2008-09-16 10:24:26: (mod_access.c.135) -- mod_access_uri_handler called 
+2008-09-16 10:24:26: (mod_staticfile.c.394) -- handling file as static file 
+2008-09-16 10:24:26: (response.c.643) -- subrequest finished 
+2008-09-16 10:24:26: (response.c.116) Response-Header: 
+HTTP/1.1 200 OK
+Content-Type: image/gif
+Accept-Ranges: bytes
+ETag: "663437015"
+Last-Modified: Sun, 07 Sep 2008 22:25:15 GMT
+Content-Length: 338
+Date: Tue, 16 Sep 2008 08:24:26 GMT
+Server: lighttpd/1.4.19
+
+ 
+2008-09-16 10:24:26: (request.c.294) fd: 11 request-len: 385 
+GET /static/img/tab-view.png HTTP/1.1
+User-Agent: Mozilla/5.0 (Macintosh; U; PPC Mac OS X 10_5_5; en-us) AppleWebKit/528.4+ (KHTML, like Gecko) Version/3.1.2 Safari/525.20.1
+Referer: http://couch.it/Spdbg9mH
+Accept: */*
+Accept-Language: en-us
+Accept-Encoding: gzip, deflate
+Cookie: COUCHIT_SID=11602dd110ecbb7663b0b60162aa6cc0897a8edf
+Connection: keep-alive
+Host: couch.it
+
+ 
+2008-09-16 10:24:26: (response.c.212) -- splitting Request-URI 
+2008-09-16 10:24:26: (response.c.213) Request-URI  :  /static/img/tab-view.png 
+2008-09-16 10:24:26: (response.c.214) URI-scheme   :  http 
+2008-09-16 10:24:26: (response.c.215) URI-authority:  couch.it 
+2008-09-16 10:24:26: (response.c.216) URI-path     :  /static/img/tab-view.png 
+2008-09-16 10:24:26: (response.c.217) URI-query    :   
+2008-09-16 10:24:26: (response.c.212) -- splitting Request-URI 
+2008-09-16 10:24:26: (response.c.213) Request-URI  :  /static/img/tab-view.png 
+2008-09-16 10:24:26: (response.c.214) URI-scheme   :  http 
+2008-09-16 10:24:26: (response.c.215) URI-authority:  couch.it 
+2008-09-16 10:24:26: (response.c.216) URI-path     :  /static/img/tab-view.png 
+2008-09-16 10:24:26: (response.c.217) URI-query    :   
+2008-09-16 10:24:26: (response.c.267) -- sanatising URI 
+2008-09-16 10:24:26: (response.c.268) URI-path     :  /static/img/tab-view.png 
+2008-09-16 10:24:26: (mod_access.c.135) -- mod_access_uri_handler called 
+2008-09-16 10:24:26: (response.c.382) -- before doc_root 
+2008-09-16 10:24:26: (response.c.383) Doc-Root     : /Users/benoitc/Work/couchit 
+2008-09-16 10:24:26: (response.c.384) Rel-Path     : /static/img/tab-view.png 
+2008-09-16 10:24:26: (response.c.385) Path         :  
+2008-09-16 10:24:26: (response.c.433) -- after doc_root 
+2008-09-16 10:24:26: (response.c.434) Doc-Root     : /Users/benoitc/Work/couchit/ 
+2008-09-16 10:24:26: (response.c.435) Rel-Path     : /static/img/tab-view.png 
+2008-09-16 10:24:26: (response.c.436) Path         : /Users/benoitc/Work/couchit/static/img/tab-view.png 
+2008-09-16 10:24:26: (response.c.453) -- logical -> physical 
+2008-09-16 10:24:26: (response.c.454) Doc-Root     : /Users/benoitc/Work/couchit/ 
+2008-09-16 10:24:26: (response.c.455) Rel-Path     : /static/img/tab-view.png 
+2008-09-16 10:24:26: (response.c.456) Path         : /Users/benoitc/Work/couchit/static/img/tab-view.png 
+2008-09-16 10:24:26: (response.c.473) -- handling physical path 
+2008-09-16 10:24:26: (response.c.474) Path         : /Users/benoitc/Work/couchit/static/img/tab-view.png 
+2008-09-16 10:24:26: (response.c.481) -- file found 
+2008-09-16 10:24:26: (response.c.482) Path         : /Users/benoitc/Work/couchit/static/img/tab-view.png 
+2008-09-16 10:24:26: (response.c.631) -- handling subrequest 
+2008-09-16 10:24:26: (response.c.632) Path         : /Users/benoitc/Work/couchit/static/img/tab-view.png 
+2008-09-16 10:24:26: (mod_access.c.135) -- mod_access_uri_handler called 
+2008-09-16 10:24:26: (mod_staticfile.c.394) -- handling file as static file 
+2008-09-16 10:24:26: (response.c.643) -- subrequest finished 
+2008-09-16 10:24:26: (response.c.116) Response-Header: 
+HTTP/1.1 200 OK
+Content-Type: image/png
+Accept-Ranges: bytes
+ETag: "280222605"
+Last-Modified: Sat, 13 Sep 2008 19:04:59 GMT
+Content-Length: 304
+Date: Tue, 16 Sep 2008 08:24:26 GMT
+Server: lighttpd/1.4.19
+
+ 
+2008-09-16 10:24:26: (request.c.294) fd: 13 request-len: 391 
+GET /static/img/roundedcorners.svg HTTP/1.1
+User-Agent: Mozilla/5.0 (Macintosh; U; PPC Mac OS X 10_5_5; en-us) AppleWebKit/528.4+ (KHTML, like Gecko) Version/3.1.2 Safari/525.20.1
+Referer: http://couch.it/Spdbg9mH
+Accept: */*
+Accept-Language: en-us
+Accept-Encoding: gzip, deflate
+Cookie: COUCHIT_SID=11602dd110ecbb7663b0b60162aa6cc0897a8edf
+Connection: keep-alive
+Host: couch.it
+
+ 
+2008-09-16 10:24:26: (response.c.212) -- splitting Request-URI 
+2008-09-16 10:24:26: (response.c.213) Request-URI  :  /static/img/roundedcorners.svg 
+2008-09-16 10:24:26: (response.c.214) URI-scheme   :  http 
+2008-09-16 10:24:26: (response.c.215) URI-authority:  couch.it 
+2008-09-16 10:24:26: (response.c.216) URI-path     :  /static/img/roundedcorners.svg 
+2008-09-16 10:24:26: (response.c.217) URI-query    :   
+2008-09-16 10:24:26: (response.c.212) -- splitting Request-URI 
+2008-09-16 10:24:26: (response.c.213) Request-URI  :  /static/img/roundedcorners.svg 
+2008-09-16 10:24:26: (response.c.214) URI-scheme   :  http 
+2008-09-16 10:24:26: (response.c.215) URI-authority:  couch.it 
+2008-09-16 10:24:26: (response.c.216) URI-path     :  /static/img/roundedcorners.svg 
+2008-09-16 10:24:26: (response.c.217) URI-query    :   
+2008-09-16 10:24:26: (response.c.267) -- sanatising URI 
+2008-09-16 10:24:26: (response.c.268) URI-path     :  /static/img/roundedcorners.svg 
+2008-09-16 10:24:26: (mod_access.c.135) -- mod_access_uri_handler called 
+2008-09-16 10:24:26: (response.c.382) -- before doc_root 
+2008-09-16 10:24:26: (response.c.383) Doc-Root     : /Users/benoitc/Work/couchit 
+2008-09-16 10:24:26: (response.c.384) Rel-Path     : /static/img/roundedcorners.svg 
+2008-09-16 10:24:26: (response.c.385) Path         :  
+2008-09-16 10:24:26: (response.c.433) -- after doc_root 
+2008-09-16 10:24:26: (response.c.434) Doc-Root     : /Users/benoitc/Work/couchit/ 
+2008-09-16 10:24:26: (response.c.435) Rel-Path     : /static/img/roundedcorners.svg 
+2008-09-16 10:24:26: (response.c.436) Path         : /Users/benoitc/Work/couchit/static/img/roundedcorners.svg 
+2008-09-16 10:24:26: (response.c.453) -- logical -> physical 
+2008-09-16 10:24:26: (response.c.454) Doc-Root     : /Users/benoitc/Work/couchit/ 
+2008-09-16 10:24:26: (response.c.455) Rel-Path     : /static/img/roundedcorners.svg 
+2008-09-16 10:24:26: (response.c.456) Path         : /Users/benoitc/Work/couchit/static/img/roundedcorners.svg 
+2008-09-16 10:24:26: (response.c.473) -- handling physical path 
+2008-09-16 10:24:26: (response.c.474) Path         : /Users/benoitc/Work/couchit/static/img/roundedcorners.svg 
+2008-09-16 10:24:26: (response.c.481) -- file found 
+2008-09-16 10:24:26: (response.c.482) Path         : /Users/benoitc/Work/couchit/static/img/roundedcorners.svg 
+2008-09-16 10:24:26: (response.c.631) -- handling subrequest 
+2008-09-16 10:24:26: (response.c.632) Path         : /Users/benoitc/Work/couchit/static/img/roundedcorners.svg 
+2008-09-16 10:24:26: (mod_access.c.135) -- mod_access_uri_handler called 
+2008-09-16 10:24:26: (mod_staticfile.c.394) -- handling file as static file 
+2008-09-16 10:24:26: (response.c.643) -- subrequest finished 
+2008-09-16 10:24:26: (response.c.116) Response-Header: 
+HTTP/1.1 200 OK
+Content-Type: application/octet-stream
+Accept-Ranges: bytes
+ETag: "267320366"
+Last-Modified: Fri, 12 Sep 2008 17:40:32 GMT
+Content-Length: 211
+Date: Tue, 16 Sep 2008 08:24:26 GMT
+Server: lighttpd/1.4.19
+
+ 
+2008-09-16 10:24:26: (request.c.294) fd: 13 request-len: 391 
+GET /static/img/roundedcorners.svg HTTP/1.1
+User-Agent: Mozilla/5.0 (Macintosh; U; PPC Mac OS X 10_5_5; en-us) AppleWebKit/528.4+ (KHTML, like Gecko) Version/3.1.2 Safari/525.20.1
+Referer: http://couch.it/Spdbg9mH
+Accept: */*
+Accept-Language: en-us
+Accept-Encoding: gzip, deflate
+Cookie: COUCHIT_SID=11602dd110ecbb7663b0b60162aa6cc0897a8edf
+Connection: keep-alive
+Host: couch.it
+
+ 
+2008-09-16 10:24:26: (response.c.212) -- splitting Request-URI 
+2008-09-16 10:24:26: (response.c.213) Request-URI  :  /static/img/roundedcorners.svg 
+2008-09-16 10:24:26: (response.c.214) URI-scheme   :  http 
+2008-09-16 10:24:26: (response.c.215) URI-authority:  couch.it 
+2008-09-16 10:24:26: (response.c.216) URI-path     :  /static/img/roundedcorners.svg 
+2008-09-16 10:24:26: (response.c.217) URI-query    :   
+2008-09-16 10:24:26: (response.c.212) -- splitting Request-URI 
+2008-09-16 10:24:26: (response.c.213) Request-URI  :  /static/img/roundedcorners.svg 
+2008-09-16 10:24:26: (response.c.214) URI-scheme   :  http 
+2008-09-16 10:24:26: (response.c.215) URI-authority:  couch.it 
+2008-09-16 10:24:26: (response.c.216) URI-path     :  /static/img/roundedcorners.svg 
+2008-09-16 10:24:26: (response.c.217) URI-query    :   
+2008-09-16 10:24:26: (response.c.267) -- sanatising URI 
+2008-09-16 10:24:26: (response.c.268) URI-path     :  /static/img/roundedcorners.svg 
+2008-09-16 10:24:26: (mod_access.c.135) -- mod_access_uri_handler called 
+2008-09-16 10:24:26: (response.c.382) -- before doc_root 
+2008-09-16 10:24:26: (response.c.383) Doc-Root     : /Users/benoitc/Work/couchit 
+2008-09-16 10:24:26: (response.c.384) Rel-Path     : /static/img/roundedcorners.svg 
+2008-09-16 10:24:26: (response.c.385) Path         :  
+2008-09-16 10:24:26: (response.c.433) -- after doc_root 
+2008-09-16 10:24:26: (response.c.434) Doc-Root     : /Users/benoitc/Work/couchit/ 
+2008-09-16 10:24:26: (response.c.435) Rel-Path     : /static/img/roundedcorners.svg 
+2008-09-16 10:24:26: (response.c.436) Path         : /Users/benoitc/Work/couchit/static/img/roundedcorners.svg 
+2008-09-16 10:24:26: (response.c.453) -- logical -> physical 
+2008-09-16 10:24:26: (response.c.454) Doc-Root     : /Users/benoitc/Work/couchit/ 
+2008-09-16 10:24:26: (response.c.455) Rel-Path     : /static/img/roundedcorners.svg 
+2008-09-16 10:24:26: (response.c.456) Path         : /Users/benoitc/Work/couchit/static/img/roundedcorners.svg 
+2008-09-16 10:24:26: (response.c.473) -- handling physical path 
+2008-09-16 10:24:26: (response.c.474) Path         : /Users/benoitc/Work/couchit/static/img/roundedcorners.svg 
+2008-09-16 10:24:26: (response.c.481) -- file found 
+2008-09-16 10:24:26: (response.c.482) Path         : /Users/benoitc/Work/couchit/static/img/roundedcorners.svg 
+2008-09-16 10:24:26: (response.c.631) -- handling subrequest 
+2008-09-16 10:24:26: (response.c.632) Path         : /Users/benoitc/Work/couchit/static/img/roundedcorners.svg 
+2008-09-16 10:24:26: (mod_access.c.135) -- mod_access_uri_handler called 
+2008-09-16 10:24:26: (mod_staticfile.c.394) -- handling file as static file 
+2008-09-16 10:24:26: (response.c.643) -- subrequest finished 
+2008-09-16 10:24:26: (response.c.116) Response-Header: 
+HTTP/1.1 200 OK
+Content-Type: application/octet-stream
+Accept-Ranges: bytes
+ETag: "267320366"
+Last-Modified: Fri, 12 Sep 2008 17:40:32 GMT
+Content-Length: 211
+Date: Tue, 16 Sep 2008 08:24:26 GMT
+Server: lighttpd/1.4.19
+
+ 
+2008-09-16 10:24:26: (request.c.294) fd: 14 request-len: 389 
+GET /static/img/icon_history.png HTTP/1.1
+User-Agent: Mozilla/5.0 (Macintosh; U; PPC Mac OS X 10_5_5; en-us) AppleWebKit/528.4+ (KHTML, like Gecko) Version/3.1.2 Safari/525.20.1
+Referer: http://couch.it/Spdbg9mH
+Accept: */*
+Accept-Language: en-us
+Accept-Encoding: gzip, deflate
+Cookie: COUCHIT_SID=11602dd110ecbb7663b0b60162aa6cc0897a8edf
+Connection: keep-alive
+Host: couch.it
+
+ 
+2008-09-16 10:24:26: (response.c.212) -- splitting Request-URI 
+2008-09-16 10:24:26: (response.c.213) Request-URI  :  /static/img/icon_history.png 
+2008-09-16 10:24:26: (response.c.214) URI-scheme   :  http 
+2008-09-16 10:24:26: (response.c.215) URI-authority:  couch.it 
+2008-09-16 10:24:26: (response.c.216) URI-path     :  /static/img/icon_history.png 
+2008-09-16 10:24:26: (response.c.217) URI-query    :   
+2008-09-16 10:24:26: (response.c.212) -- splitting Request-URI 
+2008-09-16 10:24:26: (response.c.213) Request-URI  :  /static/img/icon_history.png 
+2008-09-16 10:24:26: (response.c.214) URI-scheme   :  http 
+2008-09-16 10:24:26: (response.c.215) URI-authority:  couch.it 
+2008-09-16 10:24:26: (response.c.216) URI-path     :  /static/img/icon_history.png 
+2008-09-16 10:24:26: (response.c.217) URI-query    :   
+2008-09-16 10:24:26: (response.c.267) -- sanatising URI 
+2008-09-16 10:24:26: (response.c.268) URI-path     :  /static/img/icon_history.png 
+2008-09-16 10:24:26: (mod_access.c.135) -- mod_access_uri_handler called 
+2008-09-16 10:24:26: (response.c.382) -- before doc_root 
+2008-09-16 10:24:26: (response.c.383) Doc-Root     : /Users/benoitc/Work/couchit 
+2008-09-16 10:24:26: (response.c.384) Rel-Path     : /static/img/icon_history.png 
+2008-09-16 10:24:26: (response.c.385) Path         :  
+2008-09-16 10:24:26: (response.c.433) -- after doc_root 
+2008-09-16 10:24:26: (response.c.434) Doc-Root     : /Users/benoitc/Work/couchit/ 
+2008-09-16 10:24:26: (response.c.435) Rel-Path     : /static/img/icon_history.png 
+2008-09-16 10:24:26: (response.c.436) Path         : /Users/benoitc/Work/couchit/static/img/icon_history.png 
+2008-09-16 10:24:26: (response.c.453) -- logical -> physical 
+2008-09-16 10:24:26: (response.c.454) Doc-Root     : /Users/benoitc/Work/couchit/ 
+2008-09-16 10:24:26: (response.c.455) Rel-Path     : /static/img/icon_history.png 
+2008-09-16 10:24:26: (response.c.456) Path         : /Users/benoitc/Work/couchit/static/img/icon_history.png 
+2008-09-16 10:24:26: (response.c.473) -- handling physical path 
+2008-09-16 10:24:26: (response.c.474) Path         : /Users/benoitc/Work/couchit/static/img/icon_history.png 
+2008-09-16 10:24:26: (response.c.481) -- file found 
+2008-09-16 10:24:26: (response.c.482) Path         : /Users/benoitc/Work/couchit/static/img/icon_history.png 
+2008-09-16 10:24:26: (response.c.631) -- handling subrequest 
+2008-09-16 10:24:26: (response.c.632) Path         : /Users/benoitc/Work/couchit/static/img/icon_history.png 
+2008-09-16 10:24:26: (mod_access.c.135) -- mod_access_uri_handler called 
+2008-09-16 10:24:26: (mod_staticfile.c.394) -- handling file as static file 
+2008-09-16 10:24:26: (response.c.643) -- subrequest finished 
+2008-09-16 10:24:26: (response.c.116) Response-Header: 
+HTTP/1.1 200 OK
+Content-Type: image/png
+Accept-Ranges: bytes
+ETag: "1268968119"
+Last-Modified: Sat, 13 Sep 2008 22:44:14 GMT
+Content-Length: 953
+Date: Tue, 16 Sep 2008 08:24:26 GMT
+Server: lighttpd/1.4.19
+
+ 
+2008-09-16 10:24:26: (request.c.294) fd: 15 request-len: 384 
+GET /img/roundedcorners.svg HTTP/1.1
+User-Agent: Mozilla/5.0 (Macintosh; U; PPC Mac OS X 10_5_5; en-us) AppleWebKit/528.4+ (KHTML, like Gecko) Version/3.1.2 Safari/525.20.1
+Referer: http://couch.it/Spdbg9mH
+Accept: */*
+Accept-Language: en-us
+Accept-Encoding: gzip, deflate
+Cookie: COUCHIT_SID=11602dd110ecbb7663b0b60162aa6cc0897a8edf
+Connection: keep-alive
+Host: couch.it
+
+ 
+2008-09-16 10:24:26: (response.c.212) -- splitting Request-URI 
+2008-09-16 10:24:26: (response.c.213) Request-URI  :  /img/roundedcorners.svg 
+2008-09-16 10:24:26: (response.c.214) URI-scheme   :  http 
+2008-09-16 10:24:26: (response.c.215) URI-authority:  couch.it 
+2008-09-16 10:24:26: (response.c.216) URI-path     :  /img/roundedcorners.svg 
+2008-09-16 10:24:26: (response.c.217) URI-query    :   
+2008-09-16 10:24:26: (response.c.212) -- splitting Request-URI 
+2008-09-16 10:24:26: (response.c.213) Request-URI  :  /couchit.fcgi/img/roundedcorners.svg 
+2008-09-16 10:24:26: (response.c.214) URI-scheme   :  http 
+2008-09-16 10:24:26: (response.c.215) URI-authority:  couch.it 
+2008-09-16 10:24:26: (response.c.216) URI-path     :  /couchit.fcgi/img/roundedcorners.svg 
+2008-09-16 10:24:26: (response.c.217) URI-query    :   
+2008-09-16 10:24:26: (response.c.267) -- sanatising URI 
+2008-09-16 10:24:26: (response.c.268) URI-path     :  /couchit.fcgi/img/roundedcorners.svg 
+2008-09-16 10:24:26: (mod_access.c.135) -- mod_access_uri_handler called 
+2008-09-16 10:24:26: (mod_fastcgi.c.3563) handling it in mod_fastcgi 
+2008-09-16 10:24:26: (response.c.382) -- before doc_root 
+2008-09-16 10:24:26: (response.c.383) Doc-Root     : /Users/benoitc/Work/couchit 
+2008-09-16 10:24:26: (response.c.384) Rel-Path     : /couchit.fcgi 
+2008-09-16 10:24:26: (response.c.385) Path         :  
+2008-09-16 10:24:26: (response.c.433) -- after doc_root 
+2008-09-16 10:24:26: (response.c.434) Doc-Root     : /Users/benoitc/Work/couchit/ 
+2008-09-16 10:24:26: (response.c.435) Rel-Path     : /couchit.fcgi 
+2008-09-16 10:24:26: (response.c.436) Path         : /Users/benoitc/Work/couchit/couchit.fcgi 
+2008-09-16 10:24:26: (response.c.453) -- logical -> physical 
+2008-09-16 10:24:26: (response.c.454) Doc-Root     : /Users/benoitc/Work/couchit/ 
+2008-09-16 10:24:26: (response.c.455) Rel-Path     : /couchit.fcgi 
+2008-09-16 10:24:26: (response.c.456) Path         : /Users/benoitc/Work/couchit/couchit.fcgi 
+2008-09-16 10:24:26: (response.c.116) Response-Header: 
+HTTP/1.1 200 OK
+Transfer-Encoding: chunked
+Content-Type: text/html; charset=utf-8
+Date: Tue, 16 Sep 2008 08:24:26 GMT
+Server: lighttpd/1.4.19
+
+ 
+2008-09-16 10:24:27: (request.c.294) fd: 11 request-len: 373 
+GET /favicon.ico HTTP/1.1
+User-Agent: Mozilla/5.0 (Macintosh; U; PPC Mac OS X 10_5_5; en-us) AppleWebKit/528.4+ (KHTML, like Gecko) Version/3.1.2 Safari/525.20.1
+Referer: http://couch.it/Spdbg9mH
+Accept: */*
+Accept-Language: en-us
+Accept-Encoding: gzip, deflate
+Cookie: COUCHIT_SID=11602dd110ecbb7663b0b60162aa6cc0897a8edf
+Connection: keep-alive
+Host: couch.it
+
+ 
+2008-09-16 10:24:27: (response.c.212) -- splitting Request-URI 
+2008-09-16 10:24:27: (response.c.213) Request-URI  :  /favicon.ico 
+2008-09-16 10:24:27: (response.c.214) URI-scheme   :  http 
+2008-09-16 10:24:27: (response.c.215) URI-authority:  couch.it 
+2008-09-16 10:24:27: (response.c.216) URI-path     :  /favicon.ico 
+2008-09-16 10:24:27: (response.c.217) URI-query    :   
+2008-09-16 10:24:27: (response.c.212) -- splitting Request-URI 
+2008-09-16 10:24:27: (response.c.213) Request-URI  :  /static/favicon.ico 
+2008-09-16 10:24:27: (response.c.214) URI-scheme   :  http 
+2008-09-16 10:24:27: (response.c.215) URI-authority:  couch.it 
+2008-09-16 10:24:27: (response.c.216) URI-path     :  /static/favicon.ico 
+2008-09-16 10:24:27: (response.c.217) URI-query    :   
+2008-09-16 10:24:27: (response.c.267) -- sanatising URI 
+2008-09-16 10:24:27: (response.c.268) URI-path     :  /static/favicon.ico 
+2008-09-16 10:24:27: (mod_access.c.135) -- mod_access_uri_handler called 
+2008-09-16 10:24:27: (response.c.382) -- before doc_root 
+2008-09-16 10:24:27: (response.c.383) Doc-Root     : /Users/benoitc/Work/couchit 
+2008-09-16 10:24:27: (response.c.384) Rel-Path     : /static/favicon.ico 
+2008-09-16 10:24:27: (response.c.385) Path         :  
+2008-09-16 10:24:27: (response.c.433) -- after doc_root 
+2008-09-16 10:24:27: (response.c.434) Doc-Root     : /Users/benoitc/Work/couchit/ 
+2008-09-16 10:24:27: (response.c.435) Rel-Path     : /static/favicon.ico 
+2008-09-16 10:24:27: (response.c.436) Path         : /Users/benoitc/Work/couchit/static/favicon.ico 
+2008-09-16 10:24:27: (response.c.453) -- logical -> physical 
+2008-09-16 10:24:27: (response.c.454) Doc-Root     : /Users/benoitc/Work/couchit/ 
+2008-09-16 10:24:27: (response.c.455) Rel-Path     : /static/favicon.ico 
+2008-09-16 10:24:27: (response.c.456) Path         : /Users/benoitc/Work/couchit/static/favicon.ico 
+2008-09-16 10:24:27: (response.c.473) -- handling physical path 
+2008-09-16 10:24:27: (response.c.474) Path         : /Users/benoitc/Work/couchit/static/favicon.ico 
+2008-09-16 10:24:27: (response.c.530) -- file not found 
+2008-09-16 10:24:27: (response.c.531) Path         : /Users/benoitc/Work/couchit/static/favicon.ico 
+2008-09-16 10:24:27: (response.c.116) Response-Header: 
+HTTP/1.1 404 Not Found
+Content-Type: text/html
+Content-Length: 345
+Date: Tue, 16 Sep 2008 08:24:27 GMT
+Server: lighttpd/1.4.19
+
+ 
+2008-09-16 10:24:29: (request.c.294) fd: 11 request-len: 385 
+GET /static/img/tab-edit.png HTTP/1.1
+User-Agent: Mozilla/5.0 (Macintosh; U; PPC Mac OS X 10_5_5; en-us) AppleWebKit/528.4+ (KHTML, like Gecko) Version/3.1.2 Safari/525.20.1
+Referer: http://couch.it/Spdbg9mH
+Accept: */*
+Accept-Language: en-us
+Accept-Encoding: gzip, deflate
+Cookie: COUCHIT_SID=11602dd110ecbb7663b0b60162aa6cc0897a8edf
+Connection: keep-alive
+Host: couch.it
+
+ 
+2008-09-16 10:24:29: (response.c.212) -- splitting Request-URI 
+2008-09-16 10:24:29: (response.c.213) Request-URI  :  /static/img/tab-edit.png 
+2008-09-16 10:24:29: (response.c.214) URI-scheme   :  http 
+2008-09-16 10:24:29: (response.c.215) URI-authority:  couch.it 
+2008-09-16 10:24:29: (response.c.216) URI-path     :  /static/img/tab-edit.png 
+2008-09-16 10:24:29: (response.c.217) URI-query    :   
+2008-09-16 10:24:29: (response.c.212) -- splitting Request-URI 
+2008-09-16 10:24:29: (response.c.213) Request-URI  :  /static/img/tab-edit.png 
+2008-09-16 10:24:29: (response.c.214) URI-scheme   :  http 
+2008-09-16 10:24:29: (response.c.215) URI-authority:  couch.it 
+2008-09-16 10:24:29: (response.c.216) URI-path     :  /static/img/tab-edit.png 
+2008-09-16 10:24:29: (response.c.217) URI-query    :   
+2008-09-16 10:24:29: (response.c.267) -- sanatising URI 
+2008-09-16 10:24:29: (response.c.268) URI-path     :  /static/img/tab-edit.png 
+2008-09-16 10:24:29: (mod_access.c.135) -- mod_access_uri_handler called 
+2008-09-16 10:24:29: (response.c.382) -- before doc_root 
+2008-09-16 10:24:29: (response.c.383) Doc-Root     : /Users/benoitc/Work/couchit 
+2008-09-16 10:24:29: (response.c.384) Rel-Path     : /static/img/tab-edit.png 
+2008-09-16 10:24:29: (response.c.385) Path         :  
+2008-09-16 10:24:29: (response.c.433) -- after doc_root 
+2008-09-16 10:24:29: (response.c.434) Doc-Root     : /Users/benoitc/Work/couchit/ 
+2008-09-16 10:24:29: (response.c.435) Rel-Path     : /static/img/tab-edit.png 
+2008-09-16 10:24:29: (response.c.436) Path         : /Users/benoitc/Work/couchit/static/img/tab-edit.png 
+2008-09-16 10:24:29: (response.c.453) -- logical -> physical 
+2008-09-16 10:24:29: (response.c.454) Doc-Root     : /Users/benoitc/Work/couchit/ 
+2008-09-16 10:24:29: (response.c.455) Rel-Path     : /static/img/tab-edit.png 
+2008-09-16 10:24:29: (response.c.456) Path         : /Users/benoitc/Work/couchit/static/img/tab-edit.png 
+2008-09-16 10:24:29: (response.c.473) -- handling physical path 
+2008-09-16 10:24:29: (response.c.474) Path         : /Users/benoitc/Work/couchit/static/img/tab-edit.png 
+2008-09-16 10:24:29: (response.c.481) -- file found 
+2008-09-16 10:24:29: (response.c.482) Path         : /Users/benoitc/Work/couchit/static/img/tab-edit.png 
+2008-09-16 10:24:29: (response.c.631) -- handling subrequest 
+2008-09-16 10:24:29: (response.c.632) Path         : /Users/benoitc/Work/couchit/static/img/tab-edit.png 
+2008-09-16 10:24:29: (mod_access.c.135) -- mod_access_uri_handler called 
+2008-09-16 10:24:29: (mod_staticfile.c.394) -- handling file as static file 
+2008-09-16 10:24:29: (response.c.643) -- subrequest finished 
+2008-09-16 10:24:29: (response.c.116) Response-Header: 
+HTTP/1.1 200 OK
+Content-Type: image/png
+Accept-Ranges: bytes
+ETag: "-1071883349"
+Last-Modified: Sat, 13 Sep 2008 19:06:38 GMT
+Content-Length: 339
+Date: Tue, 16 Sep 2008 08:24:29 GMT
+Server: lighttpd/1.4.19
+
+ 
+2008-09-16 10:24:29: (request.c.294) fd: 13 request-len: 391 
+GET /static/img/markdown_icons.gif HTTP/1.1
+User-Agent: Mozilla/5.0 (Macintosh; U; PPC Mac OS X 10_5_5; en-us) AppleWebKit/528.4+ (KHTML, like Gecko) Version/3.1.2 Safari/525.20.1
+Referer: http://couch.it/Spdbg9mH
+Accept: */*
+Accept-Language: en-us
+Accept-Encoding: gzip, deflate
+Cookie: COUCHIT_SID=11602dd110ecbb7663b0b60162aa6cc0897a8edf
+Connection: keep-alive
+Host: couch.it
+
+ 
+2008-09-16 10:24:29: (response.c.212) -- splitting Request-URI 
+2008-09-16 10:24:29: (response.c.213) Request-URI  :  /static/img/markdown_icons.gif 
+2008-09-16 10:24:29: (response.c.214) URI-scheme   :  http 
+2008-09-16 10:24:29: (response.c.215) URI-authority:  couch.it 
+2008-09-16 10:24:29: (response.c.216) URI-path     :  /static/img/markdown_icons.gif 
+2008-09-16 10:24:29: (response.c.217) URI-query    :   
+2008-09-16 10:24:29: (response.c.212) -- splitting Request-URI 
+2008-09-16 10:24:29: (response.c.213) Request-URI  :  /static/img/markdown_icons.gif 
+2008-09-16 10:24:29: (response.c.214) URI-scheme   :  http 
+2008-09-16 10:24:29: (response.c.215) URI-authority:  couch.it 
+2008-09-16 10:24:29: (response.c.216) URI-path     :  /static/img/markdown_icons.gif 
+2008-09-16 10:24:29: (response.c.217) URI-query    :   
+2008-09-16 10:24:29: (response.c.267) -- sanatising URI 
+2008-09-16 10:24:29: (response.c.268) URI-path     :  /static/img/markdown_icons.gif 
+2008-09-16 10:24:29: (mod_access.c.135) -- mod_access_uri_handler called 
+2008-09-16 10:24:29: (response.c.382) -- before doc_root 
+2008-09-16 10:24:29: (response.c.383) Doc-Root     : /Users/benoitc/Work/couchit 
+2008-09-16 10:24:29: (response.c.384) Rel-Path     : /static/img/markdown_icons.gif 
+2008-09-16 10:24:29: (response.c.385) Path         :  
+2008-09-16 10:24:29: (response.c.433) -- after doc_root 
+2008-09-16 10:24:29: (response.c.434) Doc-Root     : /Users/benoitc/Work/couchit/ 
+2008-09-16 10:24:29: (response.c.435) Rel-Path     : /static/img/markdown_icons.gif 
+2008-09-16 10:24:29: (response.c.436) Path         : /Users/benoitc/Work/couchit/static/img/markdown_icons.gif 
+2008-09-16 10:24:29: (response.c.453) -- logical -> physical 
+2008-09-16 10:24:29: (response.c.454) Doc-Root     : /Users/benoitc/Work/couchit/ 
+2008-09-16 10:24:29: (response.c.455) Rel-Path     : /static/img/markdown_icons.gif 
+2008-09-16 10:24:29: (response.c.456) Path         : /Users/benoitc/Work/couchit/static/img/markdown_icons.gif 
+2008-09-16 10:24:29: (response.c.473) -- handling physical path 
+2008-09-16 10:24:29: (response.c.474) Path         : /Users/benoitc/Work/couchit/static/img/markdown_icons.gif 
+2008-09-16 10:24:29: (response.c.481) -- file found 
+2008-09-16 10:24:29: (response.c.482) Path         : /Users/benoitc/Work/couchit/static/img/markdown_icons.gif 
+2008-09-16 10:24:29: (response.c.631) -- handling subrequest 
+2008-09-16 10:24:29: (response.c.632) Path         : /Users/benoitc/Work/couchit/static/img/markdown_icons.gif 
+2008-09-16 10:24:29: (mod_access.c.135) -- mod_access_uri_handler called 
+2008-09-16 10:24:29: (mod_staticfile.c.394) -- handling file as static file 
+2008-09-16 10:24:29: (response.c.643) -- subrequest finished 
+2008-09-16 10:24:29: (response.c.116) Response-Header: 
+HTTP/1.1 200 OK
+Content-Type: image/gif
+Accept-Ranges: bytes
+ETag: "567336962"
+Last-Modified: Sat, 06 Sep 2008 16:15:27 GMT
+Content-Length: 4087
+Date: Tue, 16 Sep 2008 08:24:29 GMT
+Server: lighttpd/1.4.19
+
+ 
+2008-09-16 10:24:29: (request.c.294) fd: 14 request-len: 387 
+GET /static/img/edit-paste.png HTTP/1.1
+User-Agent: Mozilla/5.0 (Macintosh; U; PPC Mac OS X 10_5_5; en-us) AppleWebKit/528.4+ (KHTML, like Gecko) Version/3.1.2 Safari/525.20.1
+Referer: http://couch.it/Spdbg9mH
+Accept: */*
+Accept-Language: en-us
+Accept-Encoding: gzip, deflate
+Cookie: COUCHIT_SID=11602dd110ecbb7663b0b60162aa6cc0897a8edf
+Connection: keep-alive
+Host: couch.it
+
+ 
+2008-09-16 10:24:29: (response.c.212) -- splitting Request-URI 
+2008-09-16 10:24:29: (response.c.213) Request-URI  :  /static/img/edit-paste.png 
+2008-09-16 10:24:29: (response.c.214) URI-scheme   :  http 
+2008-09-16 10:24:29: (response.c.215) URI-authority:  couch.it 
+2008-09-16 10:24:29: (response.c.216) URI-path     :  /static/img/edit-paste.png 
+2008-09-16 10:24:29: (response.c.217) URI-query    :   
+2008-09-16 10:24:29: (response.c.212) -- splitting Request-URI 
+2008-09-16 10:24:29: (response.c.213) Request-URI  :  /static/img/edit-paste.png 
+2008-09-16 10:24:29: (response.c.214) URI-scheme   :  http 
+2008-09-16 10:24:29: (response.c.215) URI-authority:  couch.it 
+2008-09-16 10:24:29: (response.c.216) URI-path     :  /static/img/edit-paste.png 
+2008-09-16 10:24:29: (response.c.217) URI-query    :   
+2008-09-16 10:24:29: (response.c.267) -- sanatising URI 
+2008-09-16 10:24:29: (response.c.268) URI-path     :  /static/img/edit-paste.png 
+2008-09-16 10:24:29: (mod_access.c.135) -- mod_access_uri_handler called 
+2008-09-16 10:24:29: (response.c.382) -- before doc_root 
+2008-09-16 10:24:29: (response.c.383) Doc-Root     : /Users/benoitc/Work/couchit 
+2008-09-16 10:24:29: (response.c.384) Rel-Path     : /static/img/edit-paste.png 
+2008-09-16 10:24:29: (response.c.385) Path         :  
+2008-09-16 10:24:29: (response.c.433) -- after doc_root 
+2008-09-16 10:24:29: (response.c.434) Doc-Root     : /Users/benoitc/Work/couchit/ 
+2008-09-16 10:24:29: (response.c.435) Rel-Path     : /static/img/edit-paste.png 
+2008-09-16 10:24:29: (response.c.436) Path         : /Users/benoitc/Work/couchit/static/img/edit-paste.png 
+2008-09-16 10:24:29: (response.c.453) -- logical -> physical 
+2008-09-16 10:24:29: (response.c.454) Doc-Root     : /Users/benoitc/Work/couchit/ 
+2008-09-16 10:24:29: (response.c.455) Rel-Path     : /static/img/edit-paste.png 
+2008-09-16 10:24:29: (response.c.456) Path         : /Users/benoitc/Work/couchit/static/img/edit-paste.png 
+2008-09-16 10:24:29: (response.c.473) -- handling physical path 
+2008-09-16 10:24:29: (response.c.474) Path         : /Users/benoitc/Work/couchit/static/img/edit-paste.png 
+2008-09-16 10:24:29: (response.c.481) -- file found 
+2008-09-16 10:24:29: (response.c.482) Path         : /Users/benoitc/Work/couchit/static/img/edit-paste.png 
+2008-09-16 10:24:29: (response.c.631) -- handling subrequest 
+2008-09-16 10:24:29: (response.c.632) Path         : /Users/benoitc/Work/couchit/static/img/edit-paste.png 
+2008-09-16 10:24:29: (mod_access.c.135) -- mod_access_uri_handler called 
+2008-09-16 10:24:29: (mod_staticfile.c.394) -- handling file as static file 
+2008-09-16 10:24:29: (response.c.643) -- subrequest finished 
+2008-09-16 10:24:29: (response.c.116) Response-Header: 
+HTTP/1.1 200 OK
+Content-Type: image/png
+Accept-Ranges: bytes
+ETag: "-51592685"
+Last-Modified: Fri, 10 Feb 2006 00:44:25 GMT
+Content-Length: 561
+Date: Tue, 16 Sep 2008 08:24:29 GMT
+Server: lighttpd/1.4.19
+
+ 
+2008-09-16 10:24:35: (request.c.294) fd: 14 request-len: 390 
+GET /static/img/layout_sprite.png HTTP/1.1
+User-Agent: Mozilla/5.0 (Macintosh; U; PPC Mac OS X 10_5_5; en-us) AppleWebKit/528.4+ (KHTML, like Gecko) Version/3.1.2 Safari/525.20.1
+Referer: http://couch.it/Spdbg9mH
+Accept: */*
+Accept-Language: en-us
+Accept-Encoding: gzip, deflate
+Cookie: COUCHIT_SID=11602dd110ecbb7663b0b60162aa6cc0897a8edf
+Connection: keep-alive
+Host: couch.it
+
+ 
+2008-09-16 10:24:35: (response.c.212) -- splitting Request-URI 
+2008-09-16 10:24:35: (response.c.213) Request-URI  :  /static/img/layout_sprite.png 
+2008-09-16 10:24:35: (response.c.214) URI-scheme   :  http 
+2008-09-16 10:24:35: (response.c.215) URI-authority:  couch.it 
+2008-09-16 10:24:35: (response.c.216) URI-path     :  /static/img/layout_sprite.png 
+2008-09-16 10:24:35: (response.c.217) URI-query    :   
+2008-09-16 10:24:35: (response.c.212) -- splitting Request-URI 
+2008-09-16 10:24:35: (response.c.213) Request-URI  :  /static/img/layout_sprite.png 
+2008-09-16 10:24:35: (response.c.214) URI-scheme   :  http 
+2008-09-16 10:24:35: (response.c.215) URI-authority:  couch.it 
+2008-09-16 10:24:35: (response.c.216) URI-path     :  /static/img/layout_sprite.png 
+2008-09-16 10:24:35: (response.c.217) URI-query    :   
+2008-09-16 10:24:35: (response.c.267) -- sanatising URI 
+2008-09-16 10:24:35: (response.c.268) URI-path     :  /static/img/layout_sprite.png 
+2008-09-16 10:24:35: (mod_access.c.135) -- mod_access_uri_handler called 
+2008-09-16 10:24:35: (response.c.382) -- before doc_root 
+2008-09-16 10:24:35: (response.c.383) Doc-Root     : /Users/benoitc/Work/couchit 
+2008-09-16 10:24:35: (response.c.384) Rel-Path     : /static/img/layout_sprite.png 
+2008-09-16 10:24:35: (response.c.385) Path         :  
+2008-09-16 10:24:35: (response.c.433) -- after doc_root 
+2008-09-16 10:24:35: (response.c.434) Doc-Root     : /Users/benoitc/Work/couchit/ 
+2008-09-16 10:24:35: (response.c.435) Rel-Path     : /static/img/layout_sprite.png 
+2008-09-16 10:24:35: (response.c.436) Path         : /Users/benoitc/Work/couchit/static/img/layout_sprite.png 
+2008-09-16 10:24:35: (response.c.453) -- logical -> physical 
+2008-09-16 10:24:35: (response.c.454) Doc-Root     : /Users/benoitc/Work/couchit/ 
+2008-09-16 10:24:35: (response.c.455) Rel-Path     : /static/img/layout_sprite.png 
+2008-09-16 10:24:35: (response.c.456) Path         : /Users/benoitc/Work/couchit/static/img/layout_sprite.png 
+2008-09-16 10:24:35: (response.c.473) -- handling physical path 
+2008-09-16 10:24:35: (response.c.474) Path         : /Users/benoitc/Work/couchit/static/img/layout_sprite.png 
+2008-09-16 10:24:35: (response.c.481) -- file found 
+2008-09-16 10:24:35: (response.c.482) Path         : /Users/benoitc/Work/couchit/static/img/layout_sprite.png 
+2008-09-16 10:24:35: (response.c.631) -- handling subrequest 
+2008-09-16 10:24:35: (response.c.632) Path         : /Users/benoitc/Work/couchit/static/img/layout_sprite.png 
+2008-09-16 10:24:35: (mod_access.c.135) -- mod_access_uri_handler called 
+2008-09-16 10:24:35: (mod_staticfile.c.394) -- handling file as static file 
+2008-09-16 10:24:35: (response.c.643) -- subrequest finished 
+2008-09-16 10:24:35: (response.c.116) Response-Header: 
+HTTP/1.1 200 OK
+Content-Type: image/png
+Accept-Ranges: bytes
+ETag: "1591697359"
+Last-Modified: Thu, 31 Jan 2008 07:33:22 GMT
+Content-Length: 1409
+Date: Tue, 16 Sep 2008 08:24:35 GMT
+Server: lighttpd/1.4.19
+
+ 
+2008-09-16 10:24:49: (request.c.294) fd: 11 request-len: 484 
+GET /Spdbg9mH/couchit.fcgi/site/settings HTTP/1.1
+User-Agent: Mozilla/5.0 (Macintosh; U; PPC Mac OS X 10_5_5; en-us) AppleWebKit/528.4+ (KHTML, like Gecko) Version/3.1.2 Safari/525.20.1
+Referer: http://couch.it/Spdbg9mH
+Accept: application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5
+Accept-Language: en-us
+Accept-Encoding: gzip, deflate
+Cookie: COUCHIT_SID=11602dd110ecbb7663b0b60162aa6cc0897a8edf
+Connection: keep-alive
+Host: couch.it
+
+ 
+2008-09-16 10:24:49: (response.c.212) -- splitting Request-URI 
+2008-09-16 10:24:49: (response.c.213) Request-URI  :  /Spdbg9mH/couchit.fcgi/site/settings 
+2008-09-16 10:24:49: (response.c.214) URI-scheme   :  http 
+2008-09-16 10:24:49: (response.c.215) URI-authority:  couch.it 
+2008-09-16 10:24:49: (response.c.216) URI-path     :  /Spdbg9mH/couchit.fcgi/site/settings 
+2008-09-16 10:24:49: (response.c.217) URI-query    :   
+2008-09-16 10:24:49: (response.c.212) -- splitting Request-URI 
+2008-09-16 10:24:49: (response.c.213) Request-URI  :  /couchit.fcgi/Spdbg9mH/couchit.fcgi/site/settings 
+2008-09-16 10:24:49: (response.c.214) URI-scheme   :  http 
+2008-09-16 10:24:49: (response.c.215) URI-authority:  couch.it 
+2008-09-16 10:24:49: (response.c.216) URI-path     :  /couchit.fcgi/Spdbg9mH/couchit.fcgi/site/settings 
+2008-09-16 10:24:49: (response.c.217) URI-query    :   
+2008-09-16 10:24:49: (response.c.267) -- sanatising URI 
+2008-09-16 10:24:49: (response.c.268) URI-path     :  /couchit.fcgi/Spdbg9mH/couchit.fcgi/site/settings 
+2008-09-16 10:24:49: (mod_access.c.135) -- mod_access_uri_handler called 
+2008-09-16 10:24:49: (mod_fastcgi.c.3563) handling it in mod_fastcgi 
+2008-09-16 10:24:49: (response.c.382) -- before doc_root 
+2008-09-16 10:24:49: (response.c.383) Doc-Root     : /Users/benoitc/Work/couchit 
+2008-09-16 10:24:49: (response.c.384) Rel-Path     : /couchit.fcgi 
+2008-09-16 10:24:49: (response.c.385) Path         :  
+2008-09-16 10:24:49: (response.c.433) -- after doc_root 
+2008-09-16 10:24:49: (response.c.434) Doc-Root     : /Users/benoitc/Work/couchit/ 
+2008-09-16 10:24:49: (response.c.435) Rel-Path     : /couchit.fcgi 
+2008-09-16 10:24:49: (response.c.436) Path         : /Users/benoitc/Work/couchit/couchit.fcgi 
+2008-09-16 10:24:49: (response.c.453) -- logical -> physical 
+2008-09-16 10:24:49: (response.c.454) Doc-Root     : /Users/benoitc/Work/couchit/ 
+2008-09-16 10:24:49: (response.c.455) Rel-Path     : /couchit.fcgi 
+2008-09-16 10:24:49: (response.c.456) Path         : /Users/benoitc/Work/couchit/couchit.fcgi 
+2008-09-16 10:24:49: (response.c.116) Response-Header: 
+HTTP/1.1 404 Not Found
+Transfer-Encoding: chunked
+Content-Type: text/html; charset=utf-8
+Date: Tue, 16 Sep 2008 08:24:49 GMT
+Server: lighttpd/1.4.19
+
+ 
+2008-09-16 10:24:50: (request.c.294) fd: 11 request-len: 411 
+GET /img/roundedcorners.svg HTTP/1.1
+User-Agent: Mozilla/5.0 (Macintosh; U; PPC Mac OS X 10_5_5; en-us) AppleWebKit/528.4+ (KHTML, like Gecko) Version/3.1.2 Safari/525.20.1
+Referer: http://couch.it/Spdbg9mH/couchit.fcgi/site/settings
+Accept: */*
+Accept-Language: en-us
+Accept-Encoding: gzip, deflate
+Cookie: COUCHIT_SID=11602dd110ecbb7663b0b60162aa6cc0897a8edf
+Connection: keep-alive
+Host: couch.it
+
+ 
+2008-09-16 10:24:50: (response.c.212) -- splitting Request-URI 
+2008-09-16 10:24:50: (response.c.213) Request-URI  :  /img/roundedcorners.svg 
+2008-09-16 10:24:50: (response.c.214) URI-scheme   :  http 
+2008-09-16 10:24:50: (response.c.215) URI-authority:  couch.it 
+2008-09-16 10:24:50: (response.c.216) URI-path     :  /img/roundedcorners.svg 
+2008-09-16 10:24:50: (response.c.217) URI-query    :   
+2008-09-16 10:24:50: (response.c.212) -- splitting Request-URI 
+2008-09-16 10:24:50: (response.c.213) Request-URI  :  /couchit.fcgi/img/roundedcorners.svg 
+2008-09-16 10:24:50: (response.c.214) URI-scheme   :  http 
+2008-09-16 10:24:50: (response.c.215) URI-authority:  couch.it 
+2008-09-16 10:24:50: (response.c.216) URI-path     :  /couchit.fcgi/img/roundedcorners.svg 
+2008-09-16 10:24:50: (response.c.217) URI-query    :   
+2008-09-16 10:24:50: (response.c.267) -- sanatising URI 
+2008-09-16 10:24:50: (response.c.268) URI-path     :  /couchit.fcgi/img/roundedcorners.svg 
+2008-09-16 10:24:50: (mod_access.c.135) -- mod_access_uri_handler called 
+2008-09-16 10:24:50: (mod_fastcgi.c.3563) handling it in mod_fastcgi 
+2008-09-16 10:24:50: (response.c.382) -- before doc_root 
+2008-09-16 10:24:50: (response.c.383) Doc-Root     : /Users/benoitc/Work/couchit 
+2008-09-16 10:24:50: (response.c.384) Rel-Path     : /couchit.fcgi 
+2008-09-16 10:24:50: (response.c.385) Path         :  
+2008-09-16 10:24:50: (response.c.433) -- after doc_root 
+2008-09-16 10:24:50: (response.c.434) Doc-Root     : /Users/benoitc/Work/couchit/ 
+2008-09-16 10:24:50: (response.c.435) Rel-Path     : /couchit.fcgi 
+2008-09-16 10:24:50: (response.c.436) Path         : /Users/benoitc/Work/couchit/couchit.fcgi 
+2008-09-16 10:24:50: (response.c.453) -- logical -> physical 
+2008-09-16 10:24:50: (response.c.454) Doc-Root     : /Users/benoitc/Work/couchit/ 
+2008-09-16 10:24:50: (response.c.455) Rel-Path     : /couchit.fcgi 
+2008-09-16 10:24:50: (response.c.456) Path         : /Users/benoitc/Work/couchit/couchit.fcgi 
+2008-09-16 10:24:50: (response.c.116) Response-Header: 
+HTTP/1.1 200 OK
+Transfer-Encoding: chunked
+Content-Type: text/html; charset=utf-8
+Date: Tue, 16 Sep 2008 08:24:50 GMT
+Server: lighttpd/1.4.19
+
+ 
+2008-09-16 10:24:53: (request.c.294) fd: 11 request-len: 422 
+GET /Spdbg9mH HTTP/1.1
+User-Agent: Mozilla/5.0 (Macintosh; U; PPC Mac OS X 10_5_5; en-us) AppleWebKit/528.4+ (KHTML, like Gecko) Version/3.1.2 Safari/525.20.1
+Accept: application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5
+Accept-Language: en-us
+Accept-Encoding: gzip, deflate
+Cookie: COUCHIT_SID=11602dd110ecbb7663b0b60162aa6cc0897a8edf
+Connection: keep-alive
+Host: couch.it
+
+ 
+2008-09-16 10:24:53: (response.c.212) -- splitting Request-URI 
+2008-09-16 10:24:53: (response.c.213) Request-URI  :  /Spdbg9mH 
+2008-09-16 10:24:53: (response.c.214) URI-scheme   :  http 
+2008-09-16 10:24:53: (response.c.215) URI-authority:  couch.it 
+2008-09-16 10:24:53: (response.c.216) URI-path     :  /Spdbg9mH 
+2008-09-16 10:24:53: (response.c.217) URI-query    :   
+2008-09-16 10:24:53: (response.c.212) -- splitting Request-URI 
+2008-09-16 10:24:53: (response.c.213) Request-URI  :  /couchit.fcgi/Spdbg9mH 
+2008-09-16 10:24:53: (response.c.214) URI-scheme   :  http 
+2008-09-16 10:24:53: (response.c.215) URI-authority:  couch.it 
+2008-09-16 10:24:53: (response.c.216) URI-path     :  /couchit.fcgi/Spdbg9mH 
+2008-09-16 10:24:53: (response.c.217) URI-query    :   
+2008-09-16 10:24:53: (response.c.267) -- sanatising URI 
+2008-09-16 10:24:53: (response.c.268) URI-path     :  /couchit.fcgi/Spdbg9mH 
+2008-09-16 10:24:53: (mod_access.c.135) -- mod_access_uri_handler called 
+2008-09-16 10:24:53: (mod_fastcgi.c.3563) handling it in mod_fastcgi 
+2008-09-16 10:24:53: (response.c.382) -- before doc_root 
+2008-09-16 10:24:53: (response.c.383) Doc-Root     : /Users/benoitc/Work/couchit 
+2008-09-16 10:24:53: (response.c.384) Rel-Path     : /couchit.fcgi 
+2008-09-16 10:24:53: (response.c.385) Path         :  
+2008-09-16 10:24:53: (response.c.433) -- after doc_root 
+2008-09-16 10:24:53: (response.c.434) Doc-Root     : /Users/benoitc/Work/couchit/ 
+2008-09-16 10:24:53: (response.c.435) Rel-Path     : /couchit.fcgi 
+2008-09-16 10:24:53: (response.c.436) Path         : /Users/benoitc/Work/couchit/couchit.fcgi 
+2008-09-16 10:24:53: (response.c.453) -- logical -> physical 
+2008-09-16 10:24:53: (response.c.454) Doc-Root     : /Users/benoitc/Work/couchit/ 
+2008-09-16 10:24:53: (response.c.455) Rel-Path     : /couchit.fcgi 
+2008-09-16 10:24:53: (response.c.456) Path         : /Users/benoitc/Work/couchit/couchit.fcgi 
+2008-09-16 10:24:54: (response.c.116) Response-Header: 
+HTTP/1.1 200 OK
+Transfer-Encoding: chunked
+Content-Type: text/html; charset=utf-8
+Date: Tue, 16 Sep 2008 08:24:54 GMT
+Server: lighttpd/1.4.19
+
+ 
+2008-09-16 10:24:54: (request.c.294) fd: 13 request-len: 384 
+GET /img/roundedcorners.svg HTTP/1.1
+User-Agent: Mozilla/5.0 (Macintosh; U; PPC Mac OS X 10_5_5; en-us) AppleWebKit/528.4+ (KHTML, like Gecko) Version/3.1.2 Safari/525.20.1
+Referer: http://couch.it/Spdbg9mH
+Accept: */*
+Accept-Language: en-us
+Accept-Encoding: gzip, deflate
+Cookie: COUCHIT_SID=11602dd110ecbb7663b0b60162aa6cc0897a8edf
+Connection: keep-alive
+Host: couch.it
+
+ 
+2008-09-16 10:24:54: (response.c.212) -- splitting Request-URI 
+2008-09-16 10:24:54: (response.c.213) Request-URI  :  /img/roundedcorners.svg 
+2008-09-16 10:24:54: (response.c.214) URI-scheme   :  http 
+2008-09-16 10:24:54: (response.c.215) URI-authority:  couch.it 
+2008-09-16 10:24:54: (response.c.216) URI-path     :  /img/roundedcorners.svg 
+2008-09-16 10:24:54: (response.c.217) URI-query    :   
+2008-09-16 10:24:54: (response.c.212) -- splitting Request-URI 
+2008-09-16 10:24:54: (response.c.213) Request-URI  :  /couchit.fcgi/img/roundedcorners.svg 
+2008-09-16 10:24:54: (response.c.214) URI-scheme   :  http 
+2008-09-16 10:24:54: (response.c.215) URI-authority:  couch.it 
+2008-09-16 10:24:54: (response.c.216) URI-path     :  /couchit.fcgi/img/roundedcorners.svg 
+2008-09-16 10:24:54: (response.c.217) URI-query    :   
+2008-09-16 10:24:54: (response.c.267) -- sanatising URI 
+2008-09-16 10:24:54: (response.c.268) URI-path     :  /couchit.fcgi/img/roundedcorners.svg 
+2008-09-16 10:24:54: (mod_access.c.135) -- mod_access_uri_handler called 
+2008-09-16 10:24:54: (mod_fastcgi.c.3563) handling it in mod_fastcgi 
+2008-09-16 10:24:54: (response.c.382) -- before doc_root 
+2008-09-16 10:24:54: (response.c.383) Doc-Root     : /Users/benoitc/Work/couchit 
+2008-09-16 10:24:54: (response.c.384) Rel-Path     : /couchit.fcgi 
+2008-09-16 10:24:54: (response.c.385) Path         :  
+2008-09-16 10:24:54: (response.c.433) -- after doc_root 
+2008-09-16 10:24:54: (response.c.434) Doc-Root     : /Users/benoitc/Work/couchit/ 
+2008-09-16 10:24:54: (response.c.435) Rel-Path     : /couchit.fcgi 
+2008-09-16 10:24:54: (response.c.436) Path         : /Users/benoitc/Work/couchit/couchit.fcgi 
+2008-09-16 10:24:54: (response.c.453) -- logical -> physical 
+2008-09-16 10:24:54: (response.c.454) Doc-Root     : /Users/benoitc/Work/couchit/ 
+2008-09-16 10:24:54: (response.c.455) Rel-Path     : /couchit.fcgi 
+2008-09-16 10:24:54: (response.c.456) Path         : /Users/benoitc/Work/couchit/couchit.fcgi 
+2008-09-16 10:24:54: (response.c.116) Response-Header: 
+HTTP/1.1 200 OK
+Transfer-Encoding: chunked
+Content-Type: text/html; charset=utf-8
+Date: Tue, 16 Sep 2008 08:24:54 GMT
+Server: lighttpd/1.4.19
+
+ 

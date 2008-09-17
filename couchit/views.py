@@ -681,3 +681,14 @@ def proxy(request):
     response = BCResponse(resp)
     response.content_type = content_type
     return response 
+
+
+def couchit_about(request):
+    return render_response('about.html')
+    
+
+def couchit_help(request):
+    return render_response('help.html')
+
+def couchit_find(request):
+    return render_response('find.html')

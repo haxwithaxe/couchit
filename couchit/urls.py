@@ -37,7 +37,10 @@ all_views = {
     'change_password': views.site_change_password,
     'site_address': views.site_address,
     'site_export': views.site_export,
-    'site_delete': views.site_delete
+    'site_delete': views.site_delete,
+    'couchit_about': views.couchit_about,
+    'couchit_find': views.couchit_find,
+    'couchit_help': views.couchit_help
 }
 
 

@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>couchit - {% block title %}{% endblock %}</title>
+    <title>{% block title %}{% endblock %}</title>
     {% if DEBUG %}
     <link rel="stylesheet" href="/static/css/src/debug.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="/static/css/src/textarea.css" />
@@ -83,7 +83,7 @@ tr.rselected{background-color:#{{site.theme.border_color}};color:#{{site.theme.m
         </div>
         
         <footer class="footer_wrapper">
-            {% if not site %}
+            {% if not site and not cname and not alias %}
             <ul class="menu">
                 <li><a href="/about">about</a></li>
                 <li><a href="/find">find your site</a></li>
