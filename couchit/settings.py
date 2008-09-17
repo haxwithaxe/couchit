@@ -15,9 +15,12 @@
 
 import os
 
-DEBUG = False
+DEBUG = True
 
-SERVER_NAME = 'couch.it'
+SERVER_NAME = 'couchit.net'
+if DEBUG:
+    SERVER_NAME = 'couch.test'
+
 
 # database
 SERVER_URI ='http://127.0.0.1:5984'

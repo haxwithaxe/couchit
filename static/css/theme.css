@@ -1,8 +1,7 @@
-/* ../static/css/src/slate.css */
 body {background-color:#e7e7e7;color:#000;}
 a {color:#14456e;}
 #page article {color:#000;background-color:#fff;border-right-color:#d4d4d4;border-left-color:#d4d4d4;border-bottom-color:#d4d4d4;}
-#phistory,#pdiff,#pdesign,#claim_wrapper,#psettings {background-color:#fff;border-color:#d4d4d4;color:#000;}
+#phistory,#pdiff,#pdesign,#claim_wrapper,#psettings,#pgeneric {background-color:#fff;border-color:#d4d4d4;color:#000;}
 #pdiff h4 {border-bottom-color:#ccc;}
 ul.subsection_tabs {background-color:#d4d4d4;}
 ul.subsection_tabs li.tab a {color:#666;}

@@ -55,7 +55,6 @@ class MergeCSS(object):
             for src_fname in src_files:
                 src_fpath = os.path.join(self.src_path, src_fname)
                 if os.path.exists(src_fpath):
-                    output_css += "/* %s */\n" % src_fpath
                     output_css += str(CSSParser(read_file(src_fpath)))
             
             output_css = re_url.sub(self.replace_url, output_css)

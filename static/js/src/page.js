@@ -42,10 +42,12 @@ var PageUI = Class.create({
             }
         });
         
-        Event.observe(window, 'resize', function(e) {
-            var new_height = document.viewport.getHeight() - 150;
+        
+        window.onresize = function(e) {
+            var new_height = document.viewport.getHeight() - 250;
             $('content').setStyle({'height': new_height + 'px'});
-        });
+        }
+        
         $('cancelEdit').observe('click', function(e) {
             Event.stop(e);
             self.tabs.setActiveTab("pview");
@@ -73,7 +75,7 @@ var PageUI = Class.create({
             this.update_tabs(active_container);
         
         /* init size of textarea */
-        var new_height = document.viewport.getHeight() -150;
+        var new_height = document.viewport.getHeight() - 250;
         $('content').setStyle({'height': new_height + 'px'});
     },
     

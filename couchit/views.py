@@ -476,7 +476,7 @@ def site_address(request):
 @not_logged    
 def site_login(request):
     error = None
-    
+    back = ''
     if request.method == "GET":
         back=request.values.get('back', '')
         notify = request.session.get('notify', '')

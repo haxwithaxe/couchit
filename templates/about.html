@@ -1,11 +1,33 @@
 {% extends "base.html" %}
-{% block title %}couch.it - about{% endblock %}
+{% block title %}couchit - about{% endblock %}
 
 {% block fullpage %}
+<div id="home_wrapper"> 
 <section id="pgeneric">
-    <h1>About CouchIt</h1>
-    <p>Couchit will allow you to easily build and maintain your website.</p>
-    <p>For now just create your website as you edit a text area. Easy.</p>
+    <h1>About Couchit</h1>
+    <p>Couchit allow you <strong>to easily build and maintain your website.</strong></p> 
+    <p>Post your content and let's go.</p>
+    <p>Couchit is for now in beta, but already propose you:</p>
+        <ul>
+            <li>a simple and intuitive user interface</li>
+            <li>the possibility to create and edit page</li>
+            <li>the possibility to choose your site url</li>
+            <li>an easyway to choose your website colorscheme</li>
+            <li>an easy integration of paste from Friendpase</li>
+            <li>...</li>
+        </ul>
+    <p>An the best is coming...</p>
+    
+    <h2>How is build couchit ?</h2>
+    <ul>
+        <li>No SQL database. We use the new and powerfull document oriented database <a href="http://www.couchdb.org">Apache CouchDB</a>.</li>
+        <li><a href="http://werkzeug.pocoo.org">Werkzeug</a>, a micro web framework</li>
+    </ul>
+    
+    <h2>Who ?</h2>
+    <p><strong>There is no logging on Couchit.</strong> Cookie is only used to store your preferences. Period.</p>
+    <p>So use it freely and don't hesitate to share it with your friends ;)</p>
     
 </section>
+</div> 
 {% endblock %}
