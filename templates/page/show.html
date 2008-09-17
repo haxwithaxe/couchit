@@ -75,7 +75,7 @@
 <section id="pedit">
     <div id="pedit_wrapper">
         <form name="fedit" id="fedit" action="{{ url_for('edit_page', pagename=page.title|replace(" ", "_")) }}" method="POST">
-            <textarea name="content" id='content' cols="80" rows="20">{{ page.content| escape }}</textarea>
+            <textarea name="content" id='content' cols="80" rows="20">{{ page.content }}</textarea>
             <p><input type="submit" name="save" id="save" value="Save" /> or <a id="cancelEdit" href="{% if page.id %}{{ url_for('show_page', pagename=page.title|replace(" ", "_")) }}{% else %}/{% endif %}">Cancel</a></p>
         </form>
         <div id="preview"></div>
@@ -126,14 +126,14 @@
 
 {% block footer %}
 <script type="text/javascript">
-Site.name = "{{ site.cname }}";
-Site.url = "{{ site_url }}";
-{% if can_edit %}
-{% if not page.id %}
-Page.created = true;
-{% endif %}
-new Create();
-new PageUI();
-{% endif %}
+    Site.name = "{{ site.cname }}";
+    Site.url = "{{ site_url }}";
+    {% if can_edit %}
+    {% if not page.id %}
+    Page.created = true;
+    {% endif %}
+    new Create();
+    new PageUI();
+    {% endif %}
 </script>
 {% endblock %}

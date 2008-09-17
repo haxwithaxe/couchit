@@ -65,10 +65,13 @@ tr.rselected{background-color:#{{site.theme.border_color}};color:#{{site.theme.m
     {% endif %}
     
     <div id="container">
-        <header id="site_header">
-            <h1>{% if site.title %}{{ site.title }}{% endif %}</h1>
-            <h2>{% if site.subtitle %}{{ site.subtitle }}{% endif %}</h2>
-        </header>
+        {% if site %}
+         <header id="site_header">
+             <h1>{% if site.title %}{{ site.title }}{% endif %}</h1>
+             <h2>{% if site.subtitle %}{{ site.subtitle }}{% endif %}</h2>
+         </header>   
+        {% endif %}
+        
         
         <div id="page_wrapper">
             {% block fullpage %}
@@ -91,7 +94,7 @@ tr.rselected{background-color:#{{site.theme.border_color}};color:#{{site.theme.m
             </ul>
             {% endif %}
             
-            <p class="powered">Powered by <a href="http://couch.it">CouchIt</a>.</p>
+            <p class="powered">Powered by <a href="http://couchi.nett">CouchIt</a>.</p>
         </footer>
         
          {% block footer %}{% endblock %}

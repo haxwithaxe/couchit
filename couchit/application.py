@@ -128,7 +128,7 @@ class CouchitApp(object):
             )
 
         
-        if request.site.privacy == "private" and not authenticated and endpoint!='site_login':
+        if request.site.privacy == "private" and not authenticated and endpoint!='site_login' and endpoint!='forgot_password' and endpoint !='change_password':
             response = redirect(url_for('site_login'))
         elif not subdomain and request.site.alias:
             redirect_url = "http://%s.%s/%s" % (request.site.alias, settings.SERVER_NAME, 

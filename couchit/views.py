@@ -600,7 +600,7 @@ def site_forgot_password(request):
             [request.site.email], fail_silently=True)
             
         request.session['notify'] = u"We've sent out the secret link. Go check your email!"
-        redirect_url = url_for('login', back=back)
+        redirect_url = url_for('site_login', back=back)
         return redirect(redirect_url)
         
     return render_response('site/forgot_password.html', back=back)

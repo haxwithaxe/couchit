@@ -12,7 +12,7 @@ var PageUI = Class.create({
         //preview of markdown text  
         this.converter = new Showdown.converter;  
         this.converter_callback = function(value){  
-            $('preview').update(self.converter.makeHtml(value));  
+            $('preview').innerHTML = self.converter.makeHtml(value);  
         }  
         this.converter_callback(this.textarea.getValue());  
         this.textarea.observe('change',self.converter_callback);
@@ -71,8 +71,14 @@ var PageUI = Class.create({
     
     init: function() {
         var active_container = this.tabs.activeContainer;  
+        if (Page.created && active_container.id != "pedit")    
+            this.tabs.setActiveTab("pedit");
+            active_container = this.tabs.activeContainer;  
+            
         if (active_container)
             this.update_tabs(active_container);
+        
+        
         
         /* init size of textarea */
         var new_height = document.viewport.getHeight() - 250;

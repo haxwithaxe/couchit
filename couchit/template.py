@@ -20,12 +20,13 @@ import simplejson as json
 
 from couchit import settings
 from couchit.http import BCResponse, BCRequest
-from couchit.contrib.markdown2 import Markdown
+from couchit.contrib import markdown
+
+ 
 from couchit.utils import local, datetime_tojson, datetimestr_topython
 
 template_env = Environment(loader=FileSystemLoader(settings.TEMPLATES_PATH))
 template_env.charset = 'utf-8'
-_markdown = Markdown(safe_mode=True, extras=['code-color'])
 WIKI_CHANGES = {
     'mod': 'Changed',
     'add': 'Added',
@@ -52,8 +53,22 @@ template_env.globals['DEBUG'] = settings.DEBUG
 template_env.filters['rfc3339'] = datetime_tojson
 
 def convert_markdown(value):
-    return _markdown.convert(value)
+    if local.site_url:
+        base_url = local.site_url + '/'
+    else:
+        base_url = '/'
+    md = markdown.Markdown(
+            extensions = ['codehilite', 'wikilink', 'footnotes'],
+            extension_configs = {'wikilink': [
+                                        ('base_url', base_url),
+                                        ('html_class', '') ]},
+            safe_mode = 'escape')
+    
+    return md.convert(value)
 template_env.filters['markdown'] = convert_markdown
+
+
+
 
 def format_datetime(value):
     value = datetimestr_topython(value)
