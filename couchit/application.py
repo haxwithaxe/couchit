@@ -66,7 +66,6 @@ class CouchitApp(object):
             cname = cur_path[0]
             
         if site is None: # create website
-            print alias
             if alias is None or not alias and cname in ['help', 'find', 'about']:
                 response = self.views['couchit_%s' % cname](request, **request.args)
             else:

@@ -46,6 +46,7 @@ all_views = {
 
 
 urls_map = Map([
+    Rule('/', endpoint='show_page'),
     Rule('/proxy', endpoint='proxy'),
     Rule('/site/design', endpoint='site_design'),
     Rule('/site/claim', endpoint='site_claim'),
@@ -65,7 +66,9 @@ urls_map = Map([
     Rule('/<pagename>/edit', endpoint='edit_page'),
     Rule('/<pagename>/delete', endpoint='delete_page'),
     Rule('/<pagename>/diff', endpoint='diff_page'),
-    Rule('/', defaults={'pagename': 'home' }, endpoint='show_page'),
-    Rule('/<pagename>', endpoint='show_page')
+    Rule('/<pagename>/', endpoint='show_page', strict_slashes=False),
+    Rule('/<pagename>', endpoint='show_page', strict_slashes=False)
+    
+   
 ])
 
