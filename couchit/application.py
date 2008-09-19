@@ -28,6 +28,7 @@ from couchit import context_processors
 from couchit import views
 from couchit.template import template_env, url_for
 
+
 class CouchitApp(object):
     def __init__(self):
         local.application = self
@@ -58,7 +59,7 @@ class CouchitApp(object):
             response = redirect('http://%s' % settings.SERVER_NAME)
             return response(environ, start_response)
 
-        if subdomain and subdomain != 'www': # get alias
+        if subdomain and subdomain != 'www' and subdomain not in views.FORBIDDEN_CNAME: # get alias
             request.alias = subdomain
             site = get_site(local.db, subdomain, by_alias=True)
         elif cur_path: # get shortname

@@ -35,6 +35,8 @@ import simplejson as json
 
 FORBIDDEN_PAGES = ['site', 'delete', 'edit', 'create', 'history', 'changes']
 
+FORBIDDEN_CNAME = ['mail', 'www', 'blog', 'news', 'media', 'upload', 'files']
+
 re_page = re.compile(r'^[- \w]+$', re.U)
 re_address = re.compile(r'^[-_\w]+$')
 
@@ -499,7 +501,7 @@ def site_address(request):
                 'ok': False,
                 'error': u"alias is empty or length < 3"
             })
-        elif get_site(local.db, alias, True) and request.site.alias != alias:
+        elif get_site(local.db, alias, True) and request.site.alias != alias or alias in FORBIDDEN_CNAME:
             return send_json({
                 'ok': False,
                 'error':  u"A site with this name has already been registered in couch.it"
