@@ -59,24 +59,19 @@ class DatabaseSessionStore(SessionStore):
 
     def save(self, session):
         """ save session in couchdb database """
-        s = None
         expire = datetime.now() + timedelta(seconds=settings.SESSION_COOKIE_AGE)
         try:
-            s = local.db["session/%s" % session.sid]
-        except ResourceNotFound:
-            pass
-        
-        if s is not None:
-            s['session_data'] = _encode_session_data(dict(session))
-            s['expire_date'] = datetime_tojson(expire)
-        else:
-            s = {
+            local.db["session/%s" % session.sid] = {
                     'session_key':session.sid, 
                     'session_data': _encode_session_data(dict(session)),
                     'expire_date': datetime_tojson(expire)            
-                    }
-        local.db['session/%s' % session.sid] = s
-
+            }
+        except:
+            s = local.db["session/%s" % session.sid]
+            s['session_data'] = _encode_session_data(dict(session))
+            s['expire_date'] = datetime_tojson(expire)
+            local.db['session/%s' % session.sid] = s
+       
     def delete(self, session):
         """ delete session """
         try:

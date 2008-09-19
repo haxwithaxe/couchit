@@ -18,7 +18,7 @@ import re
 from time import asctime, gmtime, time
 import urllib2
 import uuid
-from jinja2.filters import do_truncate, do_striptags
+from jinja2.filters import do_truncate, do_striptags, escape
 from werkzeug import redirect
 from werkzeug.contrib.atom import AtomFeed
 from werkzeug.routing import NotFound
@@ -131,7 +131,7 @@ def home(request, cname=None, alias=None):
     request.session['createid'] = createid
     request.session['spamid'] = spamid
     request.session['spaminput'] = spaminput
-    print "1 %s" % createid
+
     return render_response('home.html', cname=cname, alias=alias,
                 b1=b1, b2=b2, spamid=spamid, spaminput=spaminput, createid=createid)
   
@@ -180,7 +180,7 @@ def edit_page(request, pagename=None):
         redirect_url = url_for('show_page', pagename=pagename)
         return redirect(redirect_url)
     
-    return render_response('page/edit.html', page=page)
+    return redirect(url_for('show_page'))
 
 @can_edit  
 def delete_page(request, pagename):
@@ -244,9 +244,7 @@ def revision_page(request=None, pagename=None, nb_revision=None):
     # get all pages
     pages = all_pages(local.db, request.site.id)
     
-
     return render_response('page/show.html', page=revision, pages=pages)
- 
    
 def diff_page(request=None, pagename=None):
     if pagename is None:
@@ -257,8 +255,11 @@ def diff_page(request=None, pagename=None):
             return send_json({'ok': False, 'reason': 'not found'})
         return NotFound
     
+    diff = ''
+    rev1 = rev2 = page
     revisions = request.values.getlist('r')
-    diff, rev1, rev2 = get_diff(local.db, page, revisions[0], revisions[1])
+    if revisions:
+        diff, rev1, rev2 = get_diff(local.db, page, revisions[0], revisions[1])
     
     if request.is_xhr:
          return send_json({
@@ -288,21 +289,24 @@ def revisions_feed(request=None, pagename=None, feedtype="atom"):
                     title="%s: Latest revisions of %s" % (request.site.cname, page.title),
                     subtitle=request.site.subtitle,
                     updated = page.updated,
-                    id = page.title.replace(" ", "_")
+                    feed_url = request.url
         )
         for rev in all_revisions:
+            title = ''
+            _url="%s%s" % (request.host_url, url_for("revision_page", 
+                cname=request.site.cname, pagename=pagename, 
+                nb_revision=rev.nb_revision
+            ))
             for change in rev.changes:
                 if change['type'] != "unmod":
                     title = "\n".join(change['changed']['lines'])
                     title = do_truncate(do_striptags(title), 60)
             title = title and title or "Edited."
-            feed.add(title, rev.content, 
+            feed.add(title, escape(rev.content), 
                 updated=rev.updated,
-                url=url_for("revision_page", 
-                    cname=request.site.cname, pagename=pagename, 
-                    nb_revision=rev.nb_revision
-                ),
-                id=str(rev.nb_revision)
+                url=_url,
+                id=_url,
+                author=rev.title.replace(' ', '_')
             )
         return feed.get_response()
     else:
@@ -310,6 +314,7 @@ def revisions_feed(request=None, pagename=None, feedtype="atom"):
             'title': "%s: Latest revisions of %s" % (request.site.cname, page.title),
             'subtitle': request.site.subtitle,
             'updated':datetime_tojson(page.updated),
+            'feed_url': request.url,
             'revisions': []
         }
         for rev in all_revisions:
@@ -320,10 +325,10 @@ def revisions_feed(request=None, pagename=None, feedtype="atom"):
                     title = do_truncate(do_striptags(title), 60)
                     
             title = title and title or "Edited."
-            url = url_for("revision_page", 
+            url = "%s%s" % (request.host_url, url_for("revision_page", 
                         cname=request.site.cname, pagename=pagename, 
                         nb_revision=rev.nb_revision
-            )
+            ))
             json['revisions'].append({
                 'title': title,
                 'content': rev.content,
@@ -339,18 +344,20 @@ def site_changes(request, feedtype=None):
     changes = get_changes(local.db, request.site.id)
 
     if feedtype == "atom":
+        
         feed = AtomFeed(
                     title="%s: Latest changes" % request.site.title and request.site.title or request.site.cname,
                     subtitle=request.site.subtitle,
                     updated = changes[0].updated,
-                    id = request.site.cname
+                    feed_url = request.url
         )
         for rev in changes:
-            feed.add(rev.title, rev.content, 
+            _url = "%s%s" % (request.host_url, url_for("show_page", pagename=rev.title.replace(' ', '_')))
+            feed.add(rev.title, escape(rev.content), 
                 updated=rev.updated,
-                url=url_for("show_page",pagename=rev.title.replace(' ', '_')
-                ),
-                id=rev.title.replace(' ', '_')
+                url=_url,
+                id=_url,
+                author=rev.title.replace(' ', '_')
             )
         return feed.get_response()
     elif feedtype == 'json':
@@ -358,11 +365,11 @@ def site_changes(request, feedtype=None):
                 'title': "%s: Latest changes" % request.site.title and request.site.title or request.site.cname,
                 'subtitle': request.site.subtitle,
                 'updated':datetime_tojson(changes[0].updated),
+                'feed_url': request.url,
                 'pages': []
             }
         for rev in changes:
-            url = url_for("show_page", pagename=rev.title.replace(' ', '_')
-            )
+            url = "%s%s" % (request.host_url, url_for("show_page", pagename=rev.title.replace(' ', '_')))
             json['pages'].append({
                 'title': rev.title,
                 'content': rev.content,
@@ -384,13 +391,15 @@ def site_export(request, feedtype="atom"):
             title="%s: Latest changes" % request.site.title and request.site.title or request.site.cname,
             subtitle=request.site.subtitle,
             updated = pages[0].updated,
-            id = request.site.cname
+            feed_url = request.url
         )
         for page in pages:
-            feed.add(page.title, page.content,
+            _url = "%s%s" % (request.host_url, url_for("show_page", pagename=page.title.replace(' ', '_')))
+            feed.add(page.title, escape(page.content),
             updated=page.updated, 
-            url=url_for("show_page", pagename=page.title.replace(' ', '_')),
-            id=page.title.replace(' ', '_')
+            url=_url,
+            id=_url,
+            author=page.title.replace(' ', '_')
         )
         return feed.get_response()
     json = {
@@ -518,6 +527,7 @@ def site_address(request):
 @not_logged    
 def site_login(request):
     error = None
+    notify = None
     back = ''
     if request.method == "GET":
         back=request.values.get('back', '')
@@ -620,11 +630,10 @@ def change_password_authenticated(request):
         
     return render_response('site/change_password_authenticated.html', error=error)
 
-@not_logged    
 def site_forgot_password(request):
     back=request.values.get('back', '')
     if request.method == 'POST':
-        back = request.form['back']
+        back = request.form.get('back', '')
         
         # create token
         otoken = PasswordToken(site=request.site.id)

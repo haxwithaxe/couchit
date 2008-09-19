@@ -204,16 +204,18 @@ var Settings = Class.create({
    initialize: function() {
        var self = this;
        this.observer = null;
-       this.title = $('site_header').getElementsBySelector("h1")[0];
-       this.subtitle = $('site_header').getElementsBySelector("h2")[0];
-       
+       this.title = $('site_header').select("h1 a")[0];
+       this.subtitle = $('site_header').select("h2")[0];
        $$('input').each(function(el) {
           new Form.Element.Observer(
               el,
               0.2, 
               function(el, value) {
-                  if (el.id == "site_title") 
-                    self.title.update(value); 
+                  if (el.id == "site_title") {
+                      self.title.update(value);
+                      document.title = value + " - settings";
+                  }
+                    
                   if (el.id == "site_subtitle")
                     self.subtitle.update(value);
                     

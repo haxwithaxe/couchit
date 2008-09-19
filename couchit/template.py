@@ -56,12 +56,13 @@ def convert_markdown(value):
     if local.site_url:
         base_url = local.site_url + '/'
     else:
-        base_url = '/'
+        base_url = ''
     md = markdown.Markdown(
             extensions = ['codehilite', 'wikilink', 'footnotes'],
             extension_configs = {'wikilink': [
                                         ('base_url', base_url),
-                                        ('html_class', '') ]},
+                                        ('html_class', ''),
+                                        ('end_url', '') ]},
             safe_mode = 'escape')
     
     return md.convert(value)

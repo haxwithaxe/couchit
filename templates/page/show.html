@@ -49,7 +49,7 @@
     {% if page.id %}
         
     
-    <article>
+    <article id="post">
         {% if page.title or page.subtitle %}
         <header>
             <h2>{{ page.title }}</h2>
@@ -131,6 +131,12 @@
     {% if can_edit %}
     {% if not page.id %}
     Page.created = true;
+    {% else %}
+    {% if page.title == 'Home' %}
+    Page.home = true;
+    {% else %}
+     Page.home = false;
+    {% endif %}
     {% endif %}
     new Create();
     new PageUI();

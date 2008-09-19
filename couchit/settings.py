@@ -19,7 +19,7 @@ DEBUG = True
 
 SERVER_NAME = 'couchit.net'
 if DEBUG:
-    SERVER_NAME = 'couch.test'
+    SERVER_NAME = 'couch.test:5000'
 
 
 # database

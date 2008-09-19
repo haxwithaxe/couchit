@@ -66,7 +66,6 @@ var PageUI = Class.create({
                 }
                 document.location.href=this.href;
             }, false);
-        
     },
     
     init: function() {
@@ -83,6 +82,7 @@ var PageUI = Class.create({
         /* init size of textarea */
         var new_height = document.viewport.getHeight() - 250;
         $('content').setStyle({'height': new_height + 'px'});
+        
     },
     
     update_tabs: function(new_container) {

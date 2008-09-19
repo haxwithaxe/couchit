@@ -4,12 +4,15 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>{% block title %}{% endblock %}</title>
+    <title>{% if site and site.title %}{{ site.title }} - {% endif %}{% block title %}{% endblock %}</title>
+    <link rel="icon" type="image/png" href="/static/img/favicon.png" />
+    
     {% if DEBUG %}
     <link rel="stylesheet" href="/static/css/src/debug.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="/static/css/src/textarea.css" />
     <script src="/static/js/lib/prototype.js" type="text/javascript"></script>
     <script src="/static/js/lib/effects.js" type="text/javascript"></script>
+    <script src="/static/js/lib/controls.js" type="text/javascript"></script>
     <script src="/static/js/lib/dragdrop.js" type="text/javascript"></script>
     <script src="/static/js/lib/builder.js" type="text/javascript"></script>
     <script src="/static/js/lib/slider.js" type="text/javascript"></script>
@@ -34,10 +37,11 @@
     <style type="text/css" media="screen">
 body{background-color:#{{ site.theme.background_color }};color:#{{ site.theme.text_color }};}
 a{color:#{{ site.theme.link_color }};}
+header h1 a{color:#{{ site.theme.text_color }};}
 #page article, #pedit #pedit_wrapper{background-color:#{{ site.theme.page_fill_color }};border-right-color:#{{ site.theme.border_color }};border-left-color:#{{ site.theme.border_color }};border-bottom-color:#{{ site.theme.border_color }};color:#{{ site.theme.page_text_color }};}
 #phistory,#pdiff,#pdesign,#pedit,#claim_wrapper,#psettings{background-color:#{{ site.theme.page_fill_color }};border-color:#{{ site.theme.border_color }};color:#{{ site.theme.page_text_color }};}
 #phistory,#pdiff,#pdesign,#page,#claim_wrapper,#psettings{color:#{{ site.theme.page_text_color }};}
-#phistory a, #pdiff a, #pdesign a, #page a, #psettings a{color:#{{ site.theme.page_link_color }};}
+#phistory a, #pdiff a, #pdesign a, #page a, #psettings a, #claim_wrapper a{color:#{{ site.theme.page_link_color }};}
 ul.subsection_tabs{background-color:#{{ site.theme.border_color }};}
 ul.subsection_tabs li.tab a, ul.subsection_tabs li.tab a:visited{color:#{{ site.theme.menu_inactive_color }};}
 .box{background-color:#{{ site.theme.page_fill_color }};}
@@ -67,7 +71,7 @@ tr.rselected{background-color:#{{site.theme.border_color}};color:#{{site.theme.m
     <div id="container">
         {% if site %}
          <header id="site_header">
-             <h1>{% if site.title %}{{ site.title }}{% endif %}</h1>
+             <h1><a href="{% if site_url %}{{ site_url }}{% else %}/{% endif %}">{% if site.title %}{{ site.title }}{% endif %}</a></h1>
              <h2>{% if site.subtitle %}{{ site.subtitle }}{% endif %}</h2>
          </header>   
         {% endif %}

@@ -101,8 +101,8 @@ class Page(Document):
         else:
             old_data = db.get(self.id)
             self.created = datetime.utcnow()
-            old_hash = make_hash(old_data['content'])
-            new_hash = make_hash(self.content)
+            old_hash = make_hash(old_data['title'], old_data['content'])
+            new_hash = make_hash(self.title, self.content)
             if old_hash != new_hash:
                 del old_data['_id']
                 del old_data['_rev']
