@@ -251,7 +251,7 @@ def history_page(request=None, pagename=None):
     page = get_page(local.db, request.site.id, pagename)
     
     if not page:
-        return NotFound
+        raise NotFound
     
     revisions = page.revisions(local.db)
     
@@ -264,9 +264,10 @@ def history_page(request=None, pagename=None):
 def revision_page(request=None, pagename=None, nb_revision=None):
     if pagename is None:
         pagename ='Home'
+        
     page = get_page(local.db, request.site.id, pagename)
     if not page:
-        return NotFound
+        raise NotFound
         
     if nb_revision is None:
         nb_revision = 0
@@ -274,7 +275,7 @@ def revision_page(request=None, pagename=None, nb_revision=None):
         try:
             nb_revision = int(nb_revision)
         except ValueError:
-            return NotFound
+            raise NotFound
 
     revision = page.revision(local.db, nb_revision)
     if revision is None:
@@ -298,7 +299,7 @@ def diff_page(request=None, pagename=None):
     if not page:
         if request.is_xhr:
             return send_json({'ok': False, 'reason': 'not found'})
-        return NotFound
+        raise NotFound
     
     diff = ''
     rev1 = rev2 = page
@@ -327,7 +328,7 @@ def revisions_feed(request=None, pagename=None, feedtype="atom"):
         pagename ='Home'
     page = get_page(local.db, request.site.id, pagename)
     if not page:
-        return NotFound
+        raise NotFound
     all_revisions = [page] + page.revisions(local.db)
     if feedtype == "atom":
         feed = AtomFeed(

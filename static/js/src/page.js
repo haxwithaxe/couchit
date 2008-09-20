@@ -67,17 +67,20 @@ var PageUI = Class.create({
                 document.location.href=this.href;
             }, false);
             
+        this._renamingPage = false;
         if (!Page.created && !Page.home) {
             
             this.page_title = $('page_title');
             this.page_title.setStyle({
                 'cursor': 'pointer'
             });
+            this.page_title.title="Click to rename";
             
             this.createRenameForm();
             //this.createRenameHelp();
 
             this.page_title.observe('click', function(e) {
+                this._renamingPage = true;
                 self.handleRename();
             }, false);
         }
@@ -103,6 +106,9 @@ var PageUI = Class.create({
         if (new_container.id == "pedit") {
             this.Sidebar.hide();
             this.Page.setStyle({'width': '99%'});
+            if (this._renamingPage) {
+                this.removeRenameForm();
+            }
         } else {
             this.Page.setStyle({'width': '76%'});
             this.Sidebar.show();
@@ -324,10 +330,7 @@ var PageUI = Class.create({
         if (!new_title)
             alert("Page title can't be empty.");
         else if (old_title == new_title) {
-            this._form.remove();
-            this.createRenameForm();
-            //this.createRenameHelp();
-            this.page_title.show();
+            this.removeRenameForm();
         } else {
             new Ajax.Request(this._form.action, {
               method: 'post',
@@ -337,6 +340,7 @@ var PageUI = Class.create({
               onSuccess: function(response) {
                   data = response.responseText.evalJSON(true);
                   if (data['ok']) {
+                      this._renamingPage = false;
                       document.location.href = data['redirect_url'];
                   } else {
                       alert (data['error']);
@@ -367,6 +371,13 @@ var PageUI = Class.create({
         }, false);
     },
     
+    removeRenameForm: function() {
+        this._form.remove();
+        this.createRenameForm();
+        //self.createRenameHelp();
+        this.page_title.show();
+        this._renamingPage = false;
+    },
     
     handleRename: function() {
         var self = this;
@@ -376,10 +387,7 @@ var PageUI = Class.create({
         this._form.select('.cancel').each(function(el) {
             el.observe("click", function(e) {
                 Event.stop(e);
-                self._form.remove();
-                self.createRenameForm();
-                //self.createRenameHelp();
-                self.page_title.show();
+                self.removeRenameForm();
                 return false;
             }, false);
         });
