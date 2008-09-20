@@ -127,3 +127,9 @@ table.difftabular th.linenos {
     font-weight: bold;
     text-decoration: none;
 }
+
+.rename {
+    font-size: 12px;
+    line-height: 18px;
+    vertical-align: middle;
+}

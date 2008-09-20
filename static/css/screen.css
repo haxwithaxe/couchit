@@ -71,6 +71,7 @@ header h1 {padding-top:5px;}
 header h2 {padding-bottom:10px;}
 header h1 a {text-decoration:none;}
 #page article,#pedit #pedit_wrapper {display:block;padding:10px;border-right:4px solid;border-left:4px solid;border-bottom:4px solid;-moz-border-radius-bottomleft:5px;-moz-border-radius-bottomright:5px;-khtml-border-bottom-left-radius:5px;-webkit-border-bottom-left-radius:5px;-khtml-border-bottom-right-radius:5px;-webkit-border-bottom-right-radius:5px;border-bottom-left-radius:5px;border-bottom-right-radius:5px;min-height:350px;}
+span.rename {font-size:12px;line-height:18px;vertical-align:middle;}
 #phistory, #pdiff,#pdesign,#psettings,#pgeneric {display:block;padding:10px;border:4px solid;-moz-border-radius:5px;-khtml-border-radius:5px;-webkit-radius:5px;border-radius:5px;min-height:350px;}
 #pgeneric {text-align:left;margin-top:10px;}
 #pdiff h4 {border-bottom:1px solid;}

@@ -18,8 +18,14 @@ from couchdb.schema import *
 from couchit.utils import make_hash
 from couchit.utils.diff import unified_diff, diff_blocks
 
-__all__ = ['Page', 'Site', 'PasswordToken']
+__all__ = ['Page', 'Site', 'PasswordToken', 'PageExist',
+'AliasExist', 'AliasPage' ]
 
+class PageExist(Exception):
+    """ raised when a page exist """
+    
+class AliasExist(Exception):
+    """ raised when an alias exist for this pagename """
 
 class ArrayField(Field):
     _to_python = list
@@ -78,7 +84,29 @@ class Site(Document):
             db[self.id] = self._data
         
         return self
-                        
+
+class AliasPage(Document):
+    title = TextField()
+    site = TextField()
+    page = TextField()
+    
+    itemType = TextField(default='alias_page')  
+    
+    def get_alias(cls, db, siteid, pagename):
+        rows = cls.view(db, '_view/page/alias', key=[siteid, pagename.lower()])
+        lrows = list(iter(rows))
+        if lrows:
+            return lrows[0]
+        return None
+    get_alias = classmethod(get_alias)   
+    
+    def is_exist(cls, db, siteid, pagename):
+        if cls.get_alias(db, siteid, pagename) is not None:
+            return True
+        return False
+    is_exist = classmethod(is_exist)
+        
+                      
 class Page(Document):
     site = TextField()
     title = TextField()
@@ -148,3 +176,41 @@ class Page(Document):
         if rows:
             return rows[0]
         return None
+    
+    def get_pagename(cls, db, siteid, pagename):
+        rows = cls.view(db, '_view/page/by_slug', key=[siteid, pagename.lower()])
+        lrows = list(iter(rows))
+        if lrows:
+            return lrows[0]
+        return None
+    get_pagename = classmethod(get_pagename)
+        
+    def is_exist(cls, db, siteid, pagename):
+        page = cls.get_pagename(db, siteid, pagename)
+        if page is not None:
+            return True
+        return False
+    is_exist=classmethod(is_exist)
+        
+    def rename(self, db, new_title):
+        if not self.id:
+            return False
+        pagename =  new_title.replace(" ", "_")
+        if self.is_exist(db, self.site, pagename):
+            raise PageExist
+            
+        alias = AliasPage.get_alias(db, self.site, pagename)
+        if alias is not None: # if an alias exist, we remove it.
+            del db[alias.id]
+            
+        new_alias = AliasPage(
+            title=self.title,
+            site=self.site,
+            page=self.id
+        )
+        new_alias.store(db)
+        
+        self.title = new_title
+        self.store(db)
+        return self
+

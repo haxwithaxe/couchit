@@ -38,6 +38,12 @@
 </section>
 {% endif %}
 
+{% if redirect_from %}
+<section id="redirect">
+    <p>This page was redirected from &quot;<strong>{{ redirect_from.replace("_", "") }}</strong>&quot;.</p>
+</section>
+{% endif %}
+
 <ul id="tabs_wiki" class="subsection_tabs">  
      <li class="tab tab-view"><a href="#pview">VIEW</a></li>
      {% if can_edit %}

@@ -62,8 +62,8 @@ def convert_markdown(value):
             extension_configs = {'wikilinks': [
                                         ('base_url', base_url),
                                         ('html_class', ''),
-                                        ('end_url', '') ]},
-            safe_mode = 'escape')
+                                        ('end_url', '') ]}
+    )
     
     return md.convert(value)
 template_env.filters['markdown'] = convert_markdown

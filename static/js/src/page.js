@@ -66,6 +66,22 @@ var PageUI = Class.create({
                 }
                 document.location.href=this.href;
             }, false);
+            
+        if (!Page.created && !Page.home) {
+            
+            this.page_title = $('page_title');
+            this.page_title.setStyle({
+                'cursor': 'pointer'
+            });
+            
+            this.createRenameForm();
+            //this.createRenameHelp();
+
+            this.page_title.observe('click', function(e) {
+                self.handleRename();
+            }, false);
+        }
+            
     },
     
     init: function() {
@@ -76,8 +92,6 @@ var PageUI = Class.create({
             
         if (active_container)
             this.update_tabs(active_container);
-        
-        
         
         /* init size of textarea */
         var new_height = document.viewport.getHeight() - 250;
@@ -258,9 +272,7 @@ var PageUI = Class.create({
                         $('si').checked = true;
                 }, false);
             });
-            
-            
-            
+  
             
           },{  
               id: 'markdown_snippet_button'  
@@ -271,5 +283,107 @@ var PageUI = Class.create({
           },{  
               id: 'markdown_help_button'  
           });
+    },
+    
+    createRenameForm: function() {
+        var url_action = $('fedit').action;
+        this._form = new Element('form', {
+            'id': 'frename',
+            'method': 'post',
+            'action': url_action
+        });
+        var input = new Element('input', {
+            'type': 'text',
+            'id': 'new_title',
+            'name': 'new_title',
+            'value': $('page_title').innerHTML
+        });
+        var old_title = new Element('input', {
+            'type': 'hidden',
+            'id': 'old_title',
+            'name': 'old_title',
+            'value': $('page_title').innerHTML
+        });
+        
+        var cancel = new Element('a', {
+            'id': 'rcancel',
+            'class': 'cancel',
+            'href':'#'
+        }).update('Cancel');
+        this._form.insert(old_title);
+        this._form.insert(input);
+        this._form.insert(cancel);
+        this._form.onsubmit = this.renamePage.bind(this);
+        
+    },
+    
+    renamePage: function(e) {
+        Event.stop(e);
+        var new_title=$('new_title').getValue();
+        var old_title=$('old_title').getValue();
+        if (!new_title)
+            alert("Page title can't be empty.");
+        else if (old_title == new_title) {
+            this._form.remove();
+            this.createRenameForm();
+            //this.createRenameHelp();
+            this.page_title.show();
+        } else {
+            new Ajax.Request(this._form.action, {
+              method: 'post',
+              contentType: 'application/json', 
+              requestHeaders: {Accept: 'application/json'},
+              postBody: Object.toJSON(this._form.serialize(true)),
+              onSuccess: function(response) {
+                  data = response.responseText.evalJSON(true);
+                  if (data['ok']) {
+                      document.location.href = data['redirect_url'];
+                  } else {
+                      alert (data['error']);
+                  }
+
+              },
+              onFailure: function() {
+                  alert("mmm... error while trying rename :(, Please contact administrator")
+              }
+             });
+        } 
+        
+    },
+    
+    createRenameHelp: function() {
+        var self = this;
+        this._help = new Element('div', {
+            'class': 'rename hidden',
+        }).update('&#x21E4; Click to rename');
+        this.page_title.insert(this._help);
+        
+        this.page_title.observe('mouseover', function(e) {
+            self._help.removeClassName('hidden');
+        }, false);
+        
+        this.page_title.observe('mouseout', function(e) {
+            self._help.addClassName('hidden');
+        }, false);
+    },
+    
+    
+    handleRename: function() {
+        var self = this;
+        this.page_title.hide();
+        //this._help.remove();
+        this.page_title.parentNode.insertBefore(this._form, $('page_title'));
+        this._form.select('.cancel').each(function(el) {
+            el.observe("click", function(e) {
+                Event.stop(e);
+                self._form.remove();
+                self.createRenameForm();
+                //self.createRenameHelp();
+                self.page_title.show();
+                return false;
+            }, false);
+        });
+        
+        
     }
-})
+});

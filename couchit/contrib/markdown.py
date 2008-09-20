@@ -2156,7 +2156,6 @@ def load_extension(ext_name, configs = []):
     module_name = '.'.join([_import_path, ext_module, ext_name])
     extension_module_name = '_'.join(['mdx', ext_name])
 
-    module = __import__(module_name, {}, {}, [ext_module])
     try:
         module = __import__(module_name, {}, {}, [ext_module])
     except ImportError:

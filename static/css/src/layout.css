@@ -112,11 +112,14 @@ header h1 a { text-decoration: none; }
     
 }
 
-span.rename {
-    font-size: 12px;
-    line-height: 18px;
-    vertical-align: middle;
+.rename {
+    display: inline;
+    width: 200px;
+    margin-left: 10px;
+    opacity: 0.6;
+    filter: 0.6;
 }
+
 
 #phistory, 
 #pdiff,

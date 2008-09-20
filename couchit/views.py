@@ -24,7 +24,7 @@ from werkzeug.contrib.atom import AtomFeed
 from werkzeug.routing import NotFound
 from werkzeug.utils import url_unquote, generate_etag
 from couchit import settings
-from couchit.models import Site, Page, PasswordToken
+from couchit.models import *
 from couchit.api import *
 from couchit.http import BCResponse
 from couchit.template import render_response, url_for, render_template, send_json
@@ -143,7 +143,17 @@ def show_page(request=None, pagename=None):
     if pagename is None:
         pagename ='home'
         
+    redirect_from = request.values.get('redirect_from', '')
+        
     page = get_page(local.db, request.site.id, pagename)
+    if not page or page.id is None:
+        alias = AliasPage.get_alias(local.db, request.site.id, pagename)
+        if alias is not None:
+            page = Page.load(local.db, alias.page)
+            return redirect(url_for('show_page', 
+            pagename=page.title.replace(' ', '_'),
+            redirect_from=pagename))
+    
     if not page or page.id is None or not re_page.match(pagename):
         if pagename.lower() in FORBIDDEN_PAGES:
             redirect_url = "%s?error=%s" % (
@@ -162,7 +172,7 @@ def show_page(request=None, pagename=None):
     
    
     return render_response('page/show.html', page=page, pages=pages, 
-        lexers=LEXERS_CHOICE)
+        lexers=LEXERS_CHOICE, redirect_from=redirect_from)
 
 @can_edit
 def edit_page(request, pagename=None):
@@ -176,13 +186,46 @@ def edit_page(request, pagename=None):
             title=pagename.replace("_", " ")
         )
         
+    if request.is_xhr and request.method=="POST":
+        error = ""
+        data = json.loads(request.data)
+        new_title = data.get('new_title')
+        if new_title and new_title is not None:
+            try:
+                page.rename(local.db, new_title)
+                redirect_url = url_for('show_page', pagename=new_title.replace(' ', '_'))
+                return send_json({"ok": True, "redirect_url": redirect_url})
+            except PageExist:
+                error = "A page already exist with this name"
+            else:
+                error = "An unexpected error happened, please contact administrator."
+                
+            
+        else:
+            error = u"New title is empty"
+        return send_json({
+            "ok": False,
+            "error": error
+        })
+            
     if request.method == "POST":
-        page.content = request.form.get('content', '')
-        page.store(local.db)
-        redirect_url = url_for('show_page', pagename=pagename)
-        return redirect(redirect_url)
+        if 'new_title' in request.form:
+            new_title = request.form['new_title']
+            try:
+                page.rename(local.db, new_title)
+                redirect_url = url_for('show_page', pagename=new_title.replace(' ', '_'))
+                return redirect(redirect_url)
+            except PageExist:
+                error = "A page already exist with this name"
+            else:
+                error = "An unexpected error happened, please contact administrator."
+        else:
+            page.content = request.form.get('content', '')
+            page.store(local.db)
+            redirect_url = url_for('show_page', pagename=pagename)
+            return redirect(redirect_url)
     
-    return redirect(url_for('show_page'))
+    return redirect(url_for('show_page', pagename=pagename))
 
 @can_edit  
 def delete_page(request, pagename):
@@ -260,7 +303,7 @@ def diff_page(request=None, pagename=None):
     diff = ''
     rev1 = rev2 = page
     revisions = request.values.getlist('r')
-    if revisions:
+    if revisions and len(revisions) >=2:
         diff, rev1, rev2 = get_diff(local.db, page, revisions[0], revisions[1])
     
     if request.is_xhr:
