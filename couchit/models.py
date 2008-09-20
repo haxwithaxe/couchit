@@ -26,6 +26,9 @@ class PageExist(Exception):
     
 class AliasExist(Exception):
     """ raised when an alias exist for this pagename """
+    
+class PageConflict(Exception):
+    """ raised when there's conflict during update """
 
 class ArrayField(Field):
     _to_python = list
