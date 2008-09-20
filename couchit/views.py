@@ -35,7 +35,7 @@ import simplejson as json
 
 FORBIDDEN_PAGES = ['site', 'delete', 'edit', 'create', 'history', 'changes']
 
-FORBIDDEN_CNAME = ['mail', 'www', 'blog', 'news', 'media', 'upload', 'files']
+FORBIDDEN_CNAME = ['mail', 'www', 'blog', 'news', 'media', 'upload', 'files', 'store']
 
 re_page = re.compile(r'^[- \w]+$', re.U)
 re_address = re.compile(r'^[-_\w]+$')

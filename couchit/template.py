@@ -58,8 +58,8 @@ def convert_markdown(value):
     else:
         base_url = ''
     md = markdown.Markdown(
-            extensions = ['codehilite', 'wikilink', 'footnotes'],
-            extension_configs = {'wikilink': [
+            extensions = ['codehilite', 'wikilinks', 'footnotes'],
+            extension_configs = {'wikilinks': [
                                         ('base_url', base_url),
                                         ('html_class', ''),
                                         ('end_url', '') ]},

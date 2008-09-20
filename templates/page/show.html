@@ -52,7 +52,7 @@
     <article id="post">
         {% if page.title or page.subtitle %}
         <header>
-            <h2>{{ page.title }} <span class="rename">(<a href="">rename</a>)</span></h2>
+            <h2 id="page_title">{{ page.title }}</h2>
             <ul class="page_infos">
                 <li><time title="GMT" datetime="{{ page.updated|rfc3339 }}">{{ page.updated|formatdatetime }}</time></li>
                 {% if page.title != "Home" and can_edit %}
