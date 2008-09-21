@@ -49,7 +49,7 @@ ul.subsection_tabs li.tab a{color:#{{ site.theme.menu_inactive_color }};}
 .box h4{background-color:#{{site.theme.border_color}};color:#{{site.theme.menu_inactive_color }};}
 tr.rselected{background-color:#{{site.theme.border_color}};color:#{{site.theme.menu_inactive_color }};}
     </style>
-    <link rel="stylesheet" href="/static/css/src/default.css" type="text/css" />
+    <link rel="stylesheet" href="/static/css/{% if site.theme.syntax_style %}{{ site.theme.syntax_style }}{% else %}default{% endif %}.css" type="text/css" />
    {% endif %}
    
     {% block head %}{% endblock %}

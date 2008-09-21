@@ -63,7 +63,8 @@ class Site(Document):
         page_fill_color = TextField(default='FFFFFF'),
         page_text_color = TextField(default='000000'),
         page_link_color = TextField(default='14456E'),
-        menu_inactive_color = TextField(default='666666')
+        menu_inactive_color = TextField(default='666666'),
+        syntax_style = TextField(default='default')
     ))
     
     itemType = TextField(default='site')

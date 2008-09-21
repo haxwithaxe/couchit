@@ -52,6 +52,10 @@
                 <th><label for="menu_inactive_color">Sidebox title Color</label></th>
                 <td><input type="text" name="menu_inactive_color" value="{{ site.theme.menu_inactive_color }}" id="menu_inactive_color"  class="setColor" /></td>
             </tr>
+            <tr>
+                <th><label for="syntax_style">Syntax Hilighting style</label></th>
+                <td><select name="syntax_style" id="syntax_style"> {% for t in ALL_COLORSHEME %} <option value="{{ t }}"{% if t == site.theme.syntax_style %} selected="selected"{% endif %}> {{ t }}</option>{% endfor %}</select></td>
+            </tr>
         </table>
         <p><input type="submit" name="sdesign" value="Save" id="sdesign" /></p>
     </form>
@@ -78,6 +82,10 @@
             }, false);
 
         });
+        
+        $('syntax_style').observe("focus", function(e) {
+            $('style_custom').checked=true;
+        }, false);
         
     </script>
 {% endblock %}

@@ -716,6 +716,7 @@ def site_design(request):
         page_text_color = '000000',
         page_link_color = '14456E',
         menu_inactive_color = '666666',
+        syntax_style = 'default'
     )
     
     if not request.site.theme or request.site.theme is None:
@@ -737,7 +738,8 @@ def site_design(request):
                 page_fill_color = request.form.get('page_fill_color', 'FFFFFF'),
                 page_text_color = request.form.get('page_text_color', '000000'),
                 page_link_color = request.form.get('page_link_color', '14456E'),
-                menu_inactive_color = request.form.get('menu_inactive_color', '666666')
+                menu_inactive_color = request.form.get('menu_inactive_color', '666666'),
+                syntax_style = request.form.get('syntax_style', 'default')
             )
         site.store(local.db)
         request.site = site 

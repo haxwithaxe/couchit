@@ -16,6 +16,7 @@ import re
 
 from jinja2 import Environment
 from jinja2.loaders import FileSystemLoader
+from pygments.styles import get_all_styles
 import simplejson as json
 
 from couchit import settings
@@ -50,6 +51,7 @@ template_env.globals['url_for'] = url_for
 
 template_env.globals['DEBUG'] = settings.DEBUG
 template_env.filters['rfc3339'] = datetime_tojson
+template_env.globals['ALL_COLORSHEME'] = list(get_all_styles())
 
 re_script = re.compile("\"\'][\s]*javascript:(.*)[\"\']/g")
 
