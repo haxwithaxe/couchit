@@ -88,9 +88,9 @@
     </div>
 </section>
  
- <div id="snippet_window" title="insert a snipet">
-     <div id="snippet_window_close"></div>
-     <div id="snippet_window_title">Insert a snippet</div>
+ <div id="snippet_window" title="insert a snipet" class="window">
+     <div id="snippet_window_close" class="close"></div>
+     <div id="snippet_window_title" class="window_title">Insert a snippet</div>
      <form name="fsnippet" id="fsnippet">
          <p class="choice"><input type="radio" name="snippet_from"  id="si" value="0" class="tsnippet" checked="checked" />Paste it here :</p>           
          <table>
@@ -121,6 +121,7 @@
         <p><input type="submit" id="ssnippet" name="ssnippet" value="Insert snippet" /><input type="submit" id="cancelSnippet" name="cancelSnippet" value="Cancel" /></p>
      </form>
  </div>
+ 
  {% endif %}
 {% endblock %}
 

@@ -339,30 +339,36 @@ code {
 
 
 /* window */
-#snippet_window_title {
-    margin-top:-7px;  
-    margin-left: 15px;
-    margin-bottom:7px;  
-    font-size:14px;
-    cursor:move;
-}
 
-#snippet_window {  
-    
+.window {
+    display: block;
+    background-image: url(../../img/window_background.png);
     -moz-border-radius: 5px;  
     -webkit-border-radius: 5px;  
-    -khtml-border-radius: 5px;  
+    -khtml-border-radius: 5px;
     padding:10px;  
     min-width:200px;  
     min-height:150px;  
     border: 4px solid;
+}
+
+.window .window_title {
+    margin-top:-7px;  
+    margin-left: 15px;
+    margin-bottom:7px;  
+    cursor:move;
+}
+
+.window{  
+    
+    
 } 
  
-#snippet_window form {
+.window form {
     position: relative;
 }
  
-#snippet_window #snippet_window_close {  
+.window .close {  
     display:block;  
     position:absolute;  
     top:4px;  

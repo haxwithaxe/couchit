@@ -133,3 +133,7 @@ table.difftabular th.linenos {
     line-height: 18px;
     vertical-align: middle;
 }
+
+.window_title {
+    font-size: 11px;
+}

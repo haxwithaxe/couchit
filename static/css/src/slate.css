@@ -72,24 +72,6 @@ tr.rselected {
     filter: 0.5;
 }
 
-#snippet_window {
-    background-color: #dedede;
-    color: #504845;
-    border: #ababab;
-}
-
-#snippet_window form table {
-    background-color: #f7f7f7;
-}
-
-input, textarea {
-    border-color: #C6C6C6 #EFEFEF #EFEFEF #C6C6C6;
-}
-
-#snippet_window input[type="submit"] {
-    background-color: #cec6b5;
-    border-color: #7a7261;
-}
 
 .box {
     background-color: #fff;
@@ -156,3 +138,29 @@ tr.errors {
 p.notice {
      background: #FFF6BF; color: #514721; border-color: #FFD324;
 }
+
+
+.window {
+ background-color: #dedede;
+    color: #bbbbbb;
+    border: #ababab;
+}
+
+.window form table {
+    background-color: #2c2c2c;
+}
+
+.window form p a, .window a:visited {
+    color: #bbb;
+}
+
+input, textarea {
+    border-color: #C6C6C6 #EFEFEF #EFEFEF #C6C6C6;
+}
+
+.window input[type="submit"] {
+    background-color: #3d3d3d;
+    border-color: #bbb;
+    color: #bbb;
+}
+
