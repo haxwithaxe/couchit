@@ -173,11 +173,6 @@ def show_page(request=None, pagename=None):
     response = render_response('page/show.html', page=page, pages=pages, 
         lexers=LEXERS_CHOICE, redirect_from=redirect_from)
         
-    need_update = request.session.get('need_update', False)
-    if need_update:
-        response.headers['Cache-Control'] = 'public'
-        response.headers['Expires'] = asctime(gmtime(time() - 3600))
-        del request.session['need_update']
     return response
 
 @can_edit
@@ -523,9 +518,6 @@ def site_settings(request):
     if request.is_xhr and request.method == "POST":
         data = json.loads(request.data)
         allow_javascript = data.get('allow_javascript', False) and True or False
-        if request.site.allow_javascript != allow_javascript:
-            request.session['need_update'] = True
-        
         site = get_site(local.db, request.site.cname)
         site.title = data.get('title', site.title)
         site.subtitle = data.get('subtitle', site.subtitle)
