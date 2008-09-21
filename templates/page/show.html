@@ -88,39 +88,7 @@
     </div>
 </section>
  
- <div id="snippet_window" title="insert a snipet" class="window">
-     <div id="snippet_window_close" class="close"></div>
-     <div id="snippet_window_title" class="window_title">Insert a snippet</div>
-     <form name="fsnippet" id="fsnippet">
-         <p class="choice"><input type="radio" name="snippet_from"  id="si" value="0" class="tsnippet" checked="checked" />Paste it here :</p>           
-         <table>
-             <tr>
-                 <th><label for="snippet_language">Programming language</label></th>
-                 <td>
-                    <select id="snippet_language" name="snippet_language">
-                        {% for lexer in lexers %}
-                        <option value="{{ lexer[0] }}">{{ lexer[1] }}</option>
-                        {% endfor %}
-                    </select>
-                 </td>
-             </tr>
-             <tr>
-                 <th><label for="snippet_content">Code:</label></th>
-                 <td>
-                     <textarea id="snippet_content" name="snippet_content" cols="40" rows="7"></textarea>
-                </td>
-            </tr>
-        </table>
-        <p class="choice"><input type="radio" name="snippet_from"  id="sfp" value="1" class="tsnippet" />Or insert a snippet from <a href="http://www.friendpaste.com">Friendpaste</a></p>
-         <table>
-             <tr>
-                 <th>URL:</th>
-                 <td><input type="text" name="snippet_url" id="snippet_url" value="" /></td>
-            </tr>
-        </table>
-        <p><input type="submit" id="ssnippet" name="ssnippet" value="Insert snippet" /><input type="submit" id="cancelSnippet" name="cancelSnippet" value="Cancel" /></p>
-     </form>
- </div>
+
  
  {% endif %}
 {% endblock %}
@@ -132,6 +100,44 @@
 
 
 {% block footer %}
+
+{% if can_edit %}
+<div id="snippet_window" title="insert a snipet" class="window">
+    <div id="snippet_window_close" class="close"></div>
+    <div id="snippet_window_title" class="window_title">Insert a snippet</div>
+    <form name="fsnippet" id="fsnippet">
+        <p class="choice"><input type="radio" name="snippet_from"  id="si" value="0" class="tsnippet" checked="checked" />Paste it here :</p>           
+        <table>
+            <tr>
+                <th><label for="snippet_language">Programming language</label></th>
+                <td>
+                   <select id="snippet_language" name="snippet_language">
+                       {% for lexer in lexers %}
+                       <option value="{{ lexer[0] }}">{{ lexer[1] }}</option>
+                       {% endfor %}
+                   </select>
+                </td>
+            </tr>
+            <tr>
+                <th><label for="snippet_content">Code:</label></th>
+                <td>
+                    <textarea id="snippet_content" name="snippet_content" cols="40" rows="7"></textarea>
+               </td>
+           </tr>
+       </table>
+       <p class="choice"><input type="radio" name="snippet_from"  id="sfp" value="1" class="tsnippet" />Or insert a snippet from <a href="http://www.friendpaste.com">Friendpaste</a></p>
+        <table>
+            <tr>
+                <th>URL:</th>
+                <td><input type="text" name="snippet_url" id="snippet_url" value="" /></td>
+           </tr>
+       </table>
+       <p><input type="submit" id="ssnippet" name="ssnippet" value="Insert snippet" /><input type="submit" id="cancelSnippet" name="cancelSnippet" value="Cancel" /></p>
+    </form>
+</div>
+    
+{% endif %}
+
 <script type="text/javascript">
     Site.name = "{{ site.cname }}";
     Site.url = "{{ site_url }}";
