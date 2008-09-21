@@ -21,9 +21,8 @@ import simplejson as json
 from couchit import settings
 from couchit.http import BCResponse, BCRequest
 from couchit.contrib import markdown
-
- 
-from couchit.utils import local, datetime_tojson, datetimestr_topython
+from couchit.utils import local, datetime_tojson, datetimestr_topython,force_unicode, smart_str
+from couchit.utils.html import sanitize_html
 
 template_env = Environment(loader=FileSystemLoader(settings.TEMPLATES_PATH))
 template_env.charset = 'utf-8'
@@ -52,7 +51,9 @@ template_env.globals['url_for'] = url_for
 template_env.globals['DEBUG'] = settings.DEBUG
 template_env.filters['rfc3339'] = datetime_tojson
 
-def convert_markdown(value):
+re_script = re.compile("\"\'][\s]*javascript:(.*)[\"\']/g")
+
+def convert_markdown(value, javascript=False):
     if local.site_url:
         base_url = local.site_url + '/'
     else:
@@ -64,11 +65,11 @@ def convert_markdown(value):
                                         ('html_class', ''),
                                         ('end_url', '') ]}
     )
+    _parsed_value = sanitize_html(md.convert(value), javascript=javascript)
+    _parsed_value = force_unicode(_parsed_value)
+    return _parsed_value
     
-    return md.convert(value)
 template_env.filters['markdown'] = convert_markdown
-
-
 
 
 def format_datetime(value):

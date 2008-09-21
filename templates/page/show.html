@@ -68,7 +68,7 @@
             </ul>
         </header>
         {% endif %}
-        {{ page.content|markdown }}
+        {{ page.content|markdown(site.allow_javascript) }}
         <footer>
             
         </footer>

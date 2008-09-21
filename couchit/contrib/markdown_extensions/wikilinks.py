@@ -1,5 +1,4 @@
-#!/usr/bin/env python
-
+# -*- coding: utf-8 -*-
 '''
 WikiLinks Extension for Python-Markdown
 ======================================
@@ -69,7 +68,13 @@ Dependencies:
 * [Markdown 2.0+](http://www.freewisdom.org/projects/python-markdown/)
 '''
 
+import codecs
+import re
+from werkzeug.utils import url_quote
 from couchit.contrib import markdown
+from couchit.utils import CouchitUnicodeDecodeError, force_unicode, smart_str, utf8
+
+re_page = re.compile(r'[^\w^\s^-]', re.U)
 
 class WikiLinkExtension (markdown.Extension) :
     def __init__(self, configs):
@@ -104,7 +109,8 @@ class WikiLinks (markdown.BasePattern) :
         if m.group(2).strip():
             base_url, end_url, html_class = self._getMeta()
             label = m.group(2).strip()
-            url = '%s%s%s'% (base_url, label.replace(' ', '_'), end_url)
+            label = re_page.sub("", label)
+            url = '%s%s%s'% (base_url, label, end_url)
             a = markdown.etree.Element('a')
             a.text = markdown.AtomicString(label)
             a.set('href', url)
@@ -112,6 +118,7 @@ class WikiLinks (markdown.BasePattern) :
                 a.set('class', html_class)
         else:
             a = ''
+        
         return a
 
     def _getMeta(self):

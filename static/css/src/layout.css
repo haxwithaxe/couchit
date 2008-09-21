@@ -600,3 +600,8 @@ h5.settings {
     width: 550px;
     text-align: center;
 }
+
+.tableSettings th {
+    width: 120px;
+    vertical-align: middle;
+}

@@ -13,6 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from datetime import datetime
 import random
 import re
 from time import asctime, gmtime, time
@@ -165,14 +166,19 @@ def show_page(request=None, pagename=None):
             site=request.site.id,
             title=pagename.replace("_", " ")
         )
-    
+
     # get all pages
     pages = all_pages(local.db, request.site.id)
     
-    
-   
-    return render_response('page/show.html', page=page, pages=pages, 
+    response = render_response('page/show.html', page=page, pages=pages, 
         lexers=LEXERS_CHOICE, redirect_from=redirect_from)
+        
+    need_update = request.session.get('need_update', False)
+    if need_update:
+        response.headers['Cache-Control'] = 'public'
+        response.headers['Expires'] = asctime(gmtime(time() - 3600))
+        del request.session['need_update']
+    return response
 
 @can_edit
 def edit_page(request, pagename=None):
@@ -516,11 +522,16 @@ def site_claim(request):
 def site_settings(request):
     if request.is_xhr and request.method == "POST":
         data = json.loads(request.data)
+        allow_javascript = data.get('allow_javascript', False) and True or False
+        if request.site.allow_javascript != allow_javascript:
+            request.session['need_update'] = True
+        
         site = get_site(local.db, request.site.cname)
         site.title = data.get('title', site.title)
         site.subtitle = data.get('subtitle', site.subtitle)
         site.email = data.get('email', site.email)
         site.privacy = data.get('privacy', site.privacy)
+        site.allow_javascript = allow_javascript
         site.store(local.db)
         request.site = site
         return send_json({ 'ok': True })

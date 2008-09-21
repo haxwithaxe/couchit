@@ -9,25 +9,25 @@
 <section id="psettings">
     <form name="fsettings" id="fsettings" action="{{ url_for('site_settings') }}" method="post">
         <h2>Settings</h2>
-        <table class="">
+        <table class="tableSettings">
             <tr>
-                <th>Title</th>
+                <th>Title:</th>
                 <td><input type="text" name="site_title" id="site_title" value="{{ site.title }}" /></td>
                 <td>Appears at the top of every page</td>
             </tr>
             <tr>
-                <th>Subtitle</th>
+                <th>Subtitle:</th>
                 <td><input type="text" name="site_subtitle" id="site_subtitle" value="{{ site.subtitle }}" /></td>
                 <td>Appears below the title</td>
             </tr>
             <tr>
-                <th>Site address</th>
+                <th>Site address:</th>
                 <td>{% if site_address %}<strong>{{ site_address }}</strong> (<a href="{{ site_url }}/site/change-site-address">change</a>){% else %}<a href="{{ site_url }}/site/change-site-address">Give your site an address</a>{% endif %}</td>
                 <td>{% if not site_address %}Give your website an address that's easy to remembe{% endif %}</td>
             </tr>
             {% if site.claimed %}
                 <tr>
-                    <th>Password</th>
+                    <th>Password:</th>
                     <td><a href="{{ site_url }}/site/change-password">Change password</a></td>
                     <td></td>
                 </tr>
@@ -60,6 +60,10 @@
                     </table>
                 </td>
             </tr>
+            <tr>
+                <th>Allow javascript:</th>
+                <td><input type="checkbox" name="allow_javascript" id="allow_javascript" value="1"{% if site.allow_javascript %} checked="checked"{% endif %} /></td>
+                <td>Allow users to include javascript in pages</td>
             {% endif %}
         </table>
     </form>

@@ -233,7 +233,8 @@ var Settings = Class.create({
                'title': $('site_title').getValue(),
                'subtitle': $('site_subtitle').getValue(),
                'email': $('email').getValue(),
-               'privacy': $$('input:checked[type="radio"][name="privacy"]').pluck('value')[0]
+               'privacy': $$('input:checked[type="radio"][name="privacy"]').pluck('value')[0],
+               'allow_javascript': $('allow_javascript').getValue()
            }
        } catch(e) {
            data = {

@@ -53,6 +53,7 @@ class Site(Document):
     claimed = BooleanField(default=False)
     created = DateTimeField()
     updated = DateTimeField()
+    allow_javascript = BooleanField(default=False)
     default_theme = BooleanField(default=True)
     theme = DictField(Schema.build(
         background_color = TextField(default='E7E7E7'),
