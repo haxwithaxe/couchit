@@ -111,6 +111,7 @@ class WikiLinks (markdown.BasePattern) :
             label = m.group(2).strip()
             label = re_page.sub("", label)
             url = '%s%s%s'% (base_url, label, end_url)
+            url = url.replace(" ", "_")
             a = markdown.etree.Element('a')
             a.text = markdown.AtomicString(label)
             a.set('href', url)

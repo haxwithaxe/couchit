@@ -143,7 +143,7 @@ class _HTMLSanitizer(_BaseHTMLProcessor):
       'multiple', 'name', 'nohref', 'noshade', 'nowrap', 'prompt', 'readonly',
       'rel', 'rev', 'rows', 'rowspan', 'rules', 'scope', 'selected', 'shape', 'size',
       'span', 'src', 'start', 'summary', 'tabindex', 'target', 'title', 'type',
-      'usemap', 'valign', 'value', 'vspace', 'width']
+      'usemap', 'valign', 'value', 'vspace', 'width', 'style']
 
     unacceptable_elements_with_end_tag = ['script', 'applet']
     

@@ -71,7 +71,9 @@ class CouchitApp(object):
                 response = self.views['couchit_%s' % cname](request, **request.args)
             else:
                 response = self.views['home'](request, cname=cname, alias=alias, **request.args)
-            
+        
+        args = {}
+        endpoint=''
         if response is None:
             request.site = site
 
@@ -130,7 +132,10 @@ class CouchitApp(object):
 
         if hasattr(request, 'site'):
             if request.site.privacy == "private" and not authenticated and endpoint!='site_login' and endpoint!='forgot_password' and endpoint !='change_password':
-                response = redirect(url_for('site_login'))
+                back = ''
+                if endpoint:
+                    back = url_for(endpoint, **args)
+                response = redirect(url_for('site_login', back=back))
             elif not subdomain and request.site.alias:
                 redirect_url = "http://%s.%s/%s" % (request.site.alias, settings.SERVER_NAME, 
                                         path_info)

@@ -40,6 +40,7 @@ function localizeDates() {
                 return;
             var text = date.toLocaleString();
             var title = date.toLocaleString();
+            
             if (day_diff == 0) {
                 text = (diff < 60 && "Just Now" ||
                 diff < 120 && "1 minute ago" ||
@@ -48,8 +49,12 @@ function localizeDates() {
                 diff < 86400 && Math.floor( diff / 3600 ) + " hours ago");
                 title = date.toLocaleTimeString();
             } else {
-                text = (day_diff = 1 && "Yesterday" ||
-                day_diff < 7 && day_diff + " days ago");
+                hours = date.getHours();
+                minutes = date.getMinutes();
+                hours = (hours < 10) && "0" + hours || hours;
+                minutes = (minutes < 10) && "0" + minutes || minutes;
+                text = (day_diff == 1 && "Yesterday at " +  hours + ":" + minutes ||
+                el.textContent);
                 title = date.toLocaleString();
             }
             el.setAttribute('title', title);

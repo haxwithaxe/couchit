@@ -28,7 +28,7 @@ from couchit import settings
 from couchit.models import *
 from couchit.api import *
 from couchit.http import BCResponse
-from couchit.template import render_response, url_for, render_template, send_json
+from couchit.template import render_response, url_for, render_template, send_json, convert_markdown
 from couchit.utils import local, make_hash, datetime_tojson, to_str
 from couchit.utils.mail import send_mail
 
@@ -74,8 +74,9 @@ def can_edit(f):
             redirect_url = local.site_url and local.site_url or "/"
             return redirect(redirect_url)
         return f(request, **kwargs)
-    return decorated            
-        
+    return decorated
+    
+    
 def not_found(request):
     return render_response("not_found.html")
 
@@ -228,7 +229,8 @@ def edit_page(request, pagename=None):
     
     return redirect(url_for('show_page', pagename=pagename))
 
-@can_edit  
+@can_edit
+@login_required
 def delete_page(request, pagename):
     if pagename == 'Home': #security reason
         return redirect(url_for('show_page', pagename='Home'))
@@ -349,7 +351,7 @@ def revisions_feed(request=None, pagename=None, feedtype="atom"):
                     title = "\n".join(change['changed']['lines'])
                     title = do_truncate(do_striptags(title), 60)
             title = title and title or "Edited."
-            feed.add(title, escape(rev.content), 
+            feed.add(title, convert_markdown(rev.content), 
                 updated=rev.updated,
                 url=_url,
                 id=_url,
@@ -384,7 +386,6 @@ def revisions_feed(request=None, pagename=None, feedtype="atom"):
                 'id':rev.nb_revision
             })
         return send_json(json)
-    
 
 def site_changes(request, feedtype=None):
     pages = all_pages(local.db, request.site.id)
@@ -400,7 +401,7 @@ def site_changes(request, feedtype=None):
         )
         for rev in changes:
             _url = "%s%s" % (request.host_url, url_for("show_page", pagename=rev.title.replace(' ', '_')))
-            feed.add(rev.title, escape(rev.content), 
+            feed.add(rev.title, convert_markdown(rev.content), 
                 updated=rev.updated,
                 url=_url,
                 id=_url,
@@ -706,6 +707,7 @@ def site_forgot_password(request):
     return render_response('site/forgot_password.html', back=back)
 
 @can_edit
+@login_required
 def site_design(request):
     DEFAULT_COLORS = dict(
         background_color = 'E7E7E7',
