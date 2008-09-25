@@ -12,8 +12,11 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+
+from werkzeug.utils import url_quote_plus
 from pygments.lexers import get_all_lexers, get_lexer_for_filename
 from pygments.styles import get_all_styles
+
 
 from couchdb.client import ResourceNotFound
 from couchit.models import Site, Page

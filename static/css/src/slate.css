@@ -154,6 +154,10 @@ p.notice {
     color: #bbb;
 }
 
+tr.rlink_type {
+    border-color: #fff;
+}
+
 input, textarea {
     border-color: #C6C6C6 #EFEFEF #EFEFEF #C6C6C6;
 }

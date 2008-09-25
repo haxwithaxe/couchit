@@ -102,6 +102,44 @@
 {% block footer %}
 
 {% if can_edit %}
+<div id="link_window" title="Enter Link Url" class="window">
+    <div id="link_window_close" class="close"></div>
+    <div id="link_window_title" class="window_title">Enter Link Url</div>
+    <form name="flink" id="flink">
+        <table>
+             <tr class="rlink_type">
+                    <th><label for="link_type">Link type:</label></th>
+                    <td>
+                        <select id="link_type" name="link_type">
+                            <option value="page" selected="selected">Page</option>
+                            <option value="url">URL</option>
+                        </select>
+                    </td>
+            </tr>
+            <tr>
+                <th><label for="link_label">Link text:</label></th>
+                <td><input type="text" name="link_label" id="link_label" value="" /></td>
+            </tr>
+            <tr id="link_from_page">
+                <th><label for="link_page">Page:</label></th>
+                <td>
+                    <select id="link_page" name="link_page">
+                        {% for p in pages %}
+                        <option  value="{{ url_for('show_page', pagename=p.title|replace(" ", "_"))  }}">{{ p.title }}</option>
+                        
+                        {% endfor %}
+                    </select>
+                </td>
+            </tr>
+            <tr id="link_from_url">
+                <th><label for="link_url">Url:</label></th>
+                <td><textarea id="link_url" name="link_url" cols="40" rows="2"></textarea></td>
+            </tr>
+        </table>
+         <p><input type="submit" id="slink" name="slink" value="Insert link" /><input type="submit" id="cancelLink" name="cancelLink" value="Cancel" /></p>
+    </form>
+</div>
+    
 <div id="snippet_window" title="insert a snipet" class="window">
     <div id="snippet_window_close" class="close"></div>
     <div id="snippet_window_title" class="window_title">Insert a snippet</div>

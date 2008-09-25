@@ -77,8 +77,9 @@ aside ul { list-style: none; margin: 0;  padding: 0;}
 aside.hidden { display: none;}
 
 
-
-
+.hidden {
+    display: none;
+}
 header h1,
 header h2 { padding:0px;}
 
@@ -380,22 +381,39 @@ code {
     cursor: pointer;
     cursor: hand;  
 }
-#snippet_window form table {
+
+#link_window textarea {
+    width: 350px;
+}
+
+#snippet_window form table,
+#link_window form table {
     width: 100%;
     margin: 5px 0 5px 0;
 }
-#snippet_window th, td {
+#snippet_window th, 
+#snippet_window td,
+#link_window th, 
+#link_window td {
     padding: 5px 10px 5px 10px;
     vertical-align: top;
 }
 
+tr.rlink_type {
+    border-bottom: 1px solid;
+}
+
+#link_window input[type="text"] {
+    width: 350px;
+}
 #snippet_window textarea {
     width: 450px;
     height: 200px;
     
 }
 
-#snippet_window p {
+#snippet_window p,
+#link_window p {
     line-height: 15px;
     vertical-align: middle;
     margin-top: 5px;
@@ -409,7 +427,8 @@ input, textarea {
     
 }
 
-#snippet_window input[type="submit"] {
+#snippet_window input[type="submit"],
+#link_window {
     border: 1px solid;
 }
 

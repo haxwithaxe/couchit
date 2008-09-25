@@ -60,14 +60,14 @@ urls_map = Map([
     Rule('/site/export.<feedtype>', endpoint='site_export'),
     Rule('/site/login', endpoint='site_login'),
     Rule('/site/logout', endpoint='site_logout'),
-    Rule('/<pagename>/revisions.<feedtype>', endpoint='revisions_feed'),
-    Rule('/<pagename>/revision/<nb_revision>', endpoint='revision_page'),
-    Rule('/<pagename>/history', endpoint='history_page'),
-    Rule('/<pagename>/edit', endpoint='edit_page'),
-    Rule('/<pagename>/delete', endpoint='delete_page'),
-    Rule('/<pagename>/diff', endpoint='diff_page'),
-    Rule('/<pagename>/', endpoint='show_page', strict_slashes=False),
-    Rule('/<pagename>', endpoint='show_page', strict_slashes=False)
+    Rule('/<path:pagename>/revisions.<feedtype>', endpoint='revisions_feed'),
+    Rule('/<path:pagename>/revision/<nb_revision>', endpoint='revision_page'),
+    Rule('/<path:pagename>/history', endpoint='history_page'),
+    Rule('/<path:pagename>/edit', endpoint='edit_page'),
+    Rule('/<path:pagename>/delete', endpoint='delete_page'),
+    Rule('/<path:pagename>/diff', endpoint='diff_page'),
+    Rule('/<path:pagename>/', endpoint='show_page', strict_slashes=False),
+    Rule('/<path:pagename>', endpoint='show_page', strict_slashes=False)
     
    
 ])

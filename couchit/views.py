@@ -38,7 +38,7 @@ FORBIDDEN_PAGES = ['site', 'delete', 'edit', 'create', 'history', 'changes']
 
 FORBIDDEN_CNAME = ['mail', 'www', 'blog', 'news', 'media', 'upload', 'files', 'store']
 
-re_page = re.compile(r"^[\"\'\- \w]+$", re.U)
+re_page = re.compile(r"^[\"\'\-\/ \w]+$", re.U)
 re_address = re.compile(r'^[-_\w]+$')
 
 
@@ -77,8 +77,19 @@ def can_edit(f):
     return decorated
     
     
+def valid_page(f):
+    def decorated(request, **kwargs):
+        if 'pagename' in kwargs:
+            pagename = kwargs['pagename'] 
+            if not re_page.match(pagename) and pagename is not None:
+                raise NotFound
+        return f(request, **kwargs)
+    return decorated
+        
+    
 def not_found(request):
     return render_response("not_found.html")
+
 
 def home(request, cname=None, alias=None):
     def randomid():
@@ -140,7 +151,7 @@ def home(request, cname=None, alias=None):
                 b1=b1, b2=b2, spamid=spamid, spaminput=spaminput, createid=createid)
   
   
-  
+@valid_page
 def show_page(request=None, pagename=None):
     if pagename is None:
         pagename ='home'
@@ -156,7 +167,7 @@ def show_page(request=None, pagename=None):
             pagename=page.title.replace(' ', '_'),
             redirect_from=pagename))
     
-    if not page or page.id is None or not re_page.match(pagename):
+    if not page or page.id is None:
         if pagename.lower() in FORBIDDEN_PAGES:
             redirect_url = "%s?error=%s" % (
                 url_for('show_page', pagename='home'),
@@ -177,6 +188,7 @@ def show_page(request=None, pagename=None):
     return response
 
 @can_edit
+@valid_page
 def edit_page(request, pagename=None):
     if pagename is None:
         pagename ='Home'
@@ -231,6 +243,7 @@ def edit_page(request, pagename=None):
 
 @can_edit
 @login_required
+@valid_page
 def delete_page(request, pagename):
     if pagename == 'Home': #security reason
         return redirect(url_for('show_page', pagename='Home'))
@@ -247,7 +260,7 @@ def delete_page(request, pagename):
         redirect_url = '/'
     return redirect(redirect_url)
     
-
+@valid_page
 def history_page(request=None, pagename=None):
     if pagename is None:
         pagename ='Home'
@@ -263,7 +276,7 @@ def history_page(request=None, pagename=None):
 
     return render_response('page/history.html', page=page, pages=pages, revisions=revisions)
     
-
+@valid_page
 def revision_page(request=None, pagename=None, nb_revision=None):
     if pagename is None:
         pagename ='Home'
@@ -294,7 +307,8 @@ def revision_page(request=None, pagename=None, nb_revision=None):
     pages = all_pages(local.db, request.site.id)
     
     return render_response('page/show.html', page=revision, pages=pages)
-   
+
+@valid_page  
 def diff_page(request=None, pagename=None):
     if pagename is None:
         pagename ='Home'
@@ -325,7 +339,7 @@ def diff_page(request=None, pagename=None):
     rev2=rev2, revisions=all_revisions)
 
     
-  
+@valid_page  
 def revisions_feed(request=None, pagename=None, feedtype="atom"):
     if pagename is None:
         pagename ='Home'

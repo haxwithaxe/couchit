@@ -1,5 +1,7 @@
 var PageUI = Class.create({
     initialize: function() {
+        
+        this.firstload = true;
         var self = this;
         this.Sidebar = $('sidebar');
         this.Page = $('page');
@@ -18,10 +20,20 @@ var PageUI = Class.create({
         this.textarea.observe('change',self.converter_callback);
         
         this.snippet_window = new Control.Window($('snippet_window'), {
-            resizable: true,
+            resizable: false,
             draggable: $('snippet_window_title'),
             closeOnClick: $('snippet_window_close')
         });  
+        
+        this.link_window = new Control.Window($('link_window'), {
+            draggable: $('link_window_title'),
+            closeOnClick: $('link_window_close')
+        });
+        
+        this.link_types_hide = {
+            'url': 'page',
+            'page': 'url'
+        }
         
         this.build_toolbar();
         this.init();
@@ -48,6 +60,8 @@ var PageUI = Class.create({
             $('content').setStyle({'height': new_height + 'px'});
         }
         
+       
+        
         $('cancelEdit').observe('click', function(e) {
             Event.stop(e);
             self.tabs.setActiveTab("pview");
@@ -64,7 +78,7 @@ var PageUI = Class.create({
                 if (!y) {
                     return false;
                 }
-                document.location.href=this.href;
+                window.location.href=this.href;
             }, false);
             
         this._renamingPage = false;
@@ -129,12 +143,45 @@ var PageUI = Class.create({
               id: 'markdown_bold_button'  
           });  
 
-          this.toolbar.addButton('Link',function(){  
-              var selection = this.getSelection();  
+          this.toolbar.addButton('Link',function(){
+              var selection = this.getSelection();
+              self.link_window.open();
+              $('link_from_url').hide();
+              $("cancelLink").observe("click", function(e) {
+                  Event.stop(e);
+                  self.link_window.close();
+                  return false;
+              });
+              
+              $('link_type').observe('change', function(e) {
+                  var selected = this.getValue();
+                  
+                  $('link_from_'+ selected).show();
+                  $('link_from_'+self.link_types_hide[selected]).hide();
+                  
+              }, false);
+              
+              var tb = this;
+              $("slink").observe('click', function(e) {
+                  Event.stop(e);
+                  var link_type = $('link_type').getValue();
+                  var link_text = $('link_label').getValue();
+                  if (link_type == "page") {
+                      tb.replaceSelection('[' + (link_text == '' ? 'Link Text' : link_text) + '](' + $('link_page').getValue() + ')');
+                  } else {
+                      var url = $('link_url').getValue();
+;                     tb.replaceSelection('[' + (link_text == '' ? 'Link Text' : link_text) + '](' + (url == '' ? 'http://link_url/' : url).replace(/^(?!(f|ht)tps?:\/\/)/,'http://') + ')');
+                  }
+                  self.link_window.close();
+                    return false;
+              }, false);
+              
+              /*
               var response = prompt('Enter Link URL','');  
               if(response == null)  
-                  return;  
+                  return; 
               this.replaceSelection('[' + (selection == '' ? 'Link Text' : selection) + '](' + (response == '' ? 'http://link_url/' : response).replace(/^(?!(f|ht)tps?:\/\/)/,'http://') + ')');  
+                */
           },{  
               id: 'markdown_link_button'  
           });  
@@ -302,6 +349,7 @@ var PageUI = Class.create({
             'type': 'text',
             'id': 'new_title',
             'name': 'new_title',
+            'maxlength': '60',
             'value': $('page_title').innerHTML
         });
         var old_title = new Element('input', {
