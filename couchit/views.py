@@ -83,6 +83,8 @@ def valid_page(f):
             pagename = kwargs['pagename'] 
             if not re_page.match(pagename) and pagename is not None:
                 raise NotFound
+            pagename = pagename.replace(" ", "_")
+            kwargs['pagename'] = pagename
         return f(request, **kwargs)
     return decorated
         
@@ -156,6 +158,8 @@ def show_page(request=None, pagename=None):
     if pagename is None:
         pagename ='home'
         
+    #pagename = pagename.replace(" ", "_")
+
     redirect_from = request.values.get('redirect_from', '')
         
     page = get_page(local.db, request.site.id, pagename)

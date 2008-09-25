@@ -21,7 +21,7 @@ import simplejson as json
 
 from couchit import settings
 from couchit.http import BCResponse, BCRequest
-from couchit.contrib import markdown
+from couchit.contrib import markdown2
 from couchit.utils import local, datetime_tojson, datetimestr_topython,force_unicode, smart_str
 from couchit.utils.html import sanitize_html
 
@@ -55,18 +55,30 @@ template_env.globals['ALL_COLORSHEME'] = list(get_all_styles())
 
 re_script = re.compile("\"\'][\s]*javascript:(.*)[\"\']/g")
 
+
+
+
+
 def convert_markdown(value, javascript=False):
     if local.site_url:
         base_url = local.site_url + '/'
     else:
         base_url = ''
-    md = markdown.Markdown(
+    """md = markdown.Markdown(
             extensions = ['codehilite', 'wikilinks', 'footnotes'],
             extension_configs = {'wikilinks': [
                                         ('base_url', base_url),
                                         ('html_class', ''),
                                         ('end_url', '') ]}
-    )
+    )"""
+    link_patterns = [
+        (re.compile("\[\[\s*([^\]]+)\]\]", re.U), r'%s\1' % base_url, 1),
+        (re.compile(r"(\b[A-Z][a-z]+[A-Z]\w+\b)", re.U), r"%s\1" % base_url, 0)
+    ]
+    
+    md = markdown2.Markdown(extras=["link-patterns", "codehilite"],
+                            link_patterns=link_patterns)
+    
     _parsed_value = sanitize_html(md.convert(value), javascript=javascript)
     _parsed_value = force_unicode(_parsed_value)
     return _parsed_value
