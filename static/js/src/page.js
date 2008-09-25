@@ -144,8 +144,6 @@ var PageUI = Class.create({
           });  
 
           this.toolbar.addButton('Link',function(){
-              var selection = this.getSelection();
-
               function display_link_type(selected) {
                   $('link_from_'+ selected).show();
                   $('link_from_'+self.link_types_hide[selected]).hide();
@@ -166,6 +164,7 @@ var PageUI = Class.create({
               }, false);
               
               var tb = this;
+              var selection = this.getSelection();  
               $("slink").observe('click', function(e) {
                   Event.stop(e);
                   var link_type = $('link_type').getValue();
@@ -177,8 +176,9 @@ var PageUI = Class.create({
 ;                     tb.replaceSelection('[' + (link_text == '' ? 'Link Text' : link_text) + '](' + (url == '' ? 'http://link_url/' : url).replace(/^(?!(f|ht)tps?:\/\/)/,'http://') + ')');
                   }
                   self.link_window.close();
-                    return false;
+                  return false;
               }, false);
+              return
           },{  
               id: 'markdown_link_button'  
           });  
