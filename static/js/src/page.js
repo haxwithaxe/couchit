@@ -145,8 +145,16 @@ var PageUI = Class.create({
 
           this.toolbar.addButton('Link',function(){
               var selection = this.getSelection();
+              
+              
+              function display_link_type(selected) {
+                  $('link_from_'+ selected).show();
+                  $('link_from_'+self.link_types_hide[selected]).hide();
+              }
+              
               self.link_window.open();
-              $('link_from_url').hide();
+              display_link_type($('link_type').getValue())
+              
               $("cancelLink").observe("click", function(e) {
                   Event.stop(e);
                   self.link_window.close();
@@ -155,9 +163,8 @@ var PageUI = Class.create({
               
               $('link_type').observe('change', function(e) {
                   var selected = this.getValue();
+                  display_link_type(selected)
                   
-                  $('link_from_'+ selected).show();
-                  $('link_from_'+self.link_types_hide[selected]).hide();
                   
               }, false);
               
