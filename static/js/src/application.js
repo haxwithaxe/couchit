@@ -114,7 +114,7 @@ var Create = Class.create({
     submit: function() { 
         var title = $("title");
         //a-zA-Z0-9_\\u00A1-\\uFFFF
-        if (!title.value.match(/^[ \w\u00A1-\uFFFF]+$/i) || FORBIDDEN_PAGES.indexOf(title.value) >= 0) {
+        if (!title.value.match(/^['\-\" \w\u00A1-\uFFFF]+$/i) || FORBIDDEN_PAGES.indexOf(title.value) >= 0) {
             alert("Page title invalid");
             return false;
         }
