@@ -145,8 +145,7 @@ var PageUI = Class.create({
 
           this.toolbar.addButton('Link',function(){
               var selection = this.getSelection();
-              
-              
+
               function display_link_type(selected) {
                   $('link_from_'+ selected).show();
                   $('link_from_'+self.link_types_hide[selected]).hide();
@@ -163,9 +162,7 @@ var PageUI = Class.create({
               
               $('link_type').observe('change', function(e) {
                   var selected = this.getValue();
-                  display_link_type(selected)
-                  
-                  
+                  display_link_type(selected);
               }, false);
               
               var tb = this;
@@ -182,13 +179,6 @@ var PageUI = Class.create({
                   self.link_window.close();
                     return false;
               }, false);
-              
-              /*
-              var response = prompt('Enter Link URL','');  
-              if(response == null)  
-                  return; 
-              this.replaceSelection('[' + (selection == '' ? 'Link Text' : selection) + '](' + (response == '' ? 'http://link_url/' : response).replace(/^(?!(f|ht)tps?:\/\/)/,'http://') + ')');  
-                */
           },{  
               id: 'markdown_link_button'  
           });  
