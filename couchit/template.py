@@ -64,16 +64,11 @@ def convert_markdown(value, javascript=False):
         base_url = local.site_url + '/'
     else:
         base_url = ''
-    """md = markdown.Markdown(
-            extensions = ['codehilite', 'wikilinks', 'footnotes'],
-            extension_configs = {'wikilinks': [
-                                        ('base_url', base_url),
-                                        ('html_class', ''),
-                                        ('end_url', '') ]}
-    )"""
+    
     link_patterns = [
         (re.compile("\[\[\s*([^\]]+)\]\]", re.U), r'%s\1' % base_url, 1),
-        (re.compile(r"(\b[A-Z][a-z]+[A-Z]\w+\b)", re.U), r"%s\1" % base_url, 0)
+        (re.compile(r"(^| )(\b[A-Z][a-z]+[A-Z]\w+\b)", re.U), r"%s\1" % base_url, 0)
+        
     ]
     
     md = markdown2.Markdown(extras=["link-patterns", "codehilite"],

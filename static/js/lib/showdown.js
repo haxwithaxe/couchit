@@ -1147,7 +1147,7 @@ var _DoAutoLinks = function(text) {
 	);
 	
 	/* wiki links */
-    text = text.replace(/(\b[A-Z][a-z]+[A-Z][\w\u00A1-\uFFFF]+\b)/, "<a href=\""+Site.url+"/$1\">$1</a>");
+    text = text.replace(/(^| )(\b[A-Z][a-z]+[A-Z][\w\u00A1-\uFFFF]+\b)/, "<a href=\""+Site.url+"/$1\">$1</a>");
     text = text.replace(/\[\[\s*([^\]]+)\]\]/, "<a href=\""+Site.url+"/$1\">$1</a>")
 
 	return text;
