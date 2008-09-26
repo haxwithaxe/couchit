@@ -13,12 +13,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import platform
 import os
 
 DEBUG = True
 
 SERVER_NAME = 'couchit.net'
-if DEBUG:
+    
+if platform.node() != "tombstone":
     SERVER_NAME = 'couch.test:5000'
 
 
