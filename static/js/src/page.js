@@ -149,6 +149,26 @@ var PageUI = Class.create({
                   $('link_from_'+self.link_types_hide[selected]).hide();
               }
               
+         insertLinkHandler = function(e) {
+                Event.stop(e);
+
+                var link_type = $('link_type').getValue();
+                var link_text = $('link_label').getValue();
+                var link_page = $('link_page').getValue();
+                var url = $('link_url').getValue();
+
+                if (link_page == null || url == null)
+                  return
+
+                if (link_type == "page") {
+                    tb.replaceSelection('[' + (link_text == '' ? decodeURIComponent(link_page.replace(Site.url, '').replace(/_/g, " ").replace(/\//, '')) : link_text) + '](' + link_page + ')');
+                } else {
+                    tb.replaceSelection('[' + (link_text == '' ? 'Link Text' : link_text) + '](' + (url == '' ? 'http://link_url/' : url) + ')');
+                }
+                self.link_window.close();
+                this.stopObserving("click", arguments.callee, false);
+            }
+              
               self.link_window.open();
               display_link_type($('link_type').getValue())
               
@@ -165,20 +185,8 @@ var PageUI = Class.create({
               
               var tb = this;
               var selection = this.getSelection();  
-              $("slink").observe('click', function(e) {
-                  Event.stop(e);
-                  var link_type = $('link_type').getValue();
-                  var link_text = $('link_label').getValue();
-                  if (link_type == "page") {
-                      tb.replaceSelection('[' + (link_text == '' ? 'Link Text' : link_text) + '](' + $('link_page').getValue() + ')');
-                  } else {
-                      var url = $('link_url').getValue();
-;                     tb.replaceSelection('[' + (link_text == '' ? 'Link Text' : link_text) + '](' + (url == '' ? 'http://link_url/' : url).replace(/^(?!(f|ht)tps?:\/\/)/,'http://') + ')');
-                  }
-                  self.link_window.close();
-                  return false;
-              }, false);
-              return
+              $("slink").observe("click", insertLinkHandler, false);
+              
           },{  
               id: 'markdown_link_button'  
           });  
@@ -303,8 +311,7 @@ var PageUI = Class.create({
                       }
                     });
                 }
-                
-                return false;
+                this.stopObserving("click", arguments.callee, false);
             }
             
             $("ssnippet").observe("click", insert_snippet, false);
