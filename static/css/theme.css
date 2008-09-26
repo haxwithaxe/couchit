@@ -30,5 +30,6 @@ p.notice {background:#FFF6BF;color:#514721;border-color:#FFD324;}
 .window {background-color:#dedede;color:#bbbbbb;border:#ababab;}
 .window form table {background-color:#2c2c2c;}
 .window form p a, .window a:visited {color:#bbb;}
+tr.rlink_type {border-color:#fff;}
 input, textarea {border-color:#C6C6C6 #EFEFEF #EFEFEF #C6C6C6;}
 .window input[type="submit"] {background-color:#3d3d3d;border-color:#bbb;color:#bbb;}
