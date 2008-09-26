@@ -30,7 +30,8 @@ def site_url(request):
         site_url = ''
     return {
         'site_url': site_url,
-        'current_url': request.url
+        'current_url': request.url,
+        'host_url': request.host_url
     }
 
 @register_contextprocessor

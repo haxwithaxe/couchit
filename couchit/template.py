@@ -86,6 +86,15 @@ def format_datetime(value):
     return value.strftime("%a %b %d %Y at %H:%M")
 template_env.filters['formatdatetime'] = format_datetime
 
+def date(value, arg=None):
+    """Formats a date according to the given format."""
+    if not value:
+        return u''
+    if arg is None:
+        arg = "%a %b %d %Y at %H:%M"
+    return value.strftime(arg)
+template_env.filters["date"]=date
+
 def tabular(value, r1, r2): 
     """
     display diff as block

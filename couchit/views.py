@@ -767,7 +767,10 @@ def site_design(request):
     pages = all_pages(local.db, request.site.id)       
     return render_response('site/design.html', pages=pages)
     
-        
+def sitemap(request):
+    pages = all_pages(local.db, request.site.id)
+    return render_response("site/sitemap.xml", pages=pages)
+         
 def proxy(request):
     """ simple proxy to manage remote connexion via ajax"""
     url = request.values.get('url', None)
