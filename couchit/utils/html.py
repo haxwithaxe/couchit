@@ -135,7 +135,7 @@ class _HTMLSanitizer(_BaseHTMLProcessor):
       'thead', 'tr', 'tt', 'u', 'ul', 'var']
 
     acceptable_attributes = ['abbr', 'accept', 'accept-charset', 'accesskey',
-      'action', 'align', 'alt', 'allowfullscreen', 'allowScriptAccess', 'axis', 'border', 'cellpadding', 'cellspacing',
+      'action', 'align', 'alt', 'allowfullscreen', 'allowscriptaccess', 'axis', 'border', 'cellpadding', 'cellspacing',
       'char', 'charoff', 'charset', 'checked', 'cite', 'class', 'clear', 'cols',
       'colspan', 'color', 'compact', 'coords', 'datetime', 'dir', 'disabled',
       'enctype', 'for', 'frame', 'headers', 'height', 'href', 'hreflang', 'hspace',
