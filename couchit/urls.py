@@ -57,6 +57,7 @@ urls_map = Map([
     Rule('/site/change-site-address', endpoint='site_address'),
     Rule('/site/settings', endpoint='site_settings'),
     Rule('/site/sitemap.xml', endpoint='sitemap'),
+    Rule('/sitemap.xml', endpoint='sitemap'),
     Rule('/site/changes', endpoint='site_changes'),
     Rule('/site/changes.<feedtype>', endpoint='site_changes'),
     Rule('/site/export.<feedtype>', endpoint='site_export'),

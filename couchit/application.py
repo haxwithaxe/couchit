@@ -58,6 +58,10 @@ class CouchitApp(object):
         else: # redirect to main server if it isn't a subdomain
             response = redirect('http://%s' % settings.SERVER_NAME)
             return response(environ, start_response)
+            
+        if subdomain in views.FORBIDDEN_CNAME:
+            response = redirect('http://%s' % settings.SERVER_NAME)
+            return response(environ, start_response)
 
         if subdomain and subdomain != 'www' and subdomain not in views.FORBIDDEN_CNAME: # get alias
             request.alias = subdomain

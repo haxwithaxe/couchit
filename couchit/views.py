@@ -36,7 +36,7 @@ from couchit.utils.sioc import SiocWiki, send_sioc
 
 import simplejson as json
 
-FORBIDDEN_PAGES = ['site', 'delete', 'edit', 'create', 'history', 'changes']
+FORBIDDEN_PAGES = ['site', 'delete', 'edit', 'create', 'history', 'changes', 'sitemap.xml']
 
 FORBIDDEN_CNAME = ['mail', 'www', 'blog', 'news', 'media', 'upload', 'files', 'store']
 
