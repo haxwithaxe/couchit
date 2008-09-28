@@ -1,0 +1,1 @@
+var Feed=new Class.create({initialize:function(){var A=this;$(document.body).select("a[rel=feed]").each(function(B){B.addClassName("feed")})}});
