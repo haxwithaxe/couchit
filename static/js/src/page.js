@@ -336,7 +336,7 @@ var PageUI = Class.create({
           });
 
           this.toolbar.addButton('Help',function(){  
-              window.open('http://daringfireball.net/projects/markdown/dingus');  
+              window.open('http://help.couch.it/Markdown_Syntax');  
           },{  
               id: 'markdown_help_button'  
           });

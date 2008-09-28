@@ -50,7 +50,7 @@ th.linenos {font-weight:bold;}
 .linenos .special {font-weight:bold;}
 table.difftabular th {text-align:center;}
 table.difftabular th.linenos {text-align:center;}
-.claim, .logout, .login {font-weight:bold;text-decoration:none;}
+.claim, .logout, .login, .help {font-weight:bold;text-decoration:none;}
 .rename {font-size:12px;line-height:18px;vertical-align:middle;}
 .window_title {font-size:11px;}
 .hidden {display:none;}
@@ -107,8 +107,6 @@ footer ul.menu {list-style:none;text-align:center;padding-bottom:15px;}
 footer ul.menu li {display:inline;padding:0 5px 0 5px;}
 p.powered {text-align:center;}
 #page_wrapper {display:block;width:100%;clear:both;}
-code {width:95%;display:block;padding:1em 1em 1em 1em;}
-code {white-space:pre-wrap;white-space:-moz-pre-wrap !important;white-space:-pre-wrap;white-space:-o-pre-wrap;word-wrap:break-word;overflow:auto;}
 #preview {overflow:auto;}
 .window {display:block;background-image:url(../img/window_background.png);-moz-border-radius:5px;-webkit-border-radius:5px;-khtml-border-radius:5px;padding:10px;min-width:200px;min-height:150px;border:4px solid;}
 .window .window_title {margin-top:-7px;margin-left:15px;margin-bottom:7px;cursor:move;}
@@ -149,7 +147,8 @@ tr.base .last {border-bottom:1px solid;}
 tr.errors {padding:0.3em;border:1px solid;}
 div.help_error {display:block;font-weight:bold;font-size:83%;width:100%;position:relative;}
 p.notify, p.errors {padding:.8em;margin-bottom:1em;border:2px solid #ddd;}
-.claim, .logout {float:right;display:block;margin-right:2.5em;margin-bottom:15px;-moz-border-radius-bottomleft:5px;-moz-border-radius-bottomright:5px;-khtml-border-bottom-left-radius:5px;-webkit-border-bottom-left-radius:5px;-khtml-border-bottom-right-radius:5px;-webkit-border-bottom-right-radius:5px;border-bottom-left-radius:5px;border-bottom-right-radius:5px;padding:5px;}
+.claim, .logout, .help {float:right;display:block;margin-right:2.5em;margin-bottom:15px;-moz-border-radius-bottomleft:5px;-moz-border-radius-bottomright:5px;-khtml-border-bottom-left-radius:5px;-webkit-border-bottom-left-radius:5px;-khtml-border-bottom-right-radius:5px;-webkit-border-bottom-right-radius:5px;border-bottom-left-radius:5px;border-bottom-right-radius:5px;padding:5px;}
+.help {margin-right:1em;}
 #claim_wrapper {display:block;width:550px;margin:0 auto 0 auto;padding:10px;border:4px solid;-moz-border-radius:5px;-khtml-border-radius:5px;-webkit-radius:5px;border-radius:5px;}
 h5.settings {padding-bottom:0;margin-bottom:0.8em;border-bottom:1px solid;}
 #home_wrapper {margin:0 auto 0 auto;width:550px;text-align:center;}
@@ -216,7 +215,7 @@ tr.tabularh th.linenos {color:#000;}
 tr.changed {background-color:#ddf8cc;}
 tr.changed td.first,tr.base td.first {border-top-color:#33aa33;}
 tr.changed .last,tr.base .last {border-bottom-color:#33aa33;}
-.claim, .logout {background-color:#000;color:#fff;}
+.claim, .logout, .help {background-color:#000;color:#fff;}
 tr.errors {background:#ff9898;border:#ff0000;}
 p.notice {background:#FFF6BF;color:#514721;border-color:#FFD324;}
 .window {background-color:#dedede;color:#bbbbbb;border:#ababab;}

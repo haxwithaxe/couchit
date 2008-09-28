@@ -123,7 +123,7 @@ table.difftabular th.linenos {
     text-align: center;
 }
 
-.claim, .logout, .login {
+.claim, .logout, .login, .help {
     font-weight: bold;
     text-decoration: none;
 }
