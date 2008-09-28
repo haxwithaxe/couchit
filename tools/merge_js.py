@@ -47,6 +47,7 @@ class MergeJS(object):
         self.cmd_path = os.path.join(os.path.dirname(__file__), 'yuicompressor-2.3.5.jar')
     
     def compress(self, tempfile):
+        print tempfile
         cmd = "java -jar %s --type js %s" % (self.cmd_path, tempfile) 
         sout, sin = popen2(cmd)
         return sout.read()

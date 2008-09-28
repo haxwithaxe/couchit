@@ -11,7 +11,6 @@ css:
         - layout.css
         - textarea.css
         - colorPicker.css
-    theme.css:
         - slate.css
 javascript:
     prototype.js:
@@ -35,3 +34,5 @@ javascript:
     colorpicker.js:
         - lib/yahoo.color.js
         - lib/colorPicker.js
+    couchit-semantic.js:
+        - src/semantic.js

@@ -70,7 +70,7 @@ var Site = {
     name: ""
 };
 
-var FORBIDDEN_PAGES = ['site', 'delete', 'edit', 'create', 'history', 'changes']
+var FORBIDDEN_PAGES = ['site', 'delete', 'edit', 'create', 'history', 'changes', 'archives']
 
 var Create = Class.create({
     initialize: function() {

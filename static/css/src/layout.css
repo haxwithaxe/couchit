@@ -631,3 +631,19 @@ h5.settings {
     width: 120px;
     vertical-align: middle;
 }
+
+.feed {
+    margin-left: 3px;
+      padding: 0 0 0 19px;
+      background: url("../../img/feed-icon-14x14.png") no-repeat 0 50%;
+}
+
+.tooltip {  
+    border:1px solid #000;  
+    background-color:#fff;  
+    height:25px;  
+    width:200px;  
+    font-family:"Lucida Grande",Verdana;  
+    font-size:10px;  
+    color:#333;  
+}

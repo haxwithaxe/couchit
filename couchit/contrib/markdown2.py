@@ -243,6 +243,7 @@ class CodeHilite:
         
         self.src = "\n".join(lines).strip("\n")
 
+
 #---- public api
 
 
@@ -1077,7 +1078,12 @@ class Markdown(object):
                         curr_pos = start_idx + len(result)
                         text = text[:start_idx] + result + text[match.end():]
                     elif start_idx >= anchor_allowed_pos:
-                        result_head = '<a href="%s"%s>' % (url, title_str)
+                        if url.startswith('feed://') or url.startswith('feeds://'):
+                            url = url.replace('feed', 'http')
+                            result_head = '<a href="%s"%s rel="feed">' % (url, title_str)
+                            result = '%s%s</a>' % (result_head, link_text)
+                        else:
+                            result_head = '<a href="%s"%s>' % (url, title_str)
                         result = '%s%s</a>' % (result_head, link_text)
                         # <img> allowed from curr_pos on, <a> from
                         # anchor_allowed_pos on.

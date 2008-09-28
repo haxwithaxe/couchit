@@ -154,6 +154,8 @@ p.notify, p.errors {padding:.8em;margin-bottom:1em;border:2px solid #ddd;}
 h5.settings {padding-bottom:0;margin-bottom:0.8em;border-bottom:1px solid;}
 #home_wrapper {margin:0 auto 0 auto;width:550px;text-align:center;}
 .tableSettings th {width:120px;vertical-align:middle;}
+.feed {margin-left:3px;padding:0 0 0 19px;background:url("../../img/feed-icon-14x14.png") no-repeat 0 50%;}
+.tooltip {border:1px solid #000;background-color:#fff;height:25px;width:200px;font-family:"Lucida Grande",Verdana;font-size:10px;color:#333;}
 #markdown_toolbar {position:relative;list-style:none;border:1px solid #d7d7d7;background-color:#F6F6F6;margin:0;padding:0;height:18px;margin-bottom:2px;}
 #markdown_toolbar li {list-style:none;margin:0;padding:0;float:left;}
 #markdown_toolbar li a {width:24px;height:16px;float:left;display:block;background-image:url(../img/markdown_icons.gif);border:1px solid #fff;border-right-color:#d7d7d7;}
@@ -188,3 +190,38 @@ h5.settings {padding-bottom:0;margin-bottom:0.8em;border-bottom:1px solid;}
 #colorpicker-value,#colorpicker-value-input {font-size:9px !important;font-family:Helvetica, Verdana, Sans-Serif;height:10px;}
 #colorpicker-value-input {width:40px;}
 #colorpicker-okbutton {float:right;padding:0 10px;background:#3366FF;font-size:10px;font-family:Tahoma, Helvetica, Sans-Serif;border:1px solid #666666;color:#ffffff;}
+body {background-color:#e7e7e7;color:#000;}
+a {color:#14456e;}
+header h1 a {color:#000;}
+#page article {color:#000;background-color:#fff;border-right-color:#d4d4d4;border-left-color:#d4d4d4;border-bottom-color:#d4d4d4;}
+#phistory,#pdiff,#pdesign,#claim_wrapper,#psettings,#pgeneric {background-color:#fff;border-color:#d4d4d4;color:#000;}
+#pdiff h4 {border-bottom-color:#ccc;}
+ul.subsection_tabs {background-color:#d4d4d4;}
+ul.subsection_tabs li.tab a {color:#666;}
+ul.subsection_tabs li.tab a.active {color:#000;}
+ul.page_infos {border-top-color:#ccc;border-bottom-color:#ccc;}
+ul.page_infos li {border-right-color:#ccc;}
+del {background-color:#ff8888;color:#000;}
+ins {background-color:#99ff99;color:#000;}
+tr.rselected {background-color:#d4d4d4;opacity:0.5;filter:0.5;}
+.box {background-color:#fff;}
+.box a {color:#14456e;}
+.box h4 {background-color:#d4d4d4;color:#000;}
+input#srevert, input#scompare {background-color:#cec6b5;border-color:#7a7261;}
+th.linenos {background-color:#f4f4f4;color:#666;}
+.linenos .special {color:#000;}
+table.difftabular {background-color:#fff;}
+table.difftabular th {background-color:#f7f7f0;}
+tr.tabularh th.linenos {color:#000;}
+tr.changed {background-color:#ddf8cc;}
+tr.changed td.first,tr.base td.first {border-top-color:#33aa33;}
+tr.changed .last,tr.base .last {border-bottom-color:#33aa33;}
+.claim, .logout {background-color:#000;color:#fff;}
+tr.errors {background:#ff9898;border:#ff0000;}
+p.notice {background:#FFF6BF;color:#514721;border-color:#FFD324;}
+.window {background-color:#dedede;color:#bbbbbb;border:#ababab;}
+.window form table {background-color:#2c2c2c;}
+.window form p a, .window a:visited {color:#bbb;}
+tr.rlink_type {border-color:#fff;}
+input, textarea {border-color:#C6C6C6 #EFEFEF #EFEFEF #C6C6C6;}
+.window input[type="submit"] {background-color:#3d3d3d;border-color:#bbb;color:#bbb;}

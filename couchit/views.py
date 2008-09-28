@@ -27,10 +27,12 @@ from werkzeug.utils import url_unquote, generate_etag
 from couchit import settings
 from couchit.models import *
 from couchit.api import *
+from couchit.contrib import mimeparse
 from couchit.http import BCResponse
 from couchit.template import render_response, url_for, render_template, send_json, convert_markdown
 from couchit.utils import local, make_hash, datetime_tojson, to_str
 from couchit.utils.mail import send_mail
+from couchit.utils.sioc import SiocWiki, send_sioc
 
 import simplejson as json
 
@@ -155,6 +157,9 @@ def home(request, cname=None, alias=None):
   
 @valid_page
 def show_page(request=None, pagename=None):
+    mimetypes = request.accept_mimetypes
+    
+    
     if pagename is None:
         pagename ='home'
         
@@ -170,6 +175,9 @@ def show_page(request=None, pagename=None):
             return redirect(url_for('show_page', 
             pagename=page.title.replace(' ', '_'),
             redirect_from=pagename))
+            
+    
+    
     
     if not page or page.id is None:
         if pagename.lower() in FORBIDDEN_PAGES:
@@ -182,6 +190,17 @@ def show_page(request=None, pagename=None):
             site=request.site.id,
             title=pagename.replace("_", " ")
         )
+    
+    if mimeparse.best_match(['application/rdf+xml', 'text/xml', 'text/html'], 
+    request.headers['ACCEPT']) == "application/rdf+xml":
+        site_title = request.site.title and request.site.title or request.site.cname
+        site_url = request.host_url
+        if not local.site_url:
+            site_url += local.site_url
+        
+        sioc = SiocWiki(site_url, site_title, datetime_tojson(request.site.created))
+        sioc.add_page(page.content, page.title, request.url, datetime_tojson(page.updated))
+        return send_sioc(sioc.to_str())
 
     # get all pages
     pages = all_pages(local.db, request.site.id)
@@ -361,7 +380,7 @@ def revisions_feed(request=None, pagename=None, feedtype="atom"):
         for rev in all_revisions:
             title = ''
             _url="%s%s" % (request.host_url, url_for("revision_page", 
-                cname=request.site.cname, pagename=pagename, 
+                pagename=pagename, 
                 nb_revision=rev.nb_revision
             ))
             for change in rev.changes:
@@ -444,6 +463,17 @@ def site_changes(request, feedtype=None):
                 'id':rev.title.replace(' ', '_')
             })
         return send_json(json)
+    elif feedtype == 'rdf':
+        site_title = request.site.title and request.site.title or request.site.cname
+        site_url = request.host_url
+        if not local.site_url:
+            site_url += local.site_url
+        
+        sioc = SiocWiki(site_url, site_title, datetime_tojson(request.site.created))
+        for rev in changes:
+            _url = "%s%s" % (request.host_url, url_for("show_page", pagename=rev.title.replace(' ', '_')))
+            sioc.add_page(rev.content, rev.title, _url, datetime_tojson(rev.updated))
+        return send_sioc(sioc.to_str())
 
     return render_response('site/changes.html', changes=changes, pages=pages)
 
