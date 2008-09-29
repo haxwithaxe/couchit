@@ -125,14 +125,21 @@ tr.base .last {
     border-bottom-color: #33aa33;
 }
 
-.claim, .logout, .help {
+.claim, .logout {
     background-color: #000;
     color: #fff;
+}
+
+.help {
+    background-color: #bbbbbb;
+    color: #000;
+    border: #ababab;
 }
 
 tr.errors {
     background: #ff9898;
     border: #ff0000;
+    border: #ababab;
 }
 
 p.notice {
