@@ -526,13 +526,23 @@ def site_export(request, feedtype="atom"):
         pages = all_pages(local.db, request.site.id)
         zip_content = StringIO()
         zfile = zipfile.ZipFile(zip_content, "w", zipfile.ZIP_DEFLATED)
-        import time
+        import time, codecs
         for page in pages:
              zinfo = zipfile.ZipInfo()
-             zinfo.filename = smart_str(page.title.replace(" ", "_")) + ".html"
+             zinfo.filename = "markdown/%s" % smart_str(page.title.replace(" ", "_")) + ".txt"
              zinfo.compress_type = zipfile.ZIP_DEFLATED
              zinfo.date_time = time.localtime()[:6]
-             zfile.writestr(zinfo, smart_str(page.content))
+             zfile.writestr(zinfo, codecs.BOM_UTF8 + page.content.encode('utf-8'))
+             zinfo.filename = smart_str(page.title.replace(" ", "_")) + ".html"
+             zfile.writestr(zinfo, codecs.BOM_UTF8 + render_template("page/export.html", 
+                        page=page, request=request, pages=pages).encode( "utf-8" ))
+        zinfo = zipfile.ZipInfo()
+        zinfo.filename = "index.html"
+        zinfo.compress_type = zipfile.ZIP_DEFLATED
+        zinfo.date_time = time.localtime()[:6]
+        zfile.writestr(zinfo,  codecs.BOM_UTF8 + render_template("page/export_index.html",
+            pages=pages, request=request).encode( "utf-8" ))
+         
         zfile.close()
         response = BCResponse(zip_content.getvalue())
         response.headers['content-type'] = "application/x-zip-compressed"

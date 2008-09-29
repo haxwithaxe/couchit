@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>{% if site and site.title %}{{ site.title }} - {% endif %}{{ page.title }}</title>
+</head>
+<body>
+     <header id="site_header">
+         <h1><a href="{% if site_url %}{{ site_url }}{% else %}/{% endif %}">{% if site.title %}{{ site.title }}{% else %} {{ site.cname }}{% endif %}</a></h1>
+         <h2>{% if site.subtitle %}{{ site.subtitle }}{% endif %}</h2>
+     </header>   
+      
+    <section id="page">
+        <article id="post">
+               {% if page.title or page.subtitle %}
+               <header>
+                   <h2 id="page_title">{{ page.title }}</h2>
+                   <ul class="page_infos">
+                       <li><time title="GMT" datetime="{{ page.updated|rfc3339 }}">{{ page.updated|formatdatetime }}</time></li>
+                   </ul>
+               </header>
+               {% endif %}
+               {{ page.content|markdown(site.allow_javascript) }}
+               <footer>
+                   <p><a href="markdown/{{ page.title|replace(" ", "_") }}.txt">Markdown source</a></p>
+               </footer>
+           </article>
+    </section>        
+    
+    <footer class="footer_wrapper">
+        <p><a href="index.html">Back to index</a></p>
+        <p class="powered">Powered by <a href="http://couchit.net">CouchIt</a>.</p>
+    </footer>
+     
+</body>
+</html>

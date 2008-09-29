@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>{% if site and site.title %}{{ site.title }} - {% endif %}Pages</title>
+</head>
+<body>
+     <header id="site_header">
+         <h1><a href="{% if site_url %}{{ site_url }}{% else %}/{% endif %}">{% if site.title %}{{ site.title }}{% else %} {{ site.cname }}{% endif %}</a></h1>
+         <h2>{% if site.subtitle %}{{ site.subtitle }}{% endif %}</h2>
+     </header>   
+      
+    <section id="pages">
+        <article id="post">
+
+               <header>
+                   <h2>Pages</h2>
+                   
+               </header>
+               <ul class="pagelist">
+                      {% for p in pages %}
+                      <li><a href="{{ p.title|replace(" ", "_") }}.html">{{ p.title }}</a></li>
+                      {% endfor %}
+                 </ul>
+               <footer>
+                    <p><a href="markdown/">Markdown sources</a></p>
+               </footer>
+           </article>
+    </section>        
+  
+    <footer class="footer_wrapper">
+        
+        <p class="powered">Powered by <a href="http://couchit.net">CouchIt</a>.</p>
+    </footer>
+     
+</body>
+</html>
