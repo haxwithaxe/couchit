@@ -14,11 +14,16 @@
 # limitations under the License.
 
 from datetime import datetime
+import os
 import random
 import re
 from time import asctime, gmtime, time
 import urllib2
 import uuid
+import zipfile
+from StringIO import StringIO
+    
+
 from jinja2.filters import do_truncate, do_striptags, escape
 from werkzeug import redirect
 from werkzeug.contrib.atom import AtomFeed
@@ -30,7 +35,7 @@ from couchit.api import *
 from couchit.contrib import mimeparse
 from couchit.http import BCResponse
 from couchit.template import render_response, url_for, render_template, send_json, convert_markdown
-from couchit.utils import local, make_hash, datetime_tojson, to_str
+from couchit.utils import local, make_hash, datetime_tojson, to_str, smart_str, force_unicode
 from couchit.utils.mail import send_mail
 from couchit.utils.sioc import SiocWiki, send_sioc
 
@@ -42,7 +47,6 @@ FORBIDDEN_CNAME = ['mail', 'www', 'blog', 'news', 'media', 'upload', 'files', 's
 
 re_page = re.compile(r"^[\"\'\-\/ \w]+$", re.U)
 re_address = re.compile(r'^[-_\w]+$')
-
 
 def not_logged(f):
     def decorated(request, **kwargs):
@@ -477,7 +481,8 @@ def site_changes(request, feedtype=None):
 
     return render_response('site/changes.html', changes=changes, pages=pages)
 
-
+@can_edit
+@login_required
 def site_export(request, feedtype="atom"):
     pages = all_pages(local.db, request.site.id)
     if pages:
@@ -498,24 +503,40 @@ def site_export(request, feedtype="atom"):
             author=page.title.replace(' ', '_')
         )
         return feed.get_response()
-    json = {
-        'title': "%s: Latest changes" % request.site.title and request.site.title or request.site.cname,
-        'subtitle': request.site.subtitle,
-        'updated':datetime_tojson(pages[0].updated),
-        'pages': []
-    }
-    for page in pages:
-        url = url_for("show_page", 
-                    pagename=page.title.replace(' ', '_')
-        )
-        json['pages'].append({
-            'title': page.title,
-            'content': page.content,
-            'url':  url,
-            'updated':datetime_tojson(page.updated),
-            'id':page.title.replace(' ', '_')
-        })
-    return send_json(json)
+    elif feedtype == "json":
+        json = {
+            'title': "%s: Latest changes" % request.site.title and request.site.title or request.site.cname,
+            'subtitle': request.site.subtitle,
+            'updated':datetime_tojson(pages[0].updated),
+            'pages': []
+        }
+        for page in pages:
+            url = url_for("show_page", 
+                        pagename=page.title.replace(' ', '_')
+            )
+            json['pages'].append({
+                'title': page.title,
+                'content': page.content,
+                'url':  url,
+                'updated':datetime_tojson(page.updated),
+                'id':page.title.replace(' ', '_')
+            })
+        return send_json(json)
+    elif feedtype == "zip":
+        pages = all_pages(local.db, request.site.id)
+        zip_content = StringIO()
+        zfile = zipfile.ZipFile(zip_content, "w", zipfile.ZIP_DEFLATED)
+        import time
+        for page in pages:
+             zinfo = zipfile.ZipInfo()
+             zinfo.filename = smart_str(page.title.replace(" ", "_")) + ".html"
+             zinfo.compress_type = zipfile.ZIP_DEFLATED
+             zinfo.date_time = time.localtime()[:6]
+             zfile.writestr(zinfo, smart_str(page.content))
+        zfile.close()
+        response = BCResponse(zip_content.getvalue())
+        response.headers['content-type'] = "application/x-zip-compressed"
+        return response
 
 @can_edit    
 @login_required
@@ -796,6 +817,8 @@ def site_design(request):
      
     pages = all_pages(local.db, request.site.id)       
     return render_response('site/design.html', pages=pages)
+    
+
     
 def sitemap(request):
     pages = all_pages(local.db, request.site.id)
