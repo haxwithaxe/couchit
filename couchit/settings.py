@@ -18,7 +18,7 @@ import os
 
 DEBUG = True
 
-SERVER_NAME = 'couchit.net'
+SERVER_NAME = 'couch.it'
     
 if platform.node() != "tombstone":
     SERVER_NAME = 'couch.test:5000'

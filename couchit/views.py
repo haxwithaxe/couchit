@@ -45,7 +45,7 @@ FORBIDDEN_PAGES = ['site', 'delete', 'edit', 'create', 'history', 'changes', 'si
 
 FORBIDDEN_CNAME = ['mail', 'www', 'blog', 'news', 'media', 'upload', 'files', 'store']
 
-re_page = re.compile(r"^[\"\'\-\/ \w]+$", re.U)
+re_page = re.compile(r"^[@&\"'\-\/ \w]+$", re.U)
 re_address = re.compile(r'^[-_\w]+$')
 
 def not_logged(f):
@@ -87,6 +87,7 @@ def valid_page(f):
     def decorated(request, **kwargs):
         if 'pagename' in kwargs:
             pagename = kwargs['pagename'] 
+            print pagename
             if not re_page.match(pagename) and pagename is not None:
                 raise NotFound
             pagename = pagename.replace(" ", "_")
@@ -163,7 +164,6 @@ def home(request, cname=None, alias=None):
 def show_page(request=None, pagename=None):
     mimetypes = request.accept_mimetypes
     
-    
     if pagename is None:
         pagename ='home'
         
@@ -180,9 +180,7 @@ def show_page(request=None, pagename=None):
             pagename=page.title.replace(' ', '_'),
             redirect_from=pagename))
             
-    
-    
-    
+   
     if not page or page.id is None:
         if pagename.lower() in FORBIDDEN_PAGES:
             redirect_url = "%s?error=%s" % (
@@ -484,6 +482,13 @@ def site_changes(request, feedtype=None):
 @can_edit
 @login_required
 def site_export(request, feedtype="atom"):
+    def _zinfo(fname, date_time):
+        zinfo = zipfile.ZipInfo()
+        zinfo.filename = fname
+        zinfo.compress_type = zipfile.ZIP_DEFLATED
+        zinfo.date_time = date_time
+        return zinfo
+    
     pages = all_pages(local.db, request.site.id)
     if pages:
         pages.sort(lambda a,b: cmp(a.updated, b.updated))
@@ -528,18 +533,15 @@ def site_export(request, feedtype="atom"):
         zfile = zipfile.ZipFile(zip_content, "w", zipfile.ZIP_DEFLATED)
         import time, codecs
         for page in pages:
-             zinfo = zipfile.ZipInfo()
-             zinfo.filename = "markdown/%s" % smart_str(page.title.replace(" ", "_")) + ".txt"
-             zinfo.compress_type = zipfile.ZIP_DEFLATED
-             zinfo.date_time = time.localtime()[:6]
+             zinfo = _zinfo("markdown/%s" % smart_str(page.title.replace(" ", "_")) + ".txt", 
+                        time.localtime()[:6])
              zfile.writestr(zinfo, codecs.BOM_UTF8 + page.content.encode('utf-8'))
-             zinfo.filename = smart_str(page.title.replace(" ", "_")) + ".html"
+             zinfo = _zinfo("%s" % smart_str(page.title.replace(" ", "_")) + ".html", 
+                         time.localtime()[:6])
              zfile.writestr(zinfo, codecs.BOM_UTF8 + render_template("page/export.html", 
                         page=page, request=request, pages=pages).encode( "utf-8" ))
-        zinfo = zipfile.ZipInfo()
-        zinfo.filename = "index.html"
-        zinfo.compress_type = zipfile.ZIP_DEFLATED
-        zinfo.date_time = time.localtime()[:6]
+                        
+        zinfo = _zinfo("index.html", time.localtime()[:6])
         zfile.writestr(zinfo,  codecs.BOM_UTF8 + render_template("page/export_index.html",
             pages=pages, request=request).encode( "utf-8" ))
          

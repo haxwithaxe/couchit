@@ -1,16 +1,3 @@
-// allow IE to recognize HTMl5 elements
-if (!document.createElementNS) {
-    document.createElement('section');
-    document.createElement('audio');
-    document.createElement('video');
-    document.createElement('article');
-    document.createElement('aside');
-    document.createElement('footer');
-    document.createElement('header');
-    document.createElement('nav');
-    document.createElement('time');
-}
-
 Date.parseRFC3339 = function (string) {
     var date=new Date(0);
     var match = string.match(/(\d{4})-(\d\d)-(\d\d)\s*(?:[\sT]\s*(\d\d):(\d\d)(?::(\d\d))?(\.\d*)?\s*(Z|([-+])(\d\d):(\d\d))?)?/);
@@ -124,7 +111,7 @@ var Create = Class.create({
         window.location.href = url;
         this.Form.addClassName("hidden");
         this.doCreate.removeClassName("hidden");
-    },
+    }
 });
 
 var Compare = Class.create({
