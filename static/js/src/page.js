@@ -384,6 +384,12 @@ var PageUI = Class.create({
         else if (old_title == new_title) {
             this.removeRenameForm();
         } else {
+             if (!new_title.match(/^['\-\"\/ !?;,:&.@\(\)\w\u00A1-\uFFFF]+$/i) || FORBIDDEN_PAGES.indexOf(new_title) >= 0) {
+                alert("Page title invalid");
+                this.removeRenameForm();
+                return false;
+            }
+
             new Ajax.Request(this._form.action, {
               method: 'post',
               contentType: 'application/json', 
@@ -400,7 +406,7 @@ var PageUI = Class.create({
 
               },
               onFailure: function() {
-                  alert("mmm... error while trying rename :(, Please contact administrator")
+                  alert("mmm... error while trying rename :(, Please contact administrator");
               }
              });
         } 
@@ -410,7 +416,7 @@ var PageUI = Class.create({
     createRenameHelp: function() {
         var self = this;
         this._help = new Element('div', {
-            'class': 'rename hidden',
+            'class': 'rename hidden'
         }).update('&#x21E4; Click to rename');
         this.page_title.insert(this._help);
         

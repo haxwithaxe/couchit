@@ -45,7 +45,7 @@ FORBIDDEN_PAGES = ['site', 'delete', 'edit', 'create', 'history', 'changes', 'si
 
 FORBIDDEN_CNAME = ['mail', 'www', 'blog', 'news', 'media', 'upload', 'files', 'store']
 
-re_page = re.compile(r"^[@&\"'\-\/ \w]+$", re.U)
+re_page = re.compile(r"^[&@()?!.,;:\"'\-\/ \w]+$", re.U)
 re_address = re.compile(r'^[-_\w]+$')
 
 def not_logged(f):
@@ -87,8 +87,8 @@ def valid_page(f):
     def decorated(request, **kwargs):
         if 'pagename' in kwargs:
             pagename = kwargs['pagename'] 
-            print pagename
             if not re_page.match(pagename) and pagename is not None:
+                print "bbbb"
                 raise NotFound
             pagename = pagename.replace(" ", "_")
             kwargs['pagename'] = pagename
