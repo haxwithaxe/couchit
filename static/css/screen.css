@@ -108,7 +108,7 @@ footer ul.menu li {display:inline;padding:0 5px 0 5px;}
 p.powered {text-align:center;}
 #page_wrapper {display:block;width:100%;clear:both;}
 #preview {overflow:auto;}
-.window {display:block;background-image:url(../img/window_background.png);-moz-border-radius:5px;-webkit-border-radius:5px;-khtml-border-radius:5px;padding:10px;min-width:200px;min-height:150px;border:4px solid;}
+.window {display:block;background-image:url(../img/window_background.png);-moz-border-radius:5px;-webkit-border-radius:5px;-khtml-border-radius:5px;padding:10px;width:600px;min-height:150px;border:4px solid;}
 .window .window_title {margin-top:-7px;margin-left:15px;margin-bottom:7px;cursor:move;}
 .window form {position:relative;}
 .window .close {display:block;position:absolute;top:4px;left:5px;height:13px;width:13px;background-image:url(../img/window_close.gif);cursor:pointer;cursor:hand;}

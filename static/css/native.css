@@ -1,3 +1,4 @@
+.codehilite .hll { background-color: #404040 }
 .codehilite  { background: #202020; color: #d0d0d0 }
 .codehilite .c { color: #999999; font-style: italic } /* Comment */
 .codehilite .err { color: #a61717; background-color: #e3d2d2 } /* Error */
@@ -24,6 +25,7 @@
 .codehilite .gt { color: #d22323 } /* Generic.Traceback */
 .codehilite .kc { color: #6ab825; font-weight: bold } /* Keyword.Constant */
 .codehilite .kd { color: #6ab825; font-weight: bold } /* Keyword.Declaration */
+.codehilite .kn { color: #6ab825; font-weight: bold } /* Keyword.Namespace */
 .codehilite .kp { color: #6ab825 } /* Keyword.Pseudo */
 .codehilite .kr { color: #6ab825; font-weight: bold } /* Keyword.Reserved */
 .codehilite .kt { color: #6ab825; font-weight: bold } /* Keyword.Type */

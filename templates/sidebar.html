@@ -11,7 +11,7 @@
 
 
 <nav>
-    <ul>
+    <ul id="site_actions">
         <li><a href="{{ url_for('site_changes') }}">recent changes</a></li>
         {% if can_edit %}
          <li><a href="{{ url_for('site_settings') }}">settings</a></li>

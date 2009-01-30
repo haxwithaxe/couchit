@@ -15,6 +15,7 @@ body {
   color:#000;
   background: none;
   font-size: 10pt;
+  width: 100%;
 }
 
 
@@ -83,3 +84,64 @@ a:link:after, a:visited:after {
 /* a[href^="/"]:after {
   content: " (http://www.yourdomain.com" attr(href) ") ";
 } */
+
+#tabs_wiki,
+#pedit,
+#pedit *,
+#site_header,
+#sidebar,
+#sidebar *,
+#sidebar * *,
+a.claim,
+a.logout,
+a.help,
+a#page_delete,
+a.page_history,
+#fedit,
+#fedit *,
+#pedit,
+#pedit *,
+#createPage,
+#pagesBox,
+#pagesBox *,
+#sidebar #site_actions,
+#site_actions *,
+#sidebar box,
+#preview,
+#preview * { 
+    display: none; 
+    width: 0;
+    height: 0;
+    margin: 0;
+    padding: 0;
+}
+
+
+#container, 
+#page {
+    margin: 0;
+    width: 100%;
+    float: none;
+}
+#page article {
+    border: none;
+    width: 100%;
+}
+
+ul.page_infos { 
+    display: block;
+    text-align: left;
+    margin-bottom: 1.5pt;
+    width: 100%;
+}
+
+ul.page_infos li {
+    border: none;
+    float: left;
+}
+
+article header {
+    display: block;
+    width: 100%;
+    padding-bottom: 1.5pt; 
+}

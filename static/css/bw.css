@@ -1,3 +1,4 @@
+.codehilite .hll { background-color: #ffffcc }
 .codehilite  { background: #ffffff; }
 .codehilite .c { font-style: italic } /* Comment */
 .codehilite .err { border: 1px solid #FF0000 } /* Error */
@@ -12,6 +13,7 @@
 .codehilite .gu { font-weight: bold } /* Generic.Subheading */
 .codehilite .kc { font-weight: bold } /* Keyword.Constant */
 .codehilite .kd { font-weight: bold } /* Keyword.Declaration */
+.codehilite .kn { font-weight: bold } /* Keyword.Namespace */
 .codehilite .kr { font-weight: bold } /* Keyword.Reserved */
 .codehilite .s { font-style: italic } /* Literal.String */
 .codehilite .nc { font-weight: bold } /* Name.Class */
