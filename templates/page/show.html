@@ -193,8 +193,10 @@
      Page.home = false;
     {% endif %}
     {% endif %}
-    new Create();
-    new PageUI();
+    document.observe("dom:loaded", function() {
+        new Create();
+        new PageUI();
+    });
     {% endif %}
     
     new Feed();

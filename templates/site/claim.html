@@ -49,6 +49,8 @@
 
 {% block footer %}
 <script type="text/javascript" charset="utf-8">
-    new Claim();
+    document.observe("dom:loaded", function() {
+            new Claim();
+    });
 </script>
 {% endblock %}

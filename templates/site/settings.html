@@ -87,7 +87,9 @@
 <script type="text/javascript">
     Site.name = "{{ site.cname }}";
     Site.url = "{{ site_url }}";
-    new Create();
-    new Settings();
+    document.observe("dom:loaded", function() {
+        new Create();
+        new Settings();
+    });
 </script>
 {% endblock %}

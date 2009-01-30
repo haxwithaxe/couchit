@@ -73,19 +73,20 @@
     <script type="text/javascript">
         Site.name = "{{ site.cname }}";
         Site.url = "{{ site_url }}";
-        new Create();
-        
-        $('custom_form').getElementsBySelector('input.setColor').each(function(el) {
-            new Control.ColorPicker(el.id);
-            el.observe("focus", function(e) {
+        document.observe("dom:loaded", function() {
+            new Create();
+            
+            $('custom_form').getElementsBySelector('input.setColor').each(function(el) {
+                new Control.ColorPicker(el.id);
+                el.observe("focus", function(e) {
+                    $('style_custom').checked=true;
+                }, false);
+
+            });
+            
+            $('syntax_style').observe("focus", function(e) {
                 $('style_custom').checked=true;
             }, false);
-
-        });
-        
-        $('syntax_style').observe("focus", function(e) {
-            $('style_custom').checked=true;
-        }, false);
-        
+        }); 
     </script>
 {% endblock %}

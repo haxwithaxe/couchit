@@ -7,22 +7,22 @@
     <title>{% if site and site.title %}{{ site.title }} - {% endif %}{% block title %}{% endblock %}</title>
     <link rel="icon" type="image/png" href="/static/img/favicon.png" />
     <link rel="shortcut icon" href="/static/img/favicon.png" type="image/png" />
+
+    <!--[if IE]>
+
     <script>
         // allow IE to recognize HTMl5 elements
-        if (!document.createElementNS) {
-            document.createElement('section');
-            document.createElement('audio');
-            document.createElement('video');
-            document.createElement('article');
-            document.createElement('aside');
-            document.createElement('footer');
-            document.createElement('header');
-            document.createElement('nav');
-            document.createElement('time');
-        }
+        document.createElement('section');
+        document.createElement('article');
+        document.createElement('aside');
+        document.createElement('footer');
+        document.createElement('header');
+        document.createElement('nav');
+        document.createElement('time');
 
     </script>
-    
+    <![endif]-->
+
     {% if DEBUG %}
     <link rel="stylesheet" href="/static/css/src/debug.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="/static/css/src/textarea.css" />

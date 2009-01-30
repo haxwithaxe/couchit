@@ -396,6 +396,7 @@ var PageUI = Class.create({
               requestHeaders: {Accept: 'application/json'},
               postBody: Object.toJSON(this._form.serialize(true)),
               onSuccess: function(response) {
+                alert (response)
                   data = response.responseText.evalJSON(true);
                   if (data['ok']) {
                       this._renamingPage = false;

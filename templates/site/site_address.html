@@ -21,7 +21,9 @@
 
 {% block footer %}
 <script type="text/javascript">
-    new SiteAddress();
+    document.observe("dom:loaded", function() {
+            new SiteAddress();
+    });
 </script>
 {% endblock %}
 

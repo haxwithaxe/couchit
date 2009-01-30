@@ -71,11 +71,13 @@
 {% block footer %}
 <script type="text/javascript">
     Site.name = "{{ site.cname }}";
-    Site.url = "{{ site_url }}"
-    {% if can_edit %}
-    new Create();
-    {% endif %}
-    new Compare();
+    Site.url = "{{ site_url }}";
+    document.observe("dom:loaded", function() {
+        {% if can_edit %}
+        new Create();
+        {% endif %}
+        new Compare();
+    });
 </script>
 {% endblock %}
 
