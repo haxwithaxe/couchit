@@ -63,8 +63,6 @@ var Create = Class.create({
     initialize: function() {
         var self = this;
         
-     
-        
         this.Form = $("fnewpage");
         this.doCreate = $("doCreate");
        
@@ -128,29 +126,28 @@ var Compare = Class.create({
             }, false);
         });
     },
+    
     check: function(el) {
         row = el.parentNode.parentNode;
         row.toggleClassName('rselected')
         if (!el.checked) {
             this.nb_selected -=1;
-            el.removeClassName("selected");
-        
+            el.removeClassName("selected");    
         } else {
             this.nb_selected +=1;
             el.addClassName("selected");
-            
         }
         
         if (this.nb_selected == 2) {
             $$('input.c').each(function(el) {
-                if (! el.hasClassName('selected'))
+                if (!el.hasClassName('selected'))
                     el.disabled = "disabled";
             });
             this.selected = true;
         } else {
             if (this.selected) {
                 $$('input.c').each(function(el) {
-                    if (! el.hasClassName('selected'))
+                    if (!el.hasClassName('selected'))
                         el.disabled = null;
                 });
                 this.selected = false;
@@ -188,7 +185,7 @@ var Diff = Class.create({
              data = response.responseText.evalJSON(true);
              if (data['ok']) {
                 Element.remove($('tableDiff'));
-                $('pdiff').insert(data['diff'])
+                $('pdiff').insert(data['diff']);
              }
          }
         });
@@ -214,8 +211,9 @@ var Settings = Class.create({
                   if (el.id == "site_subtitle")
                     self.subtitle.update(value);
                     
-                   if(self.observer) clearTimeout(self.observer);
-                   self.observer = setTimeout(self.save.bind(self), 400);
+                  if(self.observer) 
+                    clearTimeout(self.observer);
+                  self.observer = setTimeout(self.save.bind(self), 400);
               }
          );
        });
@@ -246,8 +244,7 @@ var Settings = Class.create({
          contentType: 'application/json', 
          requestHeaders: {Accept: 'application/json'},
          onSuccess: function(response) {   
-            data = response.responseText.evalJSON(true);
-            
+            data = response.responseText.evalJSON(true); 
         }
        });
    }
@@ -266,8 +263,8 @@ var SiteAddress = Class.create({
               function(el, value) {
                   if (value.length > 3 && !value.match(/^(\w+)$/)) {
                        $('error').update("<strong>Error:</strong> "+ 
-                       $('alias').value + " is invalid, "+ 
-                       "only use letters and numbers.");
+                           $('alias').value + " is invalid, "+ 
+                           "only use letters and numbers.");
                        $('error').show();
                   } else {
                       $('error').hide()
@@ -283,7 +280,7 @@ var SiteAddress = Class.create({
             if (value.length <= 3) {
                 error = "length < 3";
             } else if (!value.match(/^(\w+)$/)) {
-                error = value + " is invalid, only use letters and numbers."
+                error = value + " is invalid, only use letters and numbers.";
             } 
             if (error) {
                 $('error').update("<strong>Error:</strong> "+error);
@@ -293,7 +290,7 @@ var SiteAddress = Class.create({
                 self.valid_name();
             }
 
-         }, false)
+         }, false);
         
     },
     
@@ -317,20 +314,19 @@ var SiteAddress = Class.create({
          }
         });
     }
-    
-    
-})
+});
 
 var Claim = Class.create({
     initialize: function() {
         var self = this;
         this.email = $('email');
-        this.password = $('password')
+        this.password = $('password');
         $('fclaim').observe('submit', function(e) {
             Event.stop(e);
             if (self.validate()) {
                 this.submit();
             }
+            return false;
         }, false);
     },
     
@@ -342,16 +338,18 @@ var Claim = Class.create({
             el.removeClassName('errors');
         });
         nb_errors = 0;
+
         if (!this.email.value.match(/(^[-!#$%&'*+/=?^_`{}|~0-9A-Z]+(\.[-!#$%&'*+/=?^_`{}|~0-9A-Z]+)*|^"([\001-\010\013\014\016-\037!#-\[\]-\177]|\\[\001-011\013\014\016-\177])*")@(?:[A-Z0-9-]+\.)+[A-Z]{2,6}$/i)) {
+
             var div = new Element('div', {'class': 'help_error'}).update('Invalid email address.');
-            this.email.parentNode.insert(div);
+            $(this.email.parentNode).insert(div);
             $('row_email').addClassName('errors');
             nb_errors += 1;
-        } 
+        }
                 
         if (this.password.value.length <= 0) {
             var div = new Element('div', {'class': 'help_error'}).update('You should set a password.');
-            this.password.parentNode.insert(div);
+            $(this.password.parentNode).insert(div);
             $('row_password').addClassName('errors');
             nb_errors += 1;
         }
