@@ -1,31 +1,32 @@
 # -*- coding: utf-8 -
 #
-# Copyright 2008 by Benoît Chesneau <benoitc@e-engura.com>
+# Copyright (c) 2008,2009 Benoit Chesneau <benoitc@e-engura.com> 
 #
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
+# Permission to use, copy, modify, and distribute this software for any
+# purpose with or without fee is hereby granted, provided that the above
+# copyright notice and this permission notice appear in all copies.
 #
-#    http://www.apache.org/licenses/LICENSE-2.0
+# THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+# WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+# MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+# ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+# WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+# ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+# OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 #
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
 
 from datetime import datetime, timedelta
 import base64
-import md5
+from hashlib import md5
 import random
 import cPickle as pickle
 
-from couchdb.client import ResourceNotFound
+from couchdbkit.resource import ResourceNotFound
 from werkzeug import Response, Request
 from werkzeug.contrib.sessions import Session,SessionStore
 
 from couchit import settings
-from couchit.utils import local, datetime_tojson
+from couchit.utils import db, local, datetime_tojson
 
 
 __all__ = ['DatabaseSessionStore', 'BCRequest', 'BCResponse', 'session_store']
@@ -35,14 +36,14 @@ def _encode_session_data(session_data):
     We also sign them with md5 and SECRET_KEY defined
     in Amisphere settings """
     pickled = pickle.dumps(session_data)
-    pickled_md5 = md5.new(pickled + settings.SECRET_KEY).hexdigest()
+    pickled_md5 = md5(pickled + settings.SECRET_KEY).hexdigest()
     return base64.encodestring(pickled + pickled_md5)
 
 def _decode_session_data(session_data):
     """ decode session object from database """
     encoded_data = base64.decodestring(session_data)
     pickled, tamper_check = encoded_data[:-32], encoded_data[-32:]
-    if md5.new(pickled + settings.SECRET_KEY).hexdigest() != tamper_check:
+    if md5(pickled + settings.SECRET_KEY).hexdigest() != tamper_check:
         raise SuspiciousOperation, "User tampered with session cookie."
     try:
         return pickle.loads(pickled)
@@ -61,21 +62,21 @@ class DatabaseSessionStore(SessionStore):
         """ save session in couchdb database """
         expire = datetime.now() + timedelta(seconds=settings.SESSION_COOKIE_AGE)
         try:
-            local.db["session/%s" % session.sid] = {
+            db["session/%s" % session.sid] = {
                     'session_key':session.sid, 
                     'session_data': _encode_session_data(dict(session)),
                     'expire_date': datetime_tojson(expire)            
             }
         except:
-            s = local.db["session/%s" % session.sid]
+            s = db["session/%s" % session.sid]
             s['session_data'] = _encode_session_data(dict(session))
             s['expire_date'] = datetime_tojson(expire)
-            local.db['session/%s' % session.sid] = s
+            db['session/%s' % session.sid] = s
        
     def delete(self, session):
         """ delete session """
         try:
-            del local.db['session/%s' % session.sid]
+            del db['session/%s' % session.sid]
         except AttributeError:
             pass
        
@@ -85,7 +86,7 @@ class DatabaseSessionStore(SessionStore):
         is defined in Amisphere settings. """
         s = None
         try:
-            s = local.db['session/%s' % sid]
+            s = db['session/%s' % sid]
         except ResourceNotFound:
             pass
             

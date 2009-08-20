@@ -7,6 +7,7 @@ var PageUI = Class.create({
         this.Page = $('page');
         this.tabs = new Control.Tabs('tabs_wiki');
         
+        
         this.textarea = new Control.TextArea('content');  
         this.toolbar = new Control.TextArea.ToolBar(this.textarea);  
         this.toolbar.container.id = 'markdown_toolbar';
@@ -103,9 +104,10 @@ var PageUI = Class.create({
     
     init: function() {
         var active_container = this.tabs.activeContainer;  
-        if (Page.created && active_container.id != "pedit")    
+        if (Page.created && active_container.id != "pedit") {  
             this.tabs.setActiveTab("pedit");
             active_container = this.tabs.activeContainer;  
+        }
             
         if (active_container)
             this.update_tabs(active_container);
@@ -396,7 +398,6 @@ var PageUI = Class.create({
               requestHeaders: {Accept: 'application/json'},
               postBody: Object.toJSON(this._form.serialize(true)),
               onSuccess: function(response) {
-                alert (response)
                   data = response.responseText.evalJSON(true);
                   if (data['ok']) {
                       this._renamingPage = false;

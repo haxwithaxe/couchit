@@ -1,17 +1,19 @@
 # -*- coding: utf-8 -
-# Copyright 2008 by Benoît Chesneau <benoitc@e-engura.com>
-# 
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
 #
-#     http://www.apache.org/licenses/LICENSE-2.0
+# Copyright (c) 2008,2009 Benoit Chesneau <benoitc@e-engura.com> 
 #
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
+# Permission to use, copy, modify, and distribute this software for any
+# purpose with or without fee is hereby granted, provided that the above
+# copyright notice and this permission notice appear in all copies.
+#
+# THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+# WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+# MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+# ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+# WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+# ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+# OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+#
 
 from datetime import datetime
 import os
@@ -25,17 +27,17 @@ from StringIO import StringIO
 import sys    
 
 from jinja2.filters import do_truncate, do_striptags, escape
-from werkzeug import redirect
+from werkzeug import redirect, generate_etag
 from werkzeug.contrib.atom import AtomFeed
 from werkzeug.routing import NotFound
-from werkzeug.utils import url_unquote, generate_etag
+from werkzeug.utils import url_unquote
 from couchit import settings
-from couchit.models import *
+from couchit.documents import *
 from couchit.api import *
 from couchit.contrib import mimeparse
 from couchit.http import BCResponse
 from couchit.template import render_response, url_for, render_template, send_json, convert_markdown
-from couchit.utils import local, make_hash, datetime_tojson, to_str, smart_str, force_unicode
+from couchit.utils import db, local, make_hash, datetime_tojson, to_str, smart_str, force_unicode
 from couchit.utils.mail import send_mail
 from couchit.utils.sioc import SiocWiki, send_sioc
 
@@ -129,16 +131,16 @@ def home(request, cname=None, alias=None):
             site.cname = request.form['cname']
         if 'alias' in request.form:
             site.alias = request.form['alias']
-        site.store(local.db)
+        site.save()
         content = ''
         if 'content' in request.form:
             content = request.form['content']
         page = Page(
             title='Home',
-            site=site.id,
+            site=site._id,
             content=content
         )
-        page.store(local.db)
+        page.save()
         if site.alias:
             redirect_url = 'http://%s.%s' % (site.alias, settings.SERVER_NAME)
         else:
@@ -171,17 +173,17 @@ def show_page(request=None, pagename=None):
 
     redirect_from = request.values.get('redirect_from', '')
         
-    page = get_page(local.db, request.site.id, pagename)
-    if not page or page.id is None:
-        alias = AliasPage.get_alias(local.db, request.site.id, pagename)
+    page = get_page(request.site._id, pagename)
+    if not page or page._id is None:
+        alias = AliasPage.get_alias(request.site._id, pagename)
         if alias is not None:
-            page = Page.load(local.db, alias.page)
+            page = Page.get(alias.page)
             return redirect(url_for('show_page', 
             pagename=page.title.replace(' ', '_'),
             redirect_from=pagename))
             
    
-    if not page or page.id is None:
+    if not page or page._id is None:
         if pagename.lower() in FORBIDDEN_PAGES:
             redirect_url = "%s?error=%s" % (
                 url_for('show_page', pagename='home'),
@@ -189,7 +191,7 @@ def show_page(request=None, pagename=None):
             )
             return redirect(redirect_url)
         page = Page(
-            site=request.site.id,
+            site=request.site._id,
             title=pagename.replace("_", " ")
         )
     
@@ -205,7 +207,7 @@ def show_page(request=None, pagename=None):
         return send_sioc(sioc.to_str())
 
     # get all pages
-    pages = all_pages(local.db, request.site.id)
+    pages = all_pages(request.site._id)
     
     response = render_response('page/show.html', page=page, pages=pages, 
         lexers=LEXERS_CHOICE, redirect_from=redirect_from)
@@ -218,10 +220,10 @@ def edit_page(request, pagename=None):
     if pagename is None:
         pagename ='Home'
     
-    page = get_page(local.db, request.site.id, pagename)
-    if not page or page.id is None:
+    page = get_page(request.site._id, pagename)
+    if not page or page._id is None:
         page = Page(
-            site=request.site.id,
+            site=request.site._id,
             title=pagename.replace("_", " ")
         )
         
@@ -231,7 +233,7 @@ def edit_page(request, pagename=None):
         new_title = data.get('new_title')
         if new_title and new_title is not None:
             try:
-                page.rename(local.db, new_title)
+                page.rename(new_title)
                 redirect_url = url_for('show_page', pagename=new_title.replace(' ', '_'))
                 return send_json({"ok": True, "redirect_url": redirect_url})
             except PageExist:
@@ -251,7 +253,7 @@ def edit_page(request, pagename=None):
         if 'new_title' in request.form:
             new_title = request.form['new_title']
             try:
-                page.rename(local.db, new_title)
+                page.rename(new_title)
                 redirect_url = url_for('show_page', pagename=new_title.replace(' ', '_'))
                 return redirect(redirect_url)
             except PageExist:
@@ -260,7 +262,7 @@ def edit_page(request, pagename=None):
                 error = "An unexpected error happened, please contact administrator."
         else:
             page.content = request.form.get('content', '')
-            page.store(local.db)
+            page.save()
             redirect_url = url_for('show_page', pagename=pagename)
             return redirect(redirect_url)
     
@@ -273,11 +275,11 @@ def delete_page(request, pagename):
     if pagename == 'Home': #security reason
         return redirect(url_for('show_page', pagename='Home'))
     
-    page = get_page(local.db, request.site.id, pagename)
-    if not page or page.id is None:
+    page = get_page(request.site._id, pagename)
+    if not page or page._id is None:
         raise NotFound
     
-    del local.db[page.id]
+    del db[page._id]
     
     if local.site_url:
         redirect_url = local.site_url
@@ -289,15 +291,15 @@ def delete_page(request, pagename):
 def history_page(request=None, pagename=None):
     if pagename is None:
         pagename ='Home'
-    page = get_page(local.db, request.site.id, pagename)
+    page = get_page(request.site._id, pagename)
     
     if not page:
         raise NotFound
     
-    revisions = page.revisions(local.db)
+    revisions = page.revisions()
     
     # get all pages
-    pages = all_pages(local.db, request.site.id)
+    pages = all_pages(request.site._id)
 
     return render_response('page/history.html', page=page, pages=pages, revisions=revisions)
     
@@ -306,7 +308,7 @@ def revision_page(request=None, pagename=None, nb_revision=None):
     if pagename is None:
         pagename ='Home'
         
-    page = get_page(local.db, request.site.id, pagename)
+    page = get_page(request.site._id, pagename)
     if not page:
         raise NotFound
         
@@ -318,18 +320,18 @@ def revision_page(request=None, pagename=None, nb_revision=None):
         except ValueError:
             raise NotFound
 
-    revision = page.revision(local.db, nb_revision)
+    revision = page.revision(nb_revision)
     if revision is None:
         return render_response('page/revision_notfound.html', page=page, pages=pages, site=request.site)
         
     # revert page
     if request.method == "POST" and "srevert" in request.form:
         page.content = revision.content
-        page.store(local.db)
+        page.save()
         return redirect(url_for("show_page", pagename=pagename))
         
     # get all pages
-    pages = all_pages(local.db, request.site.id)
+    pages = all_pages(request.site._id)
     
     return render_response('page/show.html', page=revision, pages=pages)
 
@@ -337,7 +339,7 @@ def revision_page(request=None, pagename=None, nb_revision=None):
 def diff_page(request=None, pagename=None):
     if pagename is None:
         pagename ='Home'
-    page = get_page(local.db, request.site.id, pagename)
+    page = get_page(request.site._id, pagename)
     if not page:
         if request.is_xhr:
             return send_json({'ok': False, 'reason': 'not found'})
@@ -347,7 +349,7 @@ def diff_page(request=None, pagename=None):
     rev1 = rev2 = page
     revisions = request.values.getlist('r')
     if revisions and len(revisions) >=2:
-        diff, rev1, rev2 = get_diff(local.db, page, revisions[0], revisions[1])
+        diff, rev1, rev2 = get_diff(page, revisions[0], revisions[1])
     
     if request.is_xhr:
          return send_json({
@@ -355,10 +357,10 @@ def diff_page(request=None, pagename=None):
             'diff': render_template('page/diff_inc.html', diff=diff, rev1=rev1, rev2=rev2)
          })
      
-    all_revisions = [page] + page.revisions(local.db)
+    all_revisions = [page] + page.revisions()
 
     # get all pages
-    pages = all_pages(local.db, request.site.id)
+    pages = all_pages(request.site._id)
 
     return render_response('page/diff.html', page=page, pages=pages, diff=diff, rev1=rev1, 
     rev2=rev2, revisions=all_revisions)
@@ -368,10 +370,10 @@ def diff_page(request=None, pagename=None):
 def revisions_feed(request=None, pagename=None, feedtype="atom"):
     if pagename is None:
         pagename ='Home'
-    page = get_page(local.db, request.site.id, pagename)
+    page = get_page(request.site._id, pagename)
     if not page:
         raise NotFound
-    all_revisions = [page] + page.revisions(local.db)
+    all_revisions = [page] + page.revisions()
     if feedtype == "atom":
         feed = AtomFeed(
                     title="%s: Latest revisions of %s" % (request.site.cname, page.title),
@@ -427,8 +429,8 @@ def revisions_feed(request=None, pagename=None, feedtype="atom"):
         return send_json(json)
 
 def site_changes(request, feedtype=None):
-    pages = all_pages(local.db, request.site.id)
-    changes = get_changes(local.db, request.site.id)
+    pages = all_pages(request.site._id)
+    changes = get_changes(request.site._id)
 
     if feedtype == "atom":
         
@@ -489,7 +491,7 @@ def site_export(request, feedtype="atom"):
         zinfo.date_time = date_time
         return zinfo
     
-    pages = all_pages(local.db, request.site.id)
+    pages = all_pages(request.site._id)
     if pages:
         pages.sort(lambda a,b: cmp(a.updated, b.updated))
     if feedtype == "atom":
@@ -528,7 +530,7 @@ def site_export(request, feedtype="atom"):
             })
         return send_json(json)
     elif feedtype == "zip":
-        pages = all_pages(local.db, request.site.id)
+        pages = all_pages(request.site._id)
         zip_content = StringIO()
         zfile = zipfile.ZipFile(zip_content, "w", zipfile.ZIP_DEFLATED)
         import time, codecs
@@ -557,7 +559,7 @@ def site_delete(request):
         authkey = '%s_authenticated' % request.site.cname
         if authkey in request.session:
             del request.session[authkey]
-        del local.db[request.site.id]
+        del db[request.site._id]
         redirect_url = "http://%s" % settings.SERVER_NAME
         return redirect(redirect_url)
     return render_response('site/delete.html')
@@ -566,12 +568,12 @@ def site_delete(request):
 @not_claimed
 def site_claim(request):
     if request.method == "POST":
-        site = get_site(local.db, request.site.cname)
+        site = get_site(request.site.cname)
         site.password = make_hash(request.form['password'])
         site.email = request.form['email']
         site.privacy = request.form['privacy']
         site.claimed = True
-        site.store(local.db)
+        site.save()
         request.site = site
         
         if site.alias:
@@ -600,13 +602,13 @@ def site_settings(request):
     if request.is_xhr and request.method == "POST":
         data = json.loads(request.data)
         allow_javascript = data.get('allow_javascript', False) and True or False
-        site = get_site(local.db, request.site.cname)
+        site = get_site(request.site.cname)
         site.title = data.get('title', site.title)
         site.subtitle = data.get('subtitle', site.subtitle)
         site.email = data.get('email', site.email)
         site.privacy = data.get('privacy', site.privacy)
         site.allow_javascript = allow_javascript
-        site.store(local.db)
+        site.save()
         request.site = site
         return send_json({ 'ok': True })
         
@@ -616,7 +618,7 @@ def site_settings(request):
         site_address = "http://%s.%s" % (request.site.alias, settings.SERVER_NAME)
         
     # get all pages
-    pages = all_pages(local.db, request.site.id)
+    pages = all_pages(request.site._id)
     return render_response('site/settings.html', pages=pages, site_address=site_address)
 
 @can_edit
@@ -630,7 +632,7 @@ def site_address(request):
                 'ok': False,
                 'error': u"alias is empty or length < 3"
             })
-        elif get_site(local.db, alias, True) and request.site.alias != alias or alias in FORBIDDEN_CNAME:
+        elif get_site(alias, True) and request.site.alias != alias or alias in FORBIDDEN_CNAME:
             return send_json({
                 'ok': False,
                 'error':  u"A site with this name has already been registered in couch.it"
@@ -643,12 +645,12 @@ def site_address(request):
             error = u"alias is empty or length < 3"
         elif not re_address.match(alias):
             error = u"Address name is invalid. It should only contain string and _ or -."
-        elif get_site(local.db, alias, True) and request.site.alias != alias:
+        elif get_site(alias, True) and request.site.alias != alias:
             error = u"A site with this name has already been registered in couch.it"
         else:
-            site = get_site(local.db, request.site.cname)
+            site = get_site(request.site.cname)
             site.alias = alias
-            site.store(local.db)
+            site.save()
             request.site = site
             redirect_url = "http://%s.%s" % (site.alias, settings.SERVER_NAME)
             return redirect(redirect_url)
@@ -668,7 +670,7 @@ def site_login(request):
     
     if request.method == "POST":
         error = u'Password is invalid.'
-        if validate_password(local.db, request.site.id, request.form['password']):
+        if validate_password(request.site._id, request.form['password']):
             print "here"
             request.session['%s_authenticated' % request.site.cname] = True
             if 'remember' in request.form:
@@ -706,23 +708,23 @@ def site_change_password(request):
     token = request.values.get('t', None)
     invalid_token = False
     if request.method == 'GET':
-        if token is None or not validate_token(local.db, request.site.id, token):
+        if token is None or not validate_token(request.site._id, token):
             error = u"Invalid token. Please verify url in your mail."
             invalid_token = True
     if request.method == 'POST':
         token = request.form.get('token', '')
         password = request.form.get('password')
-        if not validate_token(local.db, request.site.id, token):
+        if not validate_token(request.site._id, token):
             error = u"Invalid token. Please verify url in your mail."
             invalid_token = True
         else:
             if password:
-                site = get_site(local.db, request.site.cname)
+                site = get_site(request.site.cname)
                 site.password = make_hash(request.form['password'])
-                site.store(local.db)
+                site.save()
             
                 # delete token
-                del local.db[token]
+                del db[token]
             
                 request.session['%s_authenticated' % request.site.cname] = True
                 request.site = site
@@ -741,7 +743,7 @@ def site_change_password(request):
 def change_password_authenticated(request):
     error = None
     if request.method == 'POST':
-        site = get_site(local.db, request.site.cname)
+        site = get_site(request.site.cname)
         p1 = request.form.get('password', '')
         p2 = request.form.get('old_password', '')
         
@@ -755,7 +757,7 @@ def change_password_authenticated(request):
             h = make_hash(p1)
             if (h != site.password):
                 site.password = h
-                site.store(local.db)
+                site.save()
             request.site = site
             return redirect(url_for('site_settings'))
         
@@ -767,8 +769,8 @@ def site_forgot_password(request):
         back = request.form.get('back', '')
         
         # create token
-        otoken = PasswordToken(site=request.site.id)
-        otoken.store(local.db)
+        otoken = PasswordToken(site=request.site._id)
+        otoken.save()
         
         if request.site.alias:
             site_url = "http://%s.%s" % (request.site.alias, settings.SERVER_NAME)
@@ -777,7 +779,7 @@ def site_forgot_password(request):
         
         # send email
         mail_subject = u"Password to your couchit site"
-        mail_content = render_template('site/forgot_password.txt', url=site_url, token=otoken.id)
+        mail_content = render_template('site/forgot_password.txt', url=site_url, token=otoken._id)
         send_mail(mail_subject, mail_content, "CouchIt <feedback@couch.it>", 
             [request.site.email], fail_silently=True)
             
@@ -806,14 +808,14 @@ def site_design(request):
         request.site.theme = DEFAULT_COLORS
         
     if request.method == 'POST':
-        site = get_site(local.db, request.site.cname)
+        site = get_site(request.site.cname)
         style = request.form.get('style', 'default')
         if style == 'default':
             site.default_theme = True
             site.theme = DEFAULT_COLORS
         else:
             site.default_theme = False
-            site.theme = dict(
+            site.theme = Theme(
                 background_color = request.form.get('background_color', 'E7E7E7'),
                 text_color = request.form.get('text_color', '000000'),
                 link_color = request.form.get('link_color', '14456E'),
@@ -824,16 +826,16 @@ def site_design(request):
                 menu_inactive_color = request.form.get('menu_inactive_color', '666666'),
                 syntax_style = request.form.get('syntax_style', 'default')
             )
-        site.store(local.db)
+        site.save()
         request.site = site 
      
-    pages = all_pages(local.db, request.site.id)       
+    pages = all_pages(request.site._id)       
     return render_response('site/design.html', pages=pages)
     
 
     
 def sitemap(request):
-    pages = all_pages(local.db, request.site.id)
+    pages = all_pages(request.site._id)
     return render_response("site/sitemap.xml", pages=pages)
          
 def proxy(request):

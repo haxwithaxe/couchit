@@ -12,9 +12,10 @@
 <link rel="alternate" type="application/rdf+xml" href="{{ url_for('show_page', pagename=page.title|replace(" ", "_")) }}" title="SIOC" />
 
 {% if DEBUG %}
-<script src="/static/js/lib/livepipe.js" type="text/javascript"></script>
 <script src="/static/js/lib/effects.js" type="text/javascript"></script>
 <script src="/static/js/lib/dragdrop.js" type="text/javascript"></script>
+
+<script src="/static/js/lib/livepipe.js" type="text/javascript"></script>
 <script src="/static/js/lib/tabs.js" type="text/javascript"></script>
 <script src="/static/js/lib/resizable.js" type="text/javascript"></script>
 <script src="/static/js/lib/textarea.js" type="text/javascript"></script>
@@ -56,7 +57,7 @@
        
 </ul>
 <section id="pview">
-    {% if page.id %}
+    {% if page._id %}
         
     
     <article id="post">
@@ -86,7 +87,7 @@
     <div id="pedit_wrapper">
         <form name="fedit" id="fedit" action="{{ url_for('edit_page', pagename=page.title|replace(" ", "_")) }}" method="POST">
             <textarea name="content" id='content' cols="80" rows="20">{{ page.content }}</textarea>
-            <p><input type="submit" name="save" id="save" value="Save" /> or <a id="cancelEdit" href="{% if page.id %}{{ url_for('show_page', pagename=page.title|replace(" ", "_")) }}{% else %}/{% endif %}">Cancel</a></p>
+            <p><input type="submit" name="save" id="save" value="Save" /> or <a id="cancelEdit" href="{% if page._id %}{{ url_for('show_page', pagename=page.title|replace(" ", "_")) }}{% else %}/{% endif %}">Cancel</a></p>
         </form>
         <div id="preview"></div>
     </div>
@@ -184,7 +185,7 @@
     Site.name = "{{ site.cname }}";
     Site.url = "{{ site_url }}";
     {% if can_edit %}
-    {% if not page.id %}
+    {% if not page._id %}
     Page.created = true;
     {% else %}
     {% if page.title == 'Home' %}

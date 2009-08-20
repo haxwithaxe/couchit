@@ -1,17 +1,19 @@
 # -*- coding: utf-8 -
-# Copyright 2008 by Benoît Chesneau <benoitc@e-engura.com>
-# 
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
 #
-#     http://www.apache.org/licenses/LICENSE-2.0
+# Copyright (c) 2008,2009 Benoit Chesneau <benoitc@e-engura.com> 
 #
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
+# Permission to use, copy, modify, and distribute this software for any
+# purpose with or without fee is hereby granted, provided that the above
+# copyright notice and this permission notice appear in all copies.
+#
+# THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+# WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+# MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+# ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+# WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+# ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+# OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+#
 
 import binascii
 from calendar import timegm
@@ -37,23 +39,20 @@ from couchit import settings
 _hex = binascii.hexlify  
 local = Local()
 local_manager = LocalManager([local])
-
 _install_hooks = []
 
+def get_db():
+    from couchdbkit import Server, create_session
+    server = Server(settings.SERVER_URI)
+    return create_session(server, settings.DATABASE_NAME, Local)
+db = get_db()
 
-if sys.version_info < (2, 5):
-    # Prior to Python 2.5, Exception was an old-style class
-    def subclass_exception(name, parent, unused):
-        return types.ClassType(name, (parent,), {})
-else:
-    def subclass_exception(name, parent, module):
-        return type(name, (parent,), {'__module__': module})
+def subclass_exception(name, parent, module):
+    return type(name, (parent,), {'__module__': module})
 
 class CouchitUnicodeDecodeError(Exception):
     """ raised when unicode error"""
 
-
-    
 def slugify(value):
     import unicodedata
     value = unicodedata.normalize('NFKD', value).encode('ascii', 'ignore')
@@ -95,47 +94,27 @@ def install():
 @install_hook
 def create_db():
     """create the db if it don't exist"""
-    from couchdb.client import Server
-    couchdb_server = Server(settings.SERVER_URI)
+    from couchdbkit import Server
+    server = Server(settings.SERVER_URI)
     try:
-        db = couchdb_server.create(settings.DATABASE_NAME)
+        db = server.create_db(settings.DATABASE_NAME)
     except:
         pass
+        
+@install_hook    
+def install_designs():
+    from couchdbkit import *
+    from couchdbkit.loaders import FileSystemDocsLoader
+    server = Server(settings.SERVER_URI)
+    loader = FileSystemDocsLoader(settings.DESIGN_PATH)
+    db = server[settings.DATABASE_NAME]
+    loader.sync(db, verbose=True)
         
 def load_file(fname):
     f = file(fname, 'r')
     data = f.read()
     f.close
     return data
-        
-def load_views():
-    from couchdb.client import Server
-    
-    couchdb_server = Server(settings.SERVER_URI)
-    db = couchdb_server[settings.DATABASE_NAME]
-    
-    design_path = os.path.join(os.path.dirname(__file__), '../_design')
-    print "\nLoad CouchDB views ..."
-    for name in os.listdir(design_path):
-        path = os.path.join(design_path,name)
-        views = {}
-        for view in os.listdir(path):
-            views[view] = {}
-            for js in glob(os.path.join(path, view, '*.js')):
-                if os.path.basename(js) == 'map.js':
-                    views[view]['map'] = load_file(js)
-                if os.path.basename(js) == 'reduce.js':
-                    views[view]['reduce'] = load_file(js)
-            print "add %s/%s" % (name, view)
-        try:
-            db['_design/%s' % name] = {
-                'language': 'javascript',
-                'views': views
-            }
-        except:
-            v = db['_design/%s' % name] 
-            v['views'] = views
-            db['_design/%s' % name] = v
 
 def utf8(text):
     """Encodes text in utf-8.
