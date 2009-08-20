@@ -96,7 +96,7 @@ def all_pages(siteid):
 def get_changes(siteid):
     if siteid is None:
         return []
-    rows = Page.view('page/all_pages', key=siteid, count=50)
+    rows = Page.view('page/all_pages', key=siteid, limit=50)
     result = list(iter(rows))
     if result: # order revisions
         result.sort(lambda a,b: cmp(a.updated, b.updated))
