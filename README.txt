@@ -11,13 +11,7 @@ Couchit is still a beta release, but you already have:
     * a nice integration with Friendpaste
     * ...
 
-Couchit requirements :
-----------------------
-python 2.5.x or 2.6.x 
-couchdbkit 1.8
-jinja2 2.1.1
-pygments 1.0
-pyyaml 3.x
-rdflib 2.4.1
-wekzeug 0.5.1
+Installation :
+--------------
 
+See INSTALL file

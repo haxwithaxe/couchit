@@ -1,0 +1,137 @@
+INSTALLATION
+------------
+
+
+Couchit requirements :
+----------------------
+python 2.5.x or 2.6.x 
+couchdbkit 1.8
+jinja2 2.1.1
+pygments 1.0
+pyyaml 3.x
+rdflib 2.4.1
+wekzeug 0.5.1
+
+Server requirement :
+bind 9 or any dns server that handles wildcards in ANAME
+couchdb 0.9.1 or sup
+postfix or any mail server
+
+Optionnal :
+Python spawning
+nginx 
+
+Installation :
+--------------
+
+1) Install requirements
+
+2) Put somewhere in your disk the couchit sources. For the example /var/www/vhosts/couchit.
+
+3) Configure bind . Add your zone. Here is an example to configure a local zone for development though configuration is the same for production server, you just have to change the domain name.
+
+in named.conf add :
+
+    zone "couchit.local" {
+            type master;
+            file "couchit.local.zone";
+            allow-transfer {localhost; };
+    };
+
+
+then add a zone. On my machine it's in /var/named. Create a file couchit.local.zone:
+
+$TTL    86400
+@       IN      SOA     ns.couchit.local. root.couchit.local.  (
+                                      2009081914 ; Serial
+                                      10800       ; Refresh
+                                                                          3600        ; Retry
+                                                                          3600000     ; Expire
+                                                                          86400 )     ; Minimum
+                                                                        
+              IN      NS      ns0.couchit.local.
+
+              IN      A       127.0.0.1
+ns0           IN      A       127.0.0.1
+*             IN      A       127.0.0.1
+
+
+
+4) Optionnal : Configure nginx or the web server you use. I use nginx as a proxy and spawning as wsgi server :
+
+in nginx.conf add a virtual host :
+
+    server {
+        listen 80;
+        root /var/www/vhosts/couchit;
+        server_name couchit.local *.couchit.local;
+        access_log /var/log/nginx/couchit.access.log;
+    
+        if ($host = 'www.couchit.local') {
+            rewrite  ^/(.*)$  http://couchit.local/$1 permanent;
+        }
+
+        location / {
+           proxy_pass http://127.0.0.1:8080/;
+           proxy_redirect off;
+           proxy_set_header Host $host;
+           proxy_set_header Port $proxy_port;
+           proxy_set_header X-Real-IP $remote_addr;
+           proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+           client_max_body_size       10m;
+           client_body_buffer_size    128k;
+
+           proxy_connect_timeout      90;
+           proxy_send_timeout         90;
+           proxy_read_timeout         90;
+
+           proxy_buffer_size          4k;
+           proxy_buffers              4 32k;
+           proxy_busy_buffers_size    64k;
+           proxy_temp_file_write_size 64k;
+        }
+
+        location ~* \.(jpg|jpeg|gif|css|png|js|ico|svg)$ {
+            access_log      off;
+            expires         30d;
+        }
+
+        location /favicon.ico {
+            root /var/www/vhosts/couchit/static/img/favicon.ico;
+        }
+
+        location ~ ^/static(.*) {
+            root /var/www/vhosts/couchit/static;
+        }
+        location ~ ^/robots.txt {
+             root /var/www/vhosts/couchit/static;
+        }
+    }
+
+And launch spawning in /var/www/vhosts/couchit :
+
+nohup spawn --port 8080 --host 127.0.0.1 --processes=4 --threads=8 couchit_app.application & 
+
+(nohup is used to put spawning in background)
+
+5) Setup couchit in CouchDB :
+
+Edit settings, add appropriate domain name in SERVER_NAME, configure Apache CouchDB url and databse. Setup your mail server.
+
+Then setup Apache CouchDB
+
+    $ cd /var/www/vhosts/couchit
+    $ python manage setup
+
+    
+6) Start to use couchit :
+
+In development you could use the builtin webserver provided by werkzeug :
+
+    $ cd /var/www/vhosts/couchit
+    $ python manage runserver
+    
+and go to http://couchit.local:5000
+
+
+If you installed nginx, go to http://couchit.local 
