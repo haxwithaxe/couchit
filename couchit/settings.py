@@ -16,14 +16,10 @@
 import platform
 import os
 
-DEBUG = True
+DEBUG = False
 
 SERVER_NAME = 'couch.it'
     
-if platform.node() != "tombstone":
-    SERVER_NAME = 'couch.test:5000'
-
-
 # database
 SERVER_URI ='http://127.0.0.1:5984'
 DATABASE_NAME ='couchit'

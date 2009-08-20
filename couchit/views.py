@@ -22,7 +22,7 @@ import urllib2
 import uuid
 import zipfile
 from StringIO import StringIO
-    
+import sys    
 
 from jinja2.filters import do_truncate, do_striptags, escape
 from werkzeug import redirect
@@ -43,9 +43,9 @@ import simplejson as json
 
 FORBIDDEN_PAGES = ['site', 'delete', 'edit', 'create', 'history', 'changes', 'sitemap.xml']
 
-FORBIDDEN_CNAME = ['mail', 'www', 'blog', 'news', 'media', 'upload', 'files', 'store']
+FORBIDDEN_CNAME = ['mail', 'www', 'blog', 'media', 'upload', 'files', 'store']
 
-re_page = re.compile(r"^[&@()?!.,;:\"'\-\/ \w]+$", re.U)
+re_page = re.compile(r"^[&@()?!.,;_:\"'\-\/ \w]+$", re.U)
 re_address = re.compile(r'^[-_\w]+$')
 
 def not_logged(f):
@@ -88,7 +88,7 @@ def valid_page(f):
         if 'pagename' in kwargs:
             pagename = kwargs['pagename'] 
             if not re_page.match(pagename) and pagename is not None:
-                print "bbbb"
+                print pagename 
                 raise NotFound
             pagename = pagename.replace(" ", "_")
             kwargs['pagename'] = pagename
