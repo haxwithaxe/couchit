@@ -114,7 +114,7 @@ class Page(Document):
     previous = StringProperty(default='')
     created = DateTimeProperty()
     updated = DateTimeProperty()
-    changes = StringListProperty()
+    changes = ListProperty()
     nb_revision = IntegerProperty(default=0)
     
     itemType = StringProperty(default='page')
