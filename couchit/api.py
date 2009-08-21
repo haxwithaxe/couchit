@@ -64,7 +64,7 @@ def validate_password(siteid, password):
     return False
 
 def validate_token(siteid, token):
-    rows = Site.view('_view/site/token', key=[token, siteid])
+    rows = Site.view('site/token', key=[token, siteid])
     lrows = list(iter(rows))
     if lrows:
         return True

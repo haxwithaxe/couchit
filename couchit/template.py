@@ -56,9 +56,6 @@ template_env.globals['ALL_COLORSHEME'] = list(get_all_styles())
 re_script = re.compile("\"\'][\s]*javascript:(.*)[\"\']/g")
 
 
-
-
-
 def convert_markdown(value, javascript=False):
     if local.site_url:
         base_url = local.site_url + '/'
