@@ -117,7 +117,6 @@ class CouchitApp(object):
             except HTTPException, e:
                 response = e.get_response(environ)
 
-
         if request.session.should_save:
             permanent = request.session.get('permanent', False)
             max_age=None
