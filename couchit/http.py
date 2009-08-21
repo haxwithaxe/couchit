@@ -31,6 +31,10 @@ from couchit.utils import db, local, datetime_tojson
 
 __all__ = ['DatabaseSessionStore', 'BCRequest', 'BCResponse', 'session_store']
 
+
+class SuspiciousOperation(Exception):
+    pass
+    
 def _encode_session_data(session_data):
     """ encode session object using pickle and base64.
     We also sign them with md5 and SECRET_KEY defined
