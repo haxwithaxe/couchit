@@ -295,7 +295,6 @@ def edit_page(request, pagename=None):
     return redirect(url_for('show_page', pagename=pagename, error=error))
 
 @can_edit
-@login_required
 @valid_page
 def report_spam(request, pagename=None):
     if pagename is None:
