@@ -12,7 +12,12 @@
     <table class="historyTable">
         {% for page  in spam %}
             <tr>
-                <td><input type="checkbox" class="c" name="d" value="{{ page._id }}_{{page._rev}}" /></td>
+                {% if page.title != "Home" %}
+                    <td><input type="checkbox" class="c" name="d" value="{{ page.thash }}_{{ page._id }}_{{page._rev}}" /></td>
+                {% else %}
+                    <td></td>
+                {% endif %}
+                
                 <td><a href="{{ url_for('show_page', cname=site.cname, pagename=page.title|replace(" ", "_")) }}">{{ page.title }}</a></td>
                 <td><time title="GMT" datetime="{{ page.updated|rfc3339 }}">{{ page.updated|formatdatetime }}</time></td>
                 <td class="changes">

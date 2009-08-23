@@ -16,6 +16,7 @@
 #
 
 from datetime import datetime
+from hashlib import sha256
 import os
 import random
 import re
@@ -284,7 +285,11 @@ def edit_page(request, pagename=None):
             page.content = content
             page.is_spam = is_spam # flag page
             page.save()
-            redirect_url = url_for('show_page', pagename=pagename)
+            
+            if not page.is_spam and page.title != "Home":
+                redirect_url = url_for('show_page', pagename=pagename)
+            else:
+                redirect_url = url_for('show_spam', pagename=pagename)
             return redirect(redirect_url)
     
     return redirect(url_for('show_page', pagename=pagename, error=error))
@@ -321,8 +326,8 @@ def report_spam(request, pagename=None):
     # save new flag
     page.is_spam = not page.is_spam
     page.save()
-    
-    if not page.is_spam:
+
+    if not page.is_spam and page.title != "Home":
         redirect_url = url_for('show_page', pagename=pagename)
     else:
         redirect_url = url_for('show_spam', pagename=pagename)
@@ -555,8 +560,9 @@ def delete_spam(request):
     pages = request.values.getlist('d')
     docs = []
     for p in pages:
-        docid, rev = p.split('_')
-        docs.append({'_id': docid, '_rev': rev})
+        thash, docid, rev = p.split('_')
+        if thash != sha256("Home").hexdigest(): # make sure we don't delete home
+            docs.append({'_id': docid, '_rev': rev})
     db.bulk_delete(docs)    
     return redirect(url_for('site_spam'))
     
