@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block title %}Spam{% endblock %}
+{% block head %}
+    <link rel="alternate" type="application/atom+xml" href="{{ url_for('site_changes', cname=site.cname, feedtype='atom') }}" title="Atom Recent Changes Feed" />
+{% endblock %}
+{% block page %}
+<section id="phistory">
+    <h2>Spam</h2>
+    {% if spam %}
+    <form name="fspam" method="post" action="{{ url_for('delete_spam') }}">
+    <p><input type="submit" class="sspam" name="sspam" value="delete selected spam" /></p>
+    <table class="historyTable">
+        {% for page  in spam %}
+            <tr>
+                <td><input type="checkbox" class="c" name="d" value="{{ page._id }}_{{page._rev}}" /></td>
+                <td><a href="{{ url_for('show_page', cname=site.cname, pagename=page.title|replace(" ", "_")) }}">{{ page.title }}</a></td>
+                <td><time title="GMT" datetime="{{ page.updated|rfc3339 }}">{{ page.updated|formatdatetime }}</time></td>
+                <td class="changes">
+                    {% if page.changes %}
+                    <ol>
+                        {% for change in page.changes %}
+                            {% if change['type'] != 'unmod' %}
+                        <li>{{ change['type']|pretty_type }} <span class="lineChange">&quot;{{ change['changed']['lines']|join('\n')|trim|striptags|truncate(40) }}&quot;</span></li> 
+                            {% endif %}  
+                        {% endfor %}
+                    </ol>
+                    {% else %}
+                        {% if page.previous %}
+                    Edited.
+                        {% else %}
+                    <span class="created">Created page.</span>
+                        {% endif %}
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+    </form>
+    {% else %}
+    No spam yet.
+    {% endif %}
+    
+</section>
+{% endblock %}
+
+{% block footer %}
+<script type="text/javascript">
+    Site.name = "{{ site.cname }}";
+    Site.url = "{{ site_url }}";
+    {% if can_edit %}
+    document.observe("dom:loaded", function() {
+            new Create();
+    });
+    {% endif %}
+</script>
+{% endblock %}
+
+
+{% block sidebar %}
+{% include "sidebar.html" %}
+{% endblock %}

@@ -27,7 +27,7 @@ from couchit.utils.diff import diff_blocks
 
 __all__ = ['get_site', 'get_page', 'get_pageof',
 'all_pages', 'get_diff', 'LEXERS_CHOICE', 'get_changes', 
-'validate_password', 'validate_token']
+'validate_password', 'validate_token', 'spam']
 
 def _get_lexers():
     lexers = get_all_lexers()
@@ -92,6 +92,14 @@ def all_pages(siteid):
         pages.sort(lambda a,b: cmp(a.title, b.title))
     return pages
     
+def spam(siteid):
+    if siteid is None:
+        return []
+    rows = Page.view('page/spam', key=siteid)
+    pages = list(iter(rows))
+    if pages:
+        pages.sort(lambda a,b: cmp(a.title, b.title))
+    return pages
     
 def get_changes(siteid):
     if siteid is None:

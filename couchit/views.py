@@ -488,6 +488,7 @@ def revisions_feed(request=None, pagename=None, feedtype="atom"):
             })
         return send_json(json)
 
+
 def site_changes(request, feedtype=None):
     pages = all_pages(request.site._id)
     changes = get_changes(request.site._id)
@@ -541,6 +542,24 @@ def site_changes(request, feedtype=None):
 
     return render_response('site/changes.html', changes=changes, pages=pages)
 
+@can_edit
+@login_required
+def site_spam(request):
+    pages = all_pages(request.site._id)
+    spammed_pages = spam(request.site._id)
+    return render_response('site/spam.html', spam=spammed_pages, pages=pages)
+    
+@can_edit
+@login_required    
+def delete_spam(request):
+    pages = request.values.getlist('d')
+    docs = []
+    for p in pages:
+        docid, rev = p.split('_')
+        docs.append({'_id': docid, '_rev': rev})
+    db.bulk_delete(docs)    
+    return redirect(url_for('site_spam'))
+    
 @can_edit
 @login_required
 def site_export(request, feedtype="atom"):
