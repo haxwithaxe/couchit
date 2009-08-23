@@ -62,6 +62,7 @@ class Site(Document):
     claimed = BooleanProperty(default=False)
     created = DateTimeProperty()
     updated = DateTimeProperty()
+    akismet_key = StringProperty(default='')
     allow_javascript = BooleanProperty(default=False)
     default_theme = BooleanProperty(default=True)
     theme = SchemaProperty(Theme)
@@ -104,8 +105,7 @@ class AliasPage(Document):
         if cls.get_alias(siteid, pagename) is not None:
             return True
         return False
-        
-                      
+                          
 class Page(Document):
     site = StringProperty()
     title = StringProperty()
@@ -116,6 +116,7 @@ class Page(Document):
     updated = DateTimeProperty()
     changes = ListProperty()
     nb_revision = IntegerProperty(default=0)
+    is_spam = BooleanProperty(default=False)
     
     itemType = StringProperty(default='page')
     

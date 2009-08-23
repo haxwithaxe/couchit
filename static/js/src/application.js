@@ -227,7 +227,9 @@ var Settings = Class.create({
                'subtitle': $('site_subtitle').getValue(),
                'email': $('email').getValue(),
                'privacy': $$('input:checked[type="radio"][name="privacy"]').pluck('value')[0],
+               'akismet_key': $('site_akismet_key').getValue(),
                'allow_javascript': $('allow_javascript').getValue()
+               
            }
        } catch(e) {
            data = {

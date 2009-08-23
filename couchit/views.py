@@ -38,6 +38,7 @@ from couchit.contrib import mimeparse
 from couchit.http import BCResponse
 from couchit.template import render_response, url_for, render_template, send_json, convert_markdown
 from couchit.utils import db, local, make_hash, datetime_tojson, to_str, smart_str, force_unicode
+from couchit.utils.akismet import Akismet
 from couchit.utils.mail import send_mail
 from couchit.utils.sioc import SiocWiki, send_sioc
 
@@ -261,12 +262,27 @@ def edit_page(request, pagename=None):
             else:
                 error = "An unexpected error happened, please contact administrator."
         else:
-            page.content = request.form.get('content', '')
+            content = request.form.get('content', '')
+            
+            # check spam with akismet
+            if request.site.akismet_key:
+                ak = Akismet()
+                if request.site.alias:
+                    site_url = "http://%s.%s" % (request.site.alias, settings.SERVER_NAME)
+                else:
+                    site_url = "http://%s/%s" % (settings.SERVER_NAME, request.site.cname)
+                is_spam = ak.comment_check(site_url, request.environ['REMOTE_ADDR'], 
+                    request.environ['HTTP_USER_AGENT'], content)
+            else:
+                is_spam = False
+                
+            page.content = content
+            page.is_spam = is_spam # flag page
             page.save()
             redirect_url = url_for('show_page', pagename=pagename)
             return redirect(redirect_url)
     
-    return redirect(url_for('show_page', pagename=pagename))
+    return redirect(url_for('show_page', pagename=pagename, error=error))
 
 @can_edit
 @login_required
@@ -607,6 +623,7 @@ def site_settings(request):
         site.subtitle = data.get('subtitle', site.subtitle)
         site.email = data.get('email', site.email)
         site.privacy = data.get('privacy', site.privacy)
+        site.akismet_key = data.get('akismet_key', "")
         site.allow_javascript = allow_javascript
         site.save()
         request.site = site
@@ -832,7 +849,15 @@ def site_design(request):
     pages = all_pages(request.site._id)       
     return render_response('site/design.html', pages=pages)
     
-
+def site_check_akismet(request, key):
+    if request.site.alias:
+        site_url = "http://%s.%s" % (request.site.alias, settings.SERVER_NAME)
+    else:
+        site_url = "http://%s/%s" % (settings.SERVER_NAME, request.site.cname)
+        
+    res = Akismet()
+    resp = res.verify_key(site_url, key)
+    return send_json({"valid": resp})
     
 def sitemap(request):
     pages = all_pages(request.site._id)
@@ -873,7 +898,6 @@ def proxy(request):
     response = BCResponse(resp)
     response.content_type = content_type
     return response 
-
 
 def couchit_about(request):
     return render_response('about.html')

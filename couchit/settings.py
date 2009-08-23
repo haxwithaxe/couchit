@@ -18,7 +18,7 @@
 import platform
 import os
 
-DEBUG = False
+DEBUG = True
 
 SERVER_NAME = 'couch.it'
 
