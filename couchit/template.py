@@ -43,7 +43,7 @@ template_env.filters['pretty_type'] = pretty_type
 
 def url_for(endpoint, _external=False, **values):
     url = local.url_adapter.build(endpoint, values, force_external=_external)
-    if getattr(local, 'cname', None) != None:
+    if getattr(local, 'cname', False):
         url = "/%s%s" % (local.cname, url)
     return url
 
