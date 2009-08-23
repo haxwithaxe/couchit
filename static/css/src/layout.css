@@ -219,6 +219,11 @@ ul.subsection_tabs li.tab-edit a.active {
     padding-left: 20px;
 }
 
+#report_spam {
+    background: transparent url(../../img/spam16x16.png) 0 0 no-repeat;
+    padding-left: 20px;
+}
+
 
 ul.page_infos  { 
     list-style: none;

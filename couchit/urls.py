@@ -20,12 +20,14 @@ from couchit import views
 all_views = {
     'home': views.home,
     'show_page': views.show_page,
+    'show_spam': views.show_page,
     'edit_page': views.edit_page,
     'delete_page': views.delete_page,
     'history_page': views.history_page,
     'revision_page': views.revision_page,
     'diff_page': views.diff_page,
     'revisions_feed': views.revisions_feed,
+    'report_spam': views.report_spam,
     'site_changes': views.site_changes,
     'sitemap': views.sitemap,
     'site_design': views.site_design,
@@ -65,15 +67,16 @@ urls_map = Map([
     Rule('/site/export.<feedtype>', endpoint='site_export'),
     Rule('/site/login', endpoint='site_login'),
     Rule('/site/logout', endpoint='site_logout'),
+    Rule('/spam/<path:pagename>/', endpoint='show_spam', strict_slashes=False),
+    Rule('/spam/<path:pagename>', endpoint='show_spam', strict_slashes=False),
     Rule('/<path:pagename>/revisions.<feedtype>', endpoint='revisions_feed'),
     Rule('/<path:pagename>/revision/<nb_revision>', endpoint='revision_page'),
     Rule('/<path:pagename>/history', endpoint='history_page'),
     Rule('/<path:pagename>/edit', endpoint='edit_page'),
     Rule('/<path:pagename>/delete', endpoint='delete_page'),
     Rule('/<path:pagename>/diff', endpoint='diff_page'),
+    Rule('/<path:pagename>/spam', endpoint='report_spam'),
     Rule('/<path:pagename>/', endpoint='show_page', strict_slashes=False),
     Rule('/<path:pagename>', endpoint='show_page', strict_slashes=False)
-    
-   
 ])
 

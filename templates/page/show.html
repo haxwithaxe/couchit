@@ -69,6 +69,13 @@
                 {% if page.title != "Home" and can_edit %}
                 <li><a id="page_delete" href="{{ url_for('delete_page', pagename=page.title|replace(" ", "_")) }}">delete</a></li>   
                 {% endif %}
+                {% if can_edit %}
+                    {% if page.is_spam %}
+                    <li><a id="report_spam" href="{{ url_for('report_spam', pagename=page.title|replace(" ", "_")) }}">not spam</a></li>   
+                    {% else %}
+                    <li><a id="report_spam" href="{{ url_for('report_spam', pagename=page.title|replace(" ", "_")) }}">report spam</a></li>   
+                    {% endif %}
+                {% endif %}
                 <li class="last"><a class="page_history" href="{{ url_for('show_page', pagename=page.title|replace(" ", "_")) }}/history">history</a></li>
             </ul>
         </header>

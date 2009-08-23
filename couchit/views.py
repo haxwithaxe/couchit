@@ -214,6 +214,8 @@ def show_page(request=None, pagename=None):
         lexers=LEXERS_CHOICE, redirect_from=redirect_from)
         
     return response
+    
+
 
 @can_edit
 @valid_page
@@ -271,8 +273,11 @@ def edit_page(request, pagename=None):
                     site_url = "http://%s.%s" % (request.site.alias, settings.SERVER_NAME)
                 else:
                     site_url = "http://%s/%s" % (settings.SERVER_NAME, request.site.cname)
-                is_spam = ak.comment_check(site_url, request.environ['REMOTE_ADDR'], 
-                    request.environ['HTTP_USER_AGENT'], content)
+                try:
+                    is_spam = ak.comment_check(site_url, request.environ['REMOTE_ADDR'], 
+                        request.environ['HTTP_USER_AGENT'], content)
+                except: # fail silently
+                    is_spam = False
             else:
                 is_spam = False
                 
@@ -284,6 +289,45 @@ def edit_page(request, pagename=None):
     
     return redirect(url_for('show_page', pagename=pagename, error=error))
 
+@can_edit
+@login_required
+@valid_page
+def report_spam(request, pagename=None):
+    if pagename is None:
+        pagename ='home'
+
+    page = get_page(request.site._id, pagename)
+    if not page or page._id is None:
+        raise NotFound
+        
+    # send spam to akismet if need or send false positive
+    ak = Akismet()
+    if request.site.alias:
+        site_url = "http://%s.%s" % (request.site.alias, settings.SERVER_NAME)
+    else:
+        site_url = "http://%s/%s" % (settings.SERVER_NAME, request.site.cname)
+            
+    if page.is_spam:
+        fun_spam = ak.submit_ham
+    else:
+        fun_spam = ak.submit_spam
+        
+    try:
+        fun_spam(site_url, request.environ['REMOTE_ADDR'], 
+            request.environ['HTTP_USER_AGENT'], page.content)
+    except:
+        pass
+        
+    # save new flag
+    page.is_spam = not page.is_spam
+    page.save()
+    
+    if not page.is_spam:
+        redirect_url = url_for('show_page', pagename=pagename)
+    else:
+        redirect_url = url_for('show_spam', pagename=pagename)
+    return redirect(redirect_url)
+    
 @can_edit
 @login_required
 @valid_page
