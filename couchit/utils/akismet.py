@@ -18,21 +18,23 @@
 import restclient
 
 class Akismet(restclient.Resource):
-    URI = "http://rest.akismet.com/1.1"
-    API_KEY_URI = "http://api-key.rest.akismet.com/1.1"
+    URI = "rest.akismet.com/1.1"
     USER_AGENT = "couchit/1.1"
     
-    def __init__(self):
+    def __init__(self, site_url, key):
         self.default_headers = {
             "User-Agent": self.USER_AGENT,
             "Content-Type": "application/x-www-form-urlencoded; charset=utf-8"
         }
+        self.key = key
+        self.site_url = site_url
+        self.API_KEY_URI = "http://%s.%s" % (key, self.URI)
         super(Akismet, self).__init__(self.API_KEY_URI)
         
-    def _make_params(self, site_url, user_ip, user_agent, content, extras=None):
+    def _make_params(self, user_ip, user_agent, content, extras=None):
         extras = extras or {}
         params = {
-            "blog": site_url,
+            "blog": self.site_url,
             "user_ip": user_ip,
             "user_agent": user_agent,
             "comment_content": content
@@ -41,24 +43,24 @@ class Akismet(restclient.Resource):
         params.update(extras)
         return params
         
-    def comment_check(self, site_url, user_ip, user_agent, content, extras=None):
-        params = self._make_params(site_url, user_ip, user_agent, content, extras=extras)
-        rst = self.post("/comment-check", params, headers=self.default_headers)
-        if rst == "true":
+    def comment_check(self, user_ip, user_agent, content, extras=None):
+        params = self._make_params(user_ip, user_agent, content, extras=extras)
+        res = self.post("/comment-check", params, headers=self.default_headers)
+        if res == "true":
             return True
         return False
         
-    def submit_spam(self, site_url, user_ip, user_agent, content, extras=None):
-        params = self._make_params(site_url, user_ip, user_agent, content, extras=extras)
+    def submit_spam(self, user_ip, user_agent, content, extras=None):
+        params = self._make_params(user_ip, user_agent, content, extras=extras)
         self.post("/submit-spam", params, headers=self.default_headers)
         
-    def submit_ham(self, site_url, user_ip, user_agent, content, extras=None):
-        params = self._make_params(site_url, user_ip, user_agent, content, extras=extras)
+    def submit_ham(self, user_ip, user_agent, content, extras=None):
+        params = self._make_params(user_ip, user_agent, content, extras=extras)
         self.post("/submit-ham", params, headers=self.default_headers)
         
-    def verify_key(self, site_url, key):
+    def verify_key(self):
         res = restclient.RestClient()
-        resp = res.post(self.URI, "/verify-key", body={"blog": site_url, "key": key},
+        resp = res.post("http://%s" % self.URI, "/verify-key", body={"blog": self.site_url, "key": self.key},
                     headers=self.default_headers)
         if resp != "valid":
             return False

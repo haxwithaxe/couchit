@@ -269,13 +269,13 @@ def edit_page(request, pagename=None):
             
             # check spam with akismet
             if request.site.akismet_key:
-                ak = Akismet()
                 if request.site.alias:
                     site_url = "http://%s.%s" % (request.site.alias, settings.SERVER_NAME)
                 else:
                     site_url = "http://%s/%s" % (settings.SERVER_NAME, request.site.cname)
+                ak = Akismet(site_url, request.site.akismet_key)
                 try:
-                    is_spam = ak.comment_check(site_url, request.environ['REMOTE_ADDR'], 
+                    is_spam = ak.comment_check(request.environ['REMOTE_ADDR'], 
                         request.environ['HTTP_USER_AGENT'], content)
                 except: # fail silently
                     is_spam = False
@@ -305,20 +305,20 @@ def report_spam(request, pagename=None):
         raise NotFound
         
     # send spam to akismet if need or send false positive
-    ak = Akismet()
+   
     if request.site.alias:
         site_url = "http://%s.%s" % (request.site.alias, settings.SERVER_NAME)
     else:
         site_url = "http://%s/%s" % (settings.SERVER_NAME, request.site.cname)
-            
+    ak = Akismet(site_url, request.site.akismet_key)
     if page.is_spam:
         fun_spam = ak.submit_ham
     else:
         fun_spam = ak.submit_spam
         
     try:
-        fun_spam(site_url, request.environ['REMOTE_ADDR'], 
-            request.environ['HTTP_USER_AGENT'], page.content)
+        fun_spam(request.environ['REMOTE_ADDR'], request.environ['HTTP_USER_AGENT'], 
+            page.content)
     except:
         pass
         
@@ -923,8 +923,8 @@ def site_check_akismet(request, key):
     else:
         site_url = "http://%s/%s" % (settings.SERVER_NAME, request.site.cname)
         
-    res = Akismet()
-    resp = res.verify_key(site_url, key)
+    ak = Akismet(site_url, key)
+    resp = res.verify_key()
     return send_json({"valid": resp})
     
 def sitemap(request):
