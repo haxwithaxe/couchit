@@ -14,7 +14,10 @@
     <ul id="site_actions">
         <li><a href="{{ url_for('site_changes') }}">recent changes</a></li>
         {% if can_edit %}
-        <li><a href="{{ url_for('site_spam') }}">spam</a></li>
+        {% if site.akismet_key %}
+            <li><a href="{{ url_for('site_spam') }}">spam</a></li>
+        {% endif %}
+        
          <li><a href="{{ url_for('site_settings') }}">settings</a></li>
          <li><a href="{{ url_for('site_design') }}">design</a></li> 
         {% endif %}
