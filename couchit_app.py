@@ -17,7 +17,7 @@
 import os
 import sys
 
-sys.path.append('/var/www/vhosts/couchit-v1.1')
+sys.path.append('/var/www/vhosts/couchit')
 os.environ['PYTHON_EGG_CACHE'] = '/var/cache/.python-eggs'
 
 

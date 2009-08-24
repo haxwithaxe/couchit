@@ -20,7 +20,7 @@ from couchit.utils import db, make_hash
 from couchit.utils.diff import unified_diff, diff_blocks
 
 __all__ = ['Theme', 'Page', 'Site', 'PasswordToken', 'PageExist',
-'AliasExist', 'AliasPage' ]
+'AliasExist', 'AliasPage', 'UserInfos']
 
 class PageExist(Exception):
     """ raised when a page exist """
@@ -50,6 +50,10 @@ class Theme(DocumentSchema):
     page_link_color = StringProperty(default='14456E')
     menu_inactive_color = StringProperty(default='666666')
     syntax_style = StringProperty(default='default')
+    
+class UserInfos(DocumentSchema):
+    ip = StringProperty()
+    ua = StringProperty()
     
 class Site(Document):
     alias = StringProperty()
@@ -105,7 +109,7 @@ class AliasPage(Document):
         if cls.get_alias(siteid, pagename) is not None:
             return True
         return False
-                          
+                                  
 class Page(Document):
     site = StringProperty()
     title = StringProperty()
@@ -117,6 +121,7 @@ class Page(Document):
     changes = ListProperty()
     nb_revision = IntegerProperty(default=0)
     is_spam = BooleanProperty(default=False)
+    user = SchemaProperty(UserInfos)
     
     itemType = StringProperty(default='page')
     

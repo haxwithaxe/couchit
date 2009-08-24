@@ -140,7 +140,8 @@ def home(request, cname=None, alias=None):
         page = Page(
             title='Home',
             site=site._id,
-            content=content
+            content=content,
+            user = UserInfos(ip=request.environ['REMOTE_ADDR'], ua=request.environ['HTTP_USER_AGENT'])
         )
         page.save()
         if site.alias:
@@ -284,6 +285,7 @@ def edit_page(request, pagename=None):
                 
             page.content = content
             page.is_spam = is_spam # flag page
+            page.user = UserInfos(ip=request.environ['REMOTE_ADDR'], ua=request.environ['HTTP_USER_AGENT'])
             page.save()
             
             if not page.is_spam and page.title != "Home":
@@ -317,8 +319,7 @@ def report_spam(request, pagename=None):
         fun_spam = ak.submit_spam
         
     try:
-        fun_spam(request.environ['REMOTE_ADDR'], request.environ['HTTP_USER_AGENT'], 
-            page.content)
+        fun_spam(page.user.ip, page.user.ua, page.content)
     except:
         pass
         
