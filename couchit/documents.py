@@ -15,7 +15,8 @@
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 #
 from datetime import datetime
-from couchdbkit import *
+from couchdbkit.resource import ResourceNotFound, ResourceConflict
+from couchdbkit.schema import *
 from couchit.utils import db, make_hash
 from couchit.utils.diff import unified_diff, diff_blocks
 
@@ -218,4 +219,4 @@ class Page(Document):
         self.save()
         return self
 
-db.contain(PasswordToken, Site, AliasPage, Page)
+contain(db, PasswordToken, Site, AliasPage, Page)

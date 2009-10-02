@@ -42,9 +42,9 @@ local_manager = LocalManager([local])
 _install_hooks = []
 
 def get_db():
-    from couchdbkit import Server, create_session
+    from couchdbkit import Server
     server = Server(settings.SERVER_URI)
-    return create_session(server, settings.DATABASE_NAME, Local)
+    return server.get_or_create_db(settings.DATABASE_NAME)
 db = get_db()
 
 def subclass_exception(name, parent, module):
