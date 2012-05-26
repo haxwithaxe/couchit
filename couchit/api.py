@@ -15,7 +15,7 @@
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 #
 
-from werkzeug.utils import url_quote_plus
+from werkzeug.urls import url_quote_plus
 from pygments.lexers import get_all_lexers, get_lexer_for_filename
 from pygments.styles import get_all_styles
 

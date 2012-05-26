@@ -31,7 +31,7 @@ from jinja2.filters import do_truncate, do_striptags, escape
 from werkzeug import redirect, generate_etag
 from werkzeug.contrib.atom import AtomFeed
 from werkzeug.routing import NotFound
-from werkzeug.utils import url_unquote
+from werkzeug.urls import url_unquote
 from couchit import settings
 from couchit.documents import *
 from couchit.api import *

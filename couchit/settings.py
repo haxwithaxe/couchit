@@ -20,9 +20,9 @@ import os
 
 DEBUG = True
 
-SERVER_NAME = 'couch.it'
+SERVER_NAME = 'lib.hacdc'
 
-NODE_DEV = "enki.local"
+NODE_DEV = "couchit.local"
 if platform.node() == NODE_DEV:
     SERVER_NAME = "couchit.local:5000"
     

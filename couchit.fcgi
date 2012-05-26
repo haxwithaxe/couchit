@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 # -*- coding: utf-8 -
 #
 # Copyright (c) 2008,2009 Benoit Chesneau <benoitc@e-engura.com> 

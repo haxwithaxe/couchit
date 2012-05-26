@@ -125,14 +125,14 @@ class _BaseHTMLProcessor(sgmllib.SGMLParser):
 
 
 class _HTMLSanitizer(_BaseHTMLProcessor):
-    acceptable_elements = ['a', 'abbr', 'acronym', 'address', 'area', 'b', 'big',
+    acceptable_elements = ['a', 'abbr', 'acronym', 'address', 'area', 'audio', 'b', 'big',
       'blockquote', 'br', 'button', 'caption', 'center', 'cite', 'code', 'col',
       'colgroup', 'dd', 'del', 'dfn', 'dir', 'div', 'dl', 'dt', 'em', 'embed', 'fieldset',
       'font', 'form', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'hr', 'i', 'img', 'input',
       'ins', 'kbd', 'label', 'legend', 'li', 'map', 'menu', 'object', 'ol', 'optgroup',
       'option', 'p', 'param', 'pre', 'q', 's', 'samp', 'select', 'small', 'span', 'strike',
       'strong', 'sub', 'sup', 'table', 'tbody', 'td', 'textarea', 'tfoot', 'th',
-      'thead', 'tr', 'tt', 'u', 'ul', 'var']
+      'thead', 'tr', 'tt', 'u', 'ul', 'var','video']
 
     acceptable_attributes = ['abbr', 'accept', 'accept-charset', 'accesskey',
       'action', 'align', 'alt', 'allowfullscreen', 'allowscriptaccess', 'axis', 'border', 'cellpadding', 'cellspacing',
@@ -153,6 +153,24 @@ class _HTMLSanitizer(_BaseHTMLProcessor):
         if javascript:
             self.unacceptable_elements_with_end_tag = ['applet']
             self.acceptable_elements.append('script')
+	    self.acceptable_attributes += [ 'onblur'
+		    , 'onchange'
+		    , 'onclick'
+		    , 'ondblclick'
+		    , 'onfocus'
+		    , 'onkeydown'
+		    , 'onkeypress'
+		    , 'onkeyup'
+		    , 'onload'
+		    , 'onmousedown'
+		    , 'onmousemove'
+		    , 'onmouseout'
+		    , 'onmouseover'
+		    , 'onmouseup'
+		    , 'onreset'
+		    , 'onselect'
+		    , 'onsubmit'
+		    , 'onunload']
         else: # reset
             unacceptable_elements_with_end_tag = ['script', 'applet']
             if 'script' in self.acceptable_elements:

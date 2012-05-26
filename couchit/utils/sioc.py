@@ -15,7 +15,7 @@
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 #
 
-from rdflib.Graph import ConjunctiveGraph as Graph
+from rdflib.graph import ConjunctiveGraph as Graph
 from rdflib import Namespace, Literal, BNode, RDF, URIRef
 
 from couchit.http import BCResponse
